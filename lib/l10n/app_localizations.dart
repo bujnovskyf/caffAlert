@@ -716,17 +716,35 @@ abstract class AppLocalizations {
   /// **'We could not open your email app.'**
   String get couldNotOpenEmail;
 
-  /// No description provided for @caffLevelInfoTitle.
+  /// No description provided for @aboutCaffAlertSection.
   ///
   /// In en, this message translates to:
-  /// **'About CAF level'**
-  String get caffLevelInfoTitle;
+  /// **'About CaffAlert'**
+  String get aboutCaffAlertSection;
 
-  /// No description provided for @caffLevelInfoBody.
+  /// No description provided for @aboutCaffAlertHint.
   ///
   /// In en, this message translates to:
-  /// **'CAF level is a fictional game indicator based only on the time since your last log. It does not measure caffeine in your body or provide health advice.'**
-  String get caffLevelInfoBody;
+  /// **'A coffee log for the moments when the workday starts looking suspiciously like a nap.'**
+  String get aboutCaffAlertHint;
+
+  /// No description provided for @caffEmergencyBrief.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the CAF emergency brief'**
+  String get caffEmergencyBrief;
+
+  /// No description provided for @caffEmergencyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'CAF emergency briefing'**
+  String get caffEmergencyTitle;
+
+  /// No description provided for @caffEmergencyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Logging a coffee restores your CAF level to 100%. It then gradually drops over four hours. This is a simple game timer built from your logs — not a laboratory measurement of caffeine in your blood.\n\nCaffAlert is for days when you want to keep track of your coffee trail and symbolically avoid letting your CAF level hit zero before work is over. The alert is part of the app’s mood, not an instruction to get another coffee.\n\nImportant: the app does not provide health advice, determine a safe dose, or tell you how much caffeine to drink. Real health always comes before a fictional indicator.'**
+  String get caffEmergencyBody;
 
   /// No description provided for @deleteAccount.
   ///

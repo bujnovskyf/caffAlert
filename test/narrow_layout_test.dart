@@ -120,7 +120,8 @@ void main() {
     expect(find.text('Ohodnotit CaffAlert'), findsOneWidget);
     expect(find.text('Kontakt a nápady'), findsOneWidget);
     expect(find.text('Napsat vývojáři'), findsOneWidget);
-    expect(find.text('O CAF levelu'), findsOneWidget);
+    expect(find.text('O CaffAlertu'), findsOneWidget);
+    expect(find.text('Otevřít CAF emergency brief'), findsOneWidget);
     expect(find.text('Smazat účet'), findsOneWidget);
     expect(tester.takeException(), isNull);
 

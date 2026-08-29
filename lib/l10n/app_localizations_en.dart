@@ -335,11 +335,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get couldNotOpenEmail => 'We could not open your email app.';
 
   @override
-  String get caffLevelInfoTitle => 'About CAF level';
+  String get aboutCaffAlertSection => 'About CaffAlert';
 
   @override
-  String get caffLevelInfoBody =>
-      'CAF level is a fictional game indicator based only on the time since your last log. It does not measure caffeine in your body or provide health advice.';
+  String get aboutCaffAlertHint =>
+      'A coffee log for the moments when the workday starts looking suspiciously like a nap.';
+
+  @override
+  String get caffEmergencyBrief => 'Open the CAF emergency brief';
+
+  @override
+  String get caffEmergencyTitle => 'CAF emergency briefing';
+
+  @override
+  String get caffEmergencyBody =>
+      'Logging a coffee restores your CAF level to 100%. It then gradually drops over four hours. This is a simple game timer built from your logs — not a laboratory measurement of caffeine in your blood.\n\nCaffAlert is for days when you want to keep track of your coffee trail and symbolically avoid letting your CAF level hit zero before work is over. The alert is part of the app’s mood, not an instruction to get another coffee.\n\nImportant: the app does not provide health advice, determine a safe dose, or tell you how much caffeine to drink. Real health always comes before a fictional indicator.';
 
   @override
   String get deleteAccount => 'Delete account';

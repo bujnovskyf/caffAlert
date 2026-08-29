@@ -335,11 +335,21 @@ class AppLocalizationsCs extends AppLocalizations {
   String get couldNotOpenEmail => 'Nepodařilo se otevřít e-mailovou aplikaci.';
 
   @override
-  String get caffLevelInfoTitle => 'O CAF levelu';
+  String get aboutCaffAlertSection => 'O CaffAlertu';
 
   @override
-  String get caffLevelInfoBody =>
-      'CAF level je fiktivní herní ukazatel založený jen na čase od posledního záznamu. Neměří kofein v těle ani nepředstavuje zdravotní doporučení.';
+  String get aboutCaffAlertHint =>
+      'Kávový deníček pro okamžiky, kdy pracovní den začíná podezřele připomínat šlofíka.';
+
+  @override
+  String get caffEmergencyBrief => 'Otevřít CAF emergency brief';
+
+  @override
+  String get caffEmergencyTitle => 'CAF emergency briefing';
+
+  @override
+  String get caffEmergencyBody =>
+      'Záznamem kávy doplníš CAF úroveň na 100 %. Pak se během čtyř hodin postupně snižuje. Je to jednoduchý herní časovač nad tvými záznamy — ne laboratorní měření kofeinu v krvi.\n\nCaffAlert je tu pro dny, kdy chceš mít přehled o své kávové stopě a symbolicky nenechat CAF úroveň spadnout na nulu dřív, než skončí práce. Alarm je součást nálady aplikace, ne příkaz k další kávě.\n\nDůležité: aplikace neposkytuje zdravotní doporučení, neurčuje bezpečnou dávku ani neříká, kolik kofeinu máš pít. Reálné zdraví má vždy přednost před fiktivním ukazatelem.';
 
   @override
   String get deleteAccount => 'Smazat účet';

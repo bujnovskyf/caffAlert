@@ -186,6 +186,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   const SizedBox(height: 16),
                   _SectionCard(
+                    icon: Icons.warning_amber_rounded,
+                    title: localizations.aboutCaffAlertSection,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          localizations.aboutCaffAlertHint,
+                          style:
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    color: AppColors.roast,
+                                  ),
+                        ),
+                        const SizedBox(height: 16),
+                        OutlinedButton.icon(
+                          onPressed: _showCaffEmergencyBrief,
+                          icon: const Icon(Icons.info_outline_rounded),
+                          label: Text(localizations.caffEmergencyBrief),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  _SectionCard(
                     icon: Icons.shield_outlined,
                     title: localizations.accountSection,
                     child: Column(
@@ -205,12 +228,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             color: AppColors.espresso,
                             fontWeight: FontWeight.w700,
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        OutlinedButton.icon(
-                          onPressed: () => _showCaffLevelInfo(),
-                          icon: const Icon(Icons.info_outline_rounded),
-                          label: Text(localizations.caffLevelInfoTitle),
                         ),
                         const SizedBox(height: 20),
                         OutlinedButton.icon(
@@ -330,14 +347,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
-  Future<void> _showCaffLevelInfo() async {
+  Future<void> _showCaffEmergencyBrief() async {
     final localizations = AppLocalizations.of(context);
     await showDialog<void>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        icon: const Icon(Icons.info_outline_rounded),
-        title: Text(localizations.caffLevelInfoTitle),
-        content: Text(localizations.caffLevelInfoBody),
+        icon: const Icon(
+          Icons.warning_amber_rounded,
+          color: AppColors.caramel,
+        ),
+        title: Text(localizations.caffEmergencyTitle),
+        content: SingleChildScrollView(
+          child: Text(localizations.caffEmergencyBody),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),
