@@ -130,8 +130,8 @@
   "onboardingWelcomeBody": "Your day moves fast. CaffAlert helps you keep your caffeine rhythm in view.",
   "onboardingLogTitle": "Every log counts",
   "onboardingLogBody": "Log a coffee, an energy drink, or another caffeinated drink. Each log replenishes your CAF level.",
-  "onboardingTrackTitle": "Keep CAF level in sight",
-  "onboardingTrackBody": "CAF level gradually drops. When it gets low, CaffAlert will dramatically remind you that the system is losing momentum.",
+  "onboardingTrackTitle": "The four-hour protocol",
+  "onboardingTrackBody": "CAF level drops over four hours. According to the entirely unverified CaffAlert Protocol, that is the ideal distance between “I am fine” and “why do all the letters look the same now?” Scientific value: approximately zero.",
   "onboardingNext": "Continue",
   "onboardingSkip": "Skip",
   "onboardingStart": "Log your first coffee"

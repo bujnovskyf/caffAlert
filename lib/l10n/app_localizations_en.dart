@@ -415,11 +415,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Log a coffee, an energy drink, or another caffeinated drink. Each log replenishes your CAF level.';
 
   @override
-  String get onboardingTrackTitle => 'Keep CAF level in sight';
+  String get onboardingTrackTitle => 'The four-hour protocol';
 
   @override
   String get onboardingTrackBody =>
-      'CAF level gradually drops. When it gets low, CaffAlert will dramatically remind you that the system is losing momentum.';
+      'CAF level drops over four hours. According to the entirely unverified CaffAlert Protocol, that is the ideal distance between “I am fine” and “why do all the letters look the same now?” Scientific value: approximately zero.';
 
   @override
   String get onboardingNext => 'Continue';

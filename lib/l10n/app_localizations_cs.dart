@@ -415,11 +415,11 @@ class AppLocalizationsCs extends AppLocalizations {
       'Zaznamenej kávu, energy drink nebo jiný kofeinový nápoj. Každý záznam doplní tvůj CAF level.';
 
   @override
-  String get onboardingTrackTitle => 'Měj CAF level na očích';
+  String get onboardingTrackTitle => 'Čtyřhodinový protokol';
 
   @override
   String get onboardingTrackBody =>
-      'CAF level postupně klesá. Když bude nízko, CaffAlert ti dramaticky připomene, že systém ztrácí tempo.';
+      'CAF level klesá čtyři hodiny. Podle zcela neověřeného CaffAlert protokolu je to ideální vzdálenost mezi „jsem v pohodě“ a „proč už všechna písmena vypadají stejně“. Vědecká hodnota: přibližně nula.';
 
   @override
   String get onboardingNext => 'Pokračovat';

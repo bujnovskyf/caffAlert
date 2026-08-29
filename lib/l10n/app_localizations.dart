@@ -863,13 +863,13 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingTrackTitle.
   ///
   /// In en, this message translates to:
-  /// **'Keep CAF level in sight'**
+  /// **'The four-hour protocol'**
   String get onboardingTrackTitle;
 
   /// No description provided for @onboardingTrackBody.
   ///
   /// In en, this message translates to:
-  /// **'CAF level gradually drops. When it gets low, CaffAlert will dramatically remind you that the system is losing momentum.'**
+  /// **'CAF level drops over four hours. According to the entirely unverified CaffAlert Protocol, that is the ideal distance between “I am fine” and “why do all the letters look the same now?” Scientific value: approximately zero.'**
   String get onboardingTrackBody;
 
   /// No description provided for @onboardingNext.

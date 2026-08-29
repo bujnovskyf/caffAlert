@@ -179,7 +179,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Pokračovat'));
     await tester.pumpAndSettle();
-    expect(find.text('Měj CAF level na očích'), findsOneWidget);
+    expect(find.text('Čtyřhodinový protokol'), findsOneWidget);
 
     await tester.tap(find.text('Zaznamenat první kávu'));
     await tester.pumpAndSettle();

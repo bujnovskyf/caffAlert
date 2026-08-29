@@ -130,8 +130,8 @@
   "onboardingWelcomeBody": "Tvůj den jede naplno. CaffAlert ti pomůže udržet přehled o tvém kofeinovém rytmu.",
   "onboardingLogTitle": "Každý záznam se počítá",
   "onboardingLogBody": "Zaznamenej kávu, energy drink nebo jiný kofeinový nápoj. Každý záznam doplní tvůj CAF level.",
-  "onboardingTrackTitle": "Měj CAF level na očích",
-  "onboardingTrackBody": "CAF level postupně klesá. Když bude nízko, CaffAlert ti dramaticky připomene, že systém ztrácí tempo.",
+  "onboardingTrackTitle": "Čtyřhodinový protokol",
+  "onboardingTrackBody": "CAF level klesá čtyři hodiny. Podle zcela neověřeného CaffAlert protokolu je to ideální vzdálenost mezi „jsem v pohodě“ a „proč už všechna písmena vypadají stejně“. Vědecká hodnota: přibližně nula.",
   "onboardingNext": "Pokračovat",
   "onboardingSkip": "Přeskočit",
   "onboardingStart": "Zaznamenat první kávu"
