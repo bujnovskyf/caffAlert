@@ -366,6 +366,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: Text(localizations.caffEmergencyBody),
         ),
         actions: [
+          TextButton.icon(
+            onPressed: _showProtocolSource,
+            icon: const Icon(Icons.source_outlined, size: 18),
+            label: Text(localizations.onboardingSource),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: Text(localizations.dismiss),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _showProtocolSource() async {
+    final localizations = AppLocalizations.of(context);
+    await showDialog<void>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        icon: const Icon(Icons.science_outlined, color: AppColors.caramel),
+        title: Text(localizations.onboardingSourceTitle),
+        content: Text(
+          localizations.onboardingSourceMeme,
+          textAlign: TextAlign.center,
+          style: Theme.of(dialogContext).textTheme.headlineSmall?.copyWith(
+                color: AppColors.espresso,
+                fontWeight: FontWeight.w700,
+              ),
+        ),
+        actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),
             child: Text(localizations.dismiss),

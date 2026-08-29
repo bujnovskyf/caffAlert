@@ -349,7 +349,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get caffEmergencyBody =>
-      'CaffAlert is a tool for keeping your caffeine rhythm in view throughout the day. Log a coffee, an energy drink, or another caffeinated drink — every log replenishes your CAF level and joins your history.\n\nCAF level then gradually drops over four hours. At a glance, you can see when you last logged something, how often you return to caffeine, and when the system starts dramatically asking for attention.\n\nFour hours are a fixed CaffAlert rule. Once CAF level reaches its critical zone, the system dramatically suggests a next step.\n\nCaffAlert is neither a diet nor a limiter. It is a simple overview that keeps your caffeine rhythm visible. Stay caffeinated.';
+      'CaffAlert is a tool for keeping your caffeine rhythm in view throughout the day. Log a coffee, an energy drink, or another caffeinated drink — every log replenishes your CAF level and joins your history.\n\nCAF level then gradually drops over four hours. At a glance, you can see when you last logged something, how often you return to caffeine, and when the system starts dramatically asking for attention.\n\nThe four-hour interval is the calibration constant of the CaffAlert Protocol. After 240 minutes, the model assumes that relative CAF level has declined into the 0% critical zone. The algorithm then activates a system replenishment recommendation.\n\nCaffAlert is neither a diet nor a limiter. It is a simple overview that keeps your caffeine rhythm visible. Stay caffeinated.';
 
   @override
   String get appDisclaimerTitle => 'Disclaimer';
@@ -419,7 +419,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingTrackBody =>
-      'CAF level drops for exactly four hours. It then enters its critical zone and the system dramatically suggests a next step.';
+      'The four-hour interval is the calibration constant of the CaffAlert Protocol. After 240 minutes, relative CAF level enters the 0% critical zone and the algorithm activates a system replenishment recommendation.';
 
   @override
   String get onboardingSource => 'CaffAlert Protocol source';
