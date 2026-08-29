@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Request deletion of a CaffAlert account and data.">
-    <title>Delete account | CaffAlert</title>
+    <meta name="description" content="Request deletion of a CaffAlert account and associated data.">
+    <title>Delete Account | CaffAlert</title>
     <link rel="stylesheet" href="/legal/legal.css">
   </head>
   <body>
@@ -17,35 +17,49 @@
         </nav>
       </header>
       <main>
-        <p class="eyebrow">CAFFALERT · ACCOUNT AND DATA</p>
-        <h1>Delete account</h1>
-        <p class="lead">Want to delete your CaffAlert account and all related data? If you can access the app, the fastest path is <strong>Settings → Delete account</strong>.</p>
+        <p class="eyebrow">CAFFALERT · ACCOUNT AND DATA DELETION</p>
+        <h1>Delete your account</h1>
+        <p class="lead">You can request permanent deletion of your CaffAlert account and the personal data associated with it from this page, even if you no longer have access to the App.</p>
 
+        <section class="details">
+          <strong>Data controller</strong><br>
+          František Bujnovský, sole trader, Company ID (IČO): 17800218<br>
+          Zámecká 305, 747 41 Hradec nad Moravicí, Czech Republic<br>
+          <a href="mailto:bujnovskyf@gmail.com">bujnovskyf@gmail.com</a>
+        </section>
+
+        <h2>Delete directly in the App</h2>
+        <p>If you can sign in, use <strong>Settings → Delete account</strong>. This is the fastest method. It immediately initiates permanent deletion of your sign-in account, profile, and all coffee entries.</p>
+
+        <h2>What deletion covers</h2>
         <div class="notice">
-          <strong>What is deleted:</strong> the sign-in account, profile, and every saved coffee entry. This cannot be undone.
+          <strong>Deletion removes:</strong> your CaffAlert sign-in account, optional profile name, and all coffee-entry records. The operation cannot be reversed.
         </div>
+        <p>We may retain only information strictly necessary to comply with a legal obligation, resolve a security incident, or establish, exercise, or defend legal claims. A deletion request itself and related correspondence may be retained for that limited purpose. We do not sell account data.</p>
 
-        <h2>Cannot access the app?</h2>
-        <p>Send the request below using the email address on the account. Before deleting the account, we verify that the request belongs to its owner. We will respond at the email provided.</p>
+        <h2>Request deletion without the App</h2>
+        <p>Use the form below and enter the email address associated with your account. We may ask for limited additional information to verify that you control the account. We will respond to the request within one month, or inform you if applicable law permits an extension or if we cannot fulfil the request and why.</p>
 
         <form name="caffalert-account-deletion" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/delete-account/sent/">
           <input type="hidden" name="form-name" value="caffalert-account-deletion">
           <p hidden><label>Leave this field empty <input name="bot-field"></label></p>
+
           <label for="email">CaffAlert account email</label>
           <input id="email" name="email" type="email" autocomplete="email" required>
 
-          <label for="message">Note <span class="small">(optional)</span></label>
-          <textarea id="message" name="message" placeholder="For example: I cannot access my account."></textarea>
+          <label for="message">Additional information <span class="small">(optional)</span></label>
+          <textarea id="message" name="message" placeholder="For example: I no longer have access to my account."></textarea>
 
           <label class="checkbox" for="confirm">
             <input id="confirm" name="confirm" type="checkbox" required>
-            <span>I request permanent deletion of my CaffAlert account, profile, and coffee entries.</span>
+            <span>I request permanent deletion of my CaffAlert account, profile, and coffee entries. I understand that deletion cannot be reversed.</span>
           </label>
 
           <button type="submit">Send deletion request</button>
         </form>
 
-        <p class="small">This form is only for deletion requests. See the <a href="/privacy">privacy policy</a> for data-processing details. For another question, email <a href="mailto:bujnovskyf@gmail.com">bujnovskyf@gmail.com</a>.</p>
+        <h2>Privacy of this request</h2>
+        <p>The form is hosted by Netlify and is used only to receive and handle deletion requests. See the <a href="/privacy">Privacy Policy</a> for details about the controller, recipients, legal bases, retention, and your data-protection rights. For another privacy request, email <a href="mailto:bujnovskyf@gmail.com">bujnovskyf@gmail.com</a>.</p>
       </main>
       <footer>© 2026 František Bujnovský · CaffAlert</footer>
     </div>
