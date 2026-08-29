@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'app_theme.dart';
 import 'l10n/app_localizations.dart';
@@ -451,12 +452,54 @@ class _AuthCard extends StatelessWidget {
                             : localizations.backToSignIn,
                       ),
                     ),
+                  if (kIsWeb) ...[
+                    const SizedBox(height: 16),
+                    const Divider(),
+                    const SizedBox(height: 6),
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      spacing: 2,
+                      runSpacing: 0,
+                      children: [
+                        _LegalLink(
+                          label: localizations.privacyPolicy,
+                          path: '/privacy',
+                        ),
+                        _LegalLink(
+                          label: localizations.termsOfUse,
+                          path: '/terms',
+                        ),
+                        _LegalLink(
+                          label: localizations.deleteAccountWeb,
+                          path: '/delete-account',
+                        ),
+                      ],
+                    ),
+                  ],
                 ],
               ),
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class _LegalLink extends StatelessWidget {
+  const _LegalLink({required this.label, required this.path});
+
+  final String label;
+  final String path;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () => launchUrl(
+        Uri.base.resolve(path),
+        mode: LaunchMode.externalApplication,
+      ),
+      child: Text(label),
     );
   }
 }

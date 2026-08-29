@@ -734,6 +734,24 @@ abstract class AppLocalizations {
   /// **'Delete account'**
   String get deleteAccountConfirm;
 
+  /// No description provided for @privacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get privacyPolicy;
+
+  /// No description provided for @termsOfUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms'**
+  String get termsOfUse;
+
+  /// No description provided for @deleteAccountWeb.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete account'**
+  String get deleteAccountWeb;
+
   /// No description provided for @loadingData.
   ///
   /// In en, this message translates to:

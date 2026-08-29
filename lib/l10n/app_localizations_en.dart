@@ -346,6 +346,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deleteAccountConfirm => 'Delete account';
 
   @override
+  String get privacyPolicy => 'Privacy';
+
+  @override
+  String get termsOfUse => 'Terms';
+
+  @override
+  String get deleteAccountWeb => 'Delete account';
+
+  @override
   String get loadingData => 'Loading your coffee data…';
 
   @override

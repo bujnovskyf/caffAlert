@@ -346,6 +346,15 @@ class AppLocalizationsCs extends AppLocalizations {
   String get deleteAccountConfirm => 'Smazat účet';
 
   @override
+  String get privacyPolicy => 'Soukromí';
+
+  @override
+  String get termsOfUse => 'Podmínky';
+
+  @override
+  String get deleteAccountWeb => 'Smazání účtu';
+
+  @override
   String get loadingData => 'Načítám tvoje kávová data…';
 
   @override
