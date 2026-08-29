@@ -875,13 +875,13 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingSource.
   ///
   /// In en, this message translates to:
-  /// **'CaffAlert Protocol source'**
+  /// **'Source'**
   String get onboardingSource;
 
   /// No description provided for @onboardingSourceTitle.
   ///
   /// In en, this message translates to:
-  /// **'CaffAlert Protocol source'**
+  /// **'Source'**
   String get onboardingSourceTitle;
 
   /// No description provided for @onboardingSourceMeme.
