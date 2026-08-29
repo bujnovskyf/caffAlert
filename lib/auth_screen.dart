@@ -1,11 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'app_theme.dart';
 import 'l10n/app_localizations.dart';
+import 'locale_controller.dart';
 
 enum _AuthMode { signIn, signUp, forgotPassword }
 
@@ -289,6 +291,14 @@ class _AuthCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: _LanguagePicker(
+                      selectedLanguage:
+                          Localizations.localeOf(context).languageCode,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
                   if (MediaQuery.sizeOf(context).width < 900) ...[
                     Row(
                       children: [
@@ -502,6 +512,46 @@ class _LegalLink extends StatelessWidget {
         mode: LaunchMode.externalApplication,
       ),
       child: Text(label),
+    );
+  }
+}
+
+class _LanguagePicker extends StatelessWidget {
+  const _LanguagePicker({required this.selectedLanguage});
+
+  final String selectedLanguage;
+
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton<String>(
+      tooltip: 'Language',
+      onSelected: (languageCode) {
+        context.read<LocaleController>().setLocale(Locale(languageCode));
+      },
+      itemBuilder: (context) => const [
+        PopupMenuItem(value: 'cs', child: Text('🇨🇿  Čeština')),
+        PopupMenuItem(value: 'en', child: Text('🇬🇧  English')),
+      ],
+      child: Semantics(
+        button: true,
+        label: 'Language: $selectedLanguage',
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+          decoration: BoxDecoration(
+            color: AppColors.foam.withValues(alpha: 0.72),
+            border:
+                Border.all(color: AppColors.caramel.withValues(alpha: 0.35)),
+            borderRadius: BorderRadius.circular(999),
+          ),
+          child: Text(
+            selectedLanguage == 'cs' ? '🇨🇿  CZ' : '🇬🇧  EN',
+            style: const TextStyle(
+              color: AppColors.espresso,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

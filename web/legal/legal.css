@@ -5,6 +5,7 @@ a { color:#8d472d; text-underline-offset:.18em; } a:hover { color:var(--espresso
 .page { width:min(100% - 32px,780px); margin:0 auto; padding:28px 0 56px; }
 .topbar { display:flex; justify-content:space-between; gap:16px; align-items:center; margin-bottom:36px; font-weight:700; }
 .brand { color:var(--espresso); text-decoration:none; }.topbar nav { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:14px; font-size:.9rem; }
+.language-switch { align-items:center; background:#f7e8dc; border:1px solid #d6b39c; border-radius:999px; color:var(--espresso); display:inline-flex; font-size:.83rem; gap:6px; padding:5px 9px; text-decoration:none; }.language-switch:hover { background:#f0d7c4; color:var(--espresso); }
 main { background:var(--paper); border:1px solid var(--line); border-radius:24px; padding:clamp(24px,5vw,52px); box-shadow:0 16px 42px rgba(63,31,17,.08); }
 .eyebrow { color:var(--caramel); font-size:.75rem; font-weight:800; letter-spacing:.12em; margin:0 0 10px; }
 h1,h2 { color:var(--espresso); line-height:1.15; } h1 { font-size:clamp(2rem,8vw,3rem); margin:0 0 14px; } h2 { font-size:1.25rem; margin:36px 0 10px; }
