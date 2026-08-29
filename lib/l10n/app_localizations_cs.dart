@@ -349,7 +349,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get caffEmergencyBody =>
-      'CaffAlert je nástroj pro přehled o tvém kofeinovém rytmu během dne. Zaznamenej kávu, energy drink nebo jiný nápoj s kofeinem — každý záznam doplní CAF úroveň a uloží se do tvé historie.\n\nCAF úroveň pak během čtyř hodin postupně klesá. Díky tomu na první pohled vidíš, kdy sis naposledy něco zaznamenal/a, jak často se ke kofeinu vracíš a kdy se systém začíná dramaticky hlásit o pozornost.\n\nProč zrovna čtyři hodiny? Podle zcela neověřeného CaffAlert protokolu je to ideální vzdálenost mezi „jsem v pohodě“ a „proč už všechna písmena vypadají stejně“. Dost času něco dokončit, málo času zapomenout na svou poslední kávu. Vědecká hodnota tohoto výpočtu: přibližně nula.\n\nCaffAlert není dieta ani omezovač. Je to jednoduchý přehled, který drží tvůj kofeinový rytmus na očích. Stay caffeinated.';
+      'CaffAlert je nástroj pro přehled o tvém kofeinovém rytmu během dne. Zaznamenej kávu, energy drink nebo jiný nápoj s kofeinem — každý záznam doplní CAF úroveň a uloží se do tvé historie.\n\nCAF úroveň pak během čtyř hodin postupně klesá. Díky tomu na první pohled vidíš, kdy sis naposledy něco zaznamenal/a, jak často se ke kofeinu vracíš a kdy se systém začíná dramaticky hlásit o pozornost.\n\nProč zrovna čtyři hodiny? Současná literatura uvádí průměrný plazmatický poločas kofeinu u zdravých dospělých zhruba kolem pěti hodin, i když se mezi lidmi výrazně liší. CaffAlert z toho vzal praktické čtyři hodiny a vyhlásil vlastní standardní CAF protokol. Jakmile fiktivní CAF úroveň dorazí do kritické zóny, systém dramaticky doporučí zvážit doplnění. Zní to vědecky; pořád je to herní ukazatel, ne měření tvého těla.\n\nCaffAlert není dieta ani omezovač. Je to jednoduchý přehled, který drží tvůj kofeinový rytmus na očích. Stay caffeinated.';
 
   @override
   String get appDisclaimerTitle => 'Disclaimer';
@@ -419,7 +419,16 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get onboardingTrackBody =>
-      'CAF level klesá čtyři hodiny. Podle zcela neověřeného CaffAlert protokolu je to ideální vzdálenost mezi „jsem v pohodě“ a „proč už všechna písmena vypadají stejně“. Vědecká hodnota: přibližně nula.';
+      'Současná literatura uvádí poločas kofeinu u zdravých dospělých zhruba kolem pěti hodin. CaffAlert pro svůj standardní CAF protokol používá praktické čtyři hodiny; pak fiktivní CAF úroveň vstoupí do kritické zóny a systém navrhne zvážit doplnění.';
+
+  @override
+  String get onboardingSource => 'Zdroj CaffAlert Protocolu';
+
+  @override
+  String get onboardingSourceTitle => 'Zdroj CaffAlert Protocolu';
+
+  @override
+  String get onboardingSourceMeme => 'I made it up.';
 
   @override
   String get onboardingNext => 'Pokračovat';

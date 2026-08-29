@@ -180,6 +180,11 @@ void main() {
     await tester.tap(find.text('Pokračovat'));
     await tester.pumpAndSettle();
     expect(find.text('Čtyřhodinový protokol'), findsOneWidget);
+    await tester.tap(find.text('Zdroj CaffAlert Protocolu'));
+    await tester.pumpAndSettle();
+    expect(find.text('I made it up.'), findsOneWidget);
+    await tester.tap(find.text('Skrýt'));
+    await tester.pumpAndSettle();
 
     await tester.tap(find.text('Zaznamenat první kávu'));
     await tester.pumpAndSettle();

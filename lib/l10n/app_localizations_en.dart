@@ -349,7 +349,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get caffEmergencyBody =>
-      'CaffAlert is a tool for keeping your caffeine rhythm in view throughout the day. Log a coffee, an energy drink, or another caffeinated drink — every log replenishes your CAF level and joins your history.\n\nCAF level then gradually drops over four hours. At a glance, you can see when you last logged something, how often you return to caffeine, and when the system starts dramatically asking for attention.\n\nWhy four hours? According to the entirely unverified CaffAlert Protocol, it is the ideal distance between “I am fine” and “why do all the letters look the same now?” Enough time to finish something, not enough time to forget your last coffee. Scientific value of this calculation: approximately zero.\n\nCaffAlert is neither a diet nor a limiter. It is a simple overview that keeps your caffeine rhythm visible. Stay caffeinated.';
+      'CaffAlert is a tool for keeping your caffeine rhythm in view throughout the day. Log a coffee, an energy drink, or another caffeinated drink — every log replenishes your CAF level and joins your history.\n\nCAF level then gradually drops over four hours. At a glance, you can see when you last logged something, how often you return to caffeine, and when the system starts dramatically asking for attention.\n\nWhy four hours? Current literature puts the average plasma half-life of caffeine in healthy adults at roughly five hours, although it varies considerably between people. CaffAlert took the practical four-hour part and declared its own standard CAF Protocol. When the fictional CAF level reaches its critical zone, the system dramatically suggests considering a refill. It sounds scientific; it is still a game indicator, not a measurement of your body.\n\nCaffAlert is neither a diet nor a limiter. It is a simple overview that keeps your caffeine rhythm visible. Stay caffeinated.';
 
   @override
   String get appDisclaimerTitle => 'Disclaimer';
@@ -419,7 +419,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingTrackBody =>
-      'CAF level drops over four hours. According to the entirely unverified CaffAlert Protocol, that is the ideal distance between “I am fine” and “why do all the letters look the same now?” Scientific value: approximately zero.';
+      'Current literature places the caffeine half-life in healthy adults at roughly five hours. CaffAlert uses a practical four-hour standard CAF Protocol; after that, the fictional CAF level enters its critical zone and the system suggests considering a refill.';
+
+  @override
+  String get onboardingSource => 'CaffAlert Protocol source';
+
+  @override
+  String get onboardingSourceTitle => 'CaffAlert Protocol source';
+
+  @override
+  String get onboardingSourceMeme => 'I made it up.';
 
   @override
   String get onboardingNext => 'Continue';
