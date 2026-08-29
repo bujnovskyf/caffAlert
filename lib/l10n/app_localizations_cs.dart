@@ -349,7 +349,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get caffEmergencyBody =>
-      'CaffAlert je nástroj pro přehled o tvém kofeinovém rytmu během dne. Zaznamenej kávu, energy drink nebo jiný nápoj s kofeinem — každý záznam doplní CAF úroveň a uloží se do tvé historie.\n\nCAF úroveň pak během čtyř hodin postupně klesá. Díky tomu na první pohled vidíš, kdy sis naposledy něco zaznamenal/a, jak často se ke kofeinu vracíš a kdy se systém začíná dramaticky hlásit o pozornost.\n\nČtyři hodiny jsou podle CAF modelu ideální interval, po kterém se CAF úroveň dostává do kritické zóny. Tehdy systém dramaticky navrhne další krok.\n\nCaffAlert není dieta ani omezovač. Je to jednoduchý přehled, který drží tvůj kofeinový rytmus na očích. Stay caffeinated.';
+      'CaffAlert je nástroj pro přehled o tvém kofeinovém rytmu během dne. Zaznamenej kávu, energy drink nebo jiný nápoj s kofeinem — každý záznam doplní CAF úroveň a uloží se do tvé historie.\n\nCAF úroveň pak během čtyř hodin postupně klesá. Díky tomu na první pohled vidíš, kdy sis naposledy něco zaznamenal/a, jak často se ke kofeinu vracíš a kdy se systém začíná dramaticky hlásit o pozornost.\n\nČtyři hodiny jsou podle CAF modelu ideální interval, po kterém se CAF úroveň dostává do kritické zóny. Tehdy systém doporučí další krok.\n\nCaffAlert není dieta ani omezovač. Je to jednoduchý přehled, který drží tvůj kofeinový rytmus na očích. Stay caffeinated.';
 
   @override
   String get appDisclaimerTitle => 'Disclaimer';
@@ -419,7 +419,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get onboardingTrackBody =>
-      'Čtyři hodiny jsou podle CAF modelu ideální interval, po kterém se CAF úroveň dostává do kritické zóny. Tehdy systém dramaticky navrhne další krok.';
+      'Čtyři hodiny jsou podle CAF modelu ideální interval, po kterém se CAF úroveň dostává do kritické zóny. Tehdy systém doporučí další krok.';
 
   @override
   String get onboardingSource => 'Zdroj';

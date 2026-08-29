@@ -349,7 +349,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get caffEmergencyBody =>
-      'CaffAlert is a tool for keeping your caffeine rhythm in view throughout the day. Log a coffee, an energy drink, or another caffeinated drink — every log replenishes your CAF level and joins your history.\n\nCAF level then gradually drops over four hours. At a glance, you can see when you last logged something, how often you return to caffeine, and when the system starts dramatically asking for attention.\n\nAccording to the CAF model, four hours are the ideal interval after which CAF level enters its critical zone. The system then dramatically suggests a next step.\n\nCaffAlert is neither a diet nor a limiter. It is a simple overview that keeps your caffeine rhythm visible. Stay caffeinated.';
+      'CaffAlert is a tool for keeping your caffeine rhythm in view throughout the day. Log a coffee, an energy drink, or another caffeinated drink — every log replenishes your CAF level and joins your history.\n\nCAF level then gradually drops over four hours. At a glance, you can see when you last logged something, how often you return to caffeine, and when the system starts dramatically asking for attention.\n\nAccording to the CAF model, four hours are the ideal interval after which CAF level enters its critical zone. The system then recommends a next step.\n\nCaffAlert is neither a diet nor a limiter. It is a simple overview that keeps your caffeine rhythm visible. Stay caffeinated.';
 
   @override
   String get appDisclaimerTitle => 'Disclaimer';
@@ -419,7 +419,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingTrackBody =>
-      'According to the CAF model, four hours are the ideal interval after which CAF level enters its critical zone. The system then dramatically suggests a next step.';
+      'According to the CAF model, four hours are the ideal interval after which CAF level enters its critical zone. The system then recommends a next step.';
 
   @override
   String get onboardingSource => 'Source';
