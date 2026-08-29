@@ -692,6 +692,30 @@ abstract class AppLocalizations {
   /// **'We could not open Google Play.'**
   String get couldNotOpenStore;
 
+  /// No description provided for @feedbackSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact & ideas'**
+  String get feedbackSection;
+
+  /// No description provided for @feedbackHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Have an idea, found a problem, or want to improve something? Send the developer a note.'**
+  String get feedbackHint;
+
+  /// No description provided for @contactDeveloper.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact the developer'**
+  String get contactDeveloper;
+
+  /// No description provided for @couldNotOpenEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'We could not open your email app.'**
+  String get couldNotOpenEmail;
+
   /// No description provided for @caffLevelInfoTitle.
   ///
   /// In en, this message translates to:

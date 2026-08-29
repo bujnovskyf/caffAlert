@@ -322,6 +322,19 @@ class AppLocalizationsCs extends AppLocalizations {
   String get couldNotOpenStore => 'Nepodařilo se otevřít Google Play.';
 
   @override
+  String get feedbackSection => 'Kontakt a nápady';
+
+  @override
+  String get feedbackHint =>
+      'Máš nápad, našel/a jsi problém nebo chceš něco vylepšit? Napiš vývojáři.';
+
+  @override
+  String get contactDeveloper => 'Napsat vývojáři';
+
+  @override
+  String get couldNotOpenEmail => 'Nepodařilo se otevřít e-mailovou aplikaci.';
+
+  @override
   String get caffLevelInfoTitle => 'O CAF levelu';
 
   @override

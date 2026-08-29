@@ -21,6 +21,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
   static final _playStoreUri = Uri.parse(
     'https://play.google.com/store/apps/details?id=com.zachrana.app',
   );
+  static final _feedbackUri = Uri(
+    scheme: 'mailto',
+    path: 'bujnovskyf@gmail.com',
+    queryParameters: const {
+      'subject': 'CaffAlert — feedback',
+    },
+  );
 
   final _nameController = TextEditingController();
   bool _profileInitialized = false;
@@ -150,6 +157,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           onPressed: _rateApp,
                           icon: const Icon(Icons.star_outline_rounded),
                           label: Text(localizations.rateApp),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  _SectionCard(
+                    icon: Icons.mark_email_read_outlined,
+                    title: localizations.feedbackSection,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          localizations.feedbackHint,
+                          style:
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    color: AppColors.roast,
+                                  ),
+                        ),
+                        const SizedBox(height: 16),
+                        OutlinedButton.icon(
+                          onPressed: _sendFeedback,
+                          icon: const Icon(Icons.send_outlined),
+                          label: Text(localizations.contactDeveloper),
                         ),
                       ],
                     ),
@@ -288,6 +318,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
+  Future<void> _sendFeedback() async {
+    final opened = await launchUrl(
+      _feedbackUri,
+      mode: LaunchMode.externalApplication,
+    );
+    if (!opened && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(AppLocalizations.of(context).couldNotOpenEmail)),
+      );
+    }
+  }
+
   Future<void> _showCaffLevelInfo() async {
     final localizations = AppLocalizations.of(context);
     await showDialog<void>(
@@ -375,12 +417,14 @@ class _SectionCard extends StatelessWidget {
               children: [
                 Icon(icon, color: AppColors.roast),
                 const SizedBox(width: 10),
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: AppColors.espresso,
-                        fontWeight: FontWeight.w700,
-                      ),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          color: AppColors.espresso,
+                          fontWeight: FontWeight.w700,
+                        ),
+                  ),
                 ),
               ],
             ),

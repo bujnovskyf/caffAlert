@@ -322,6 +322,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get couldNotOpenStore => 'We could not open Google Play.';
 
   @override
+  String get feedbackSection => 'Contact & ideas';
+
+  @override
+  String get feedbackHint =>
+      'Have an idea, found a problem, or want to improve something? Send the developer a note.';
+
+  @override
+  String get contactDeveloper => 'Contact the developer';
+
+  @override
+  String get couldNotOpenEmail => 'We could not open your email app.';
+
+  @override
   String get caffLevelInfoTitle => 'About CAF level';
 
   @override
