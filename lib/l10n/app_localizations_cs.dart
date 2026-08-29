@@ -349,7 +349,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get caffEmergencyBody =>
-      'CaffAlert je nástroj pro přehled o tvém kofeinovém rytmu během dne. Zaznamenej kávu, energy drink nebo jiný nápoj s kofeinem — každý záznam doplní CAF úroveň a uloží se do tvé historie.\n\nCAF úroveň pak během čtyř hodin postupně klesá. Díky tomu na první pohled vidíš, kdy sis naposledy něco zaznamenal/a, jak často se ke kofeinu vracíš a kdy se systém začíná dramaticky hlásit o pozornost.\n\nCaffAlert není dieta ani omezovač. Je to jednoduchý přehled, který drží tvůj kofeinový rytmus na očích. Stay caffeinated.';
+      'CaffAlert je nástroj pro přehled o tvém kofeinovém rytmu během dne. Zaznamenej kávu, energy drink nebo jiný nápoj s kofeinem — každý záznam doplní CAF úroveň a uloží se do tvé historie.\n\nCAF úroveň pak během čtyř hodin postupně klesá. Díky tomu na první pohled vidíš, kdy sis naposledy něco zaznamenal/a, jak často se ke kofeinu vracíš a kdy se systém začíná dramaticky hlásit o pozornost.\n\nProč zrovna čtyři hodiny? Podle zcela neověřeného CaffAlert protokolu je to ideální vzdálenost mezi „jsem v pohodě“ a „proč už všechna písmena vypadají stejně“. Dost času něco dokončit, málo času zapomenout na svou poslední kávu. Vědecká hodnota tohoto výpočtu: přibližně nula.\n\nCaffAlert není dieta ani omezovač. Je to jednoduchý přehled, který drží tvůj kofeinový rytmus na očích. Stay caffeinated.';
 
   @override
   String get appDisclaimerTitle => 'Disclaimer';
