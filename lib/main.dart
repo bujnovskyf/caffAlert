@@ -1,152 +1,135 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-import 'timer_provider.dart';
-import 'coffee_stats_provider.dart';
-import 'timer_screen.dart';
-import 'dashboard_screen.dart';
-import 'auth_screen.dart';
-import 'settings_screen.dart';
-import 'name_screen.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-// Build-time konstanty předávané přes dart-define
-const supabaseUrl = String.fromEnvironment('SUPABASE_URL');
-const supabaseAnonKey = String.fromEnvironment('SUPABASE_ANON_KEY');
-const sentryDsn = String.fromEnvironment('SENTRY_DSN');
+import 'app_config.dart';
+import 'app_theme.dart';
+import 'auth_gate.dart';
+import 'l10n/app_localizations.dart';
+import 'locale_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final localeController = await LocaleController.create();
 
-  // Inicializace Sentry s rozšířenou konfigurací.
+  late final AppConfig config;
+  try {
+    config = AppConfig.fromEnvironment();
+  } on AppConfigException {
+    runApp(ConfigurationErrorApp(localeController: localeController));
+    return;
+  }
+
+  Future<void> startApp() async {
+    await Supabase.initialize(
+      url: config.supabaseUrl,
+      publishableKey: config.supabasePublishableKey,
+    );
+    runApp(
+      ChangeNotifierProvider.value(
+        value: localeController,
+        child: const CaffAlertApp(),
+      ),
+    );
+  }
+
+  if (config.sentryDsn.trim().isEmpty) {
+    await startApp();
+    return;
+  }
+
   await SentryFlutter.init(
     (options) {
-      options.dsn = sentryDsn;
-      options.environment = 'production';
-      options.release = 'caffalert@1.0.0+1';
-      options.tracesSampleRate = 1.0;
+      options
+        ..dsn = config.sentryDsn
+        ..environment = kReleaseMode ? 'production' : 'development'
+        ..release = 'caffalert@1.0.0+1'
+        ..debug = false
+        ..sendDefaultPii = false
+        ..tracesSampleRate = kReleaseMode ? 0.1 : 0.0;
     },
-    appRunner: () async {
-      // Inicializace Supabase s využitím build-time konstant.
-      await Supabase.initialize(
-        url: supabaseUrl,
-        anonKey: supabaseAnonKey,
-      );
-
-      runApp(
-        MultiProvider(
-          providers: [
-            ChangeNotifierProvider(create: (_) => TimerProvider()),
-            ChangeNotifierProvider(create: (_) => CoffeeStatsProvider()),
-          ],
-          child: const CaffAlertApp(),
-        ),
-      );
-      Future.delayed(const Duration(seconds: 2), () {
-        throw Exception("Testovací chyba zachycená Sentry");
-      });
-    },
+    appRunner: startApp,
   );
 }
 
-class CaffAlertApp extends StatefulWidget {
+class CaffAlertApp extends StatelessWidget {
   const CaffAlertApp({super.key});
 
   @override
-  State<CaffAlertApp> createState() => _CaffAlertAppState();
+  Widget build(BuildContext context) {
+    final locale = context.watch<LocaleController>().locale;
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
+      theme: AppTheme.light,
+      locale: locale,
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      home: const AuthGate(),
+    );
+  }
 }
 
-class _CaffAlertAppState extends State<CaffAlertApp> {
-  @override
-  void initState() {
-    super.initState();
-    _listenToAuthChanges();
-  }
+class ConfigurationErrorApp extends StatelessWidget {
+  const ConfigurationErrorApp({required this.localeController, super.key});
 
-  void _listenToAuthChanges() {
-    // Poslouchá změny v autentizaci a vyvolá rebuild
-    Supabase.instance.client.auth.onAuthStateChange.listen((event) {
-      setState(() {});
-    });
-  }
+  final LocaleController localeController;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'CaffAlert',
-      theme: ThemeData(
-        fontFamily: 'Raleway',
-        primarySwatch: Colors.brown,
-        scaffoldBackgroundColor: const Color.fromARGB(255, 226, 209, 197),
-      ),
-      // Pokud není uživatel přihlášen, zobrazí se AuthScreen.
-      // Pokud je přihlášen, HomeSelector rozhodne, zda zobrazit NameScreen (pokud jméno není nastaveno)
-      // nebo MainScreen (pokud jméno existuje).
-      home: Supabase.instance.client.auth.currentSession == null
-          ? const AuthScreen()
-          : const HomeSelector(),
-      routes: {
-        '/settings': (context) => const SettingsScreen(),
-      },
-    );
-  }
-}
-
-/// HomeSelector provádí dotaz na Supabase, aby zjistil, zda má aktuální uživatel nastavené jméno.
-class HomeSelector extends StatelessWidget {
-  const HomeSelector({super.key});
-
-  Future<bool> _hasName() async {
-    final user = Supabase.instance.client.auth.currentUser;
-    if (user == null) return false;
-
-    final response = await Supabase.instance.client
-        .from('profiles')
-        .select('name')
-        .eq('id', user.id)
-        .maybeSingle();
-
-    if (response == null) return false;
-
-    final name = response['name'];
-    return name != null && name.toString().trim().isNotEmpty;
-  }
-  
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<bool>(
-      future: _hasName(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Scaffold(
-              body: Center(child: CircularProgressIndicator()));
-        } else if (snapshot.hasError) {
-          return const Scaffold(
-              body: Center(child: Text('Error loading profile')));
-        } else {
-          final hasName = snapshot.data ?? false;
-          return hasName ? MainScreen() : const NameScreen();
-        }
-      },
-    );
-  }
-}
-
-class MainScreen extends StatelessWidget {
-  final PageController _pageController = PageController();
-
-  MainScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        children: const [
-          TimerScreen(),    // Hlavní obrazovka s časovačem
-          DashboardScreen(), // Dashboard obrazovka
-          SettingsScreen(),  // Nastavení
-        ],
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.light,
+      locale: localeController.locale,
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      home: Builder(
+        builder: (context) {
+          final localizations = AppLocalizations.of(context);
+          return Scaffold(
+            body: SafeArea(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 520),
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(32),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              Icons.settings_suggest_outlined,
+                              size: 48,
+                              color: AppColors.roast,
+                            ),
+                            const SizedBox(height: 20),
+                            Text(
+                              localizations.configurationErrorTitle,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(fontWeight: FontWeight.w700),
+                            ),
+                            const SizedBox(height: 12),
+                            Text(
+                              localizations.configurationErrorBody,
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

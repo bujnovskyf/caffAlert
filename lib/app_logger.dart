@@ -8,11 +8,10 @@ class AppLogger {
     level: kReleaseMode ? Level.warning : Level.debug,
     printer: PrettyPrinter(
       methodCount: 2,
-      printTime: true,
+      dateTimeFormat: DateTimeFormat.onlyTimeAndSinceStart,
       colors: !kReleaseMode,
     ),
-    output: kIsWeb 
-        ? SentryOnlyLogOutput()
-        : CompositeLogOutput(FileLogOutput()),
+    output:
+        kIsWeb ? SentryOnlyLogOutput() : CompositeLogOutput(FileLogOutput()),
   );
 }

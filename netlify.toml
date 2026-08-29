@@ -1,3 +1,32 @@
 [build]
-command = "sh netlify_build.sh"
+command = "bash netlify_build.sh"
 publish = "build/web"
+
+[[redirects]]
+from = "/privacy"
+to = "/privacy/index.html"
+status = 200
+force = true
+
+[[redirects]]
+from = "/terms"
+to = "/terms/index.html"
+status = 200
+force = true
+
+[[redirects]]
+from = "/delete-account"
+to = "/delete-account/index.html"
+status = 200
+force = true
+
+[[redirects]]
+from = "/delete-account/sent"
+to = "/delete-account/sent/index.html"
+status = 200
+force = true
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200

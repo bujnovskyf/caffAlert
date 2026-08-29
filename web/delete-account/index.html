@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Request deletion of a CaffAlert account and data.">
+    <title>Delete account | CaffAlert</title>
+    <link rel="stylesheet" href="/legal/legal.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <a class="brand" href="/">CaffAlert</a>
+        <nav aria-label="Legal documents">
+          <a href="/privacy">Privacy</a>
+          <a href="/terms">Terms</a>
+        </nav>
+      </header>
+      <main>
+        <p class="eyebrow">CAFFALERT · ACCOUNT AND DATA</p>
+        <h1>Delete account</h1>
+        <p class="lead">Want to delete your CaffAlert account and all related data? If you can access the app, the fastest path is <strong>Settings → Delete account</strong>.</p>
+
+        <div class="notice">
+          <strong>What is deleted:</strong> the sign-in account, profile, and every saved coffee entry. This cannot be undone.
+        </div>
+
+        <h2>Cannot access the app?</h2>
+        <p>Send the request below using the email address on the account. Before deleting the account, we verify that the request belongs to its owner. We will respond at the email provided.</p>
+
+        <form name="caffalert-account-deletion" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/delete-account/sent/">
+          <input type="hidden" name="form-name" value="caffalert-account-deletion">
+          <p hidden><label>Leave this field empty <input name="bot-field"></label></p>
+          <label for="email">CaffAlert account email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+
+          <label for="message">Note <span class="small">(optional)</span></label>
+          <textarea id="message" name="message" placeholder="For example: I cannot access my account."></textarea>
+
+          <label class="checkbox" for="confirm">
+            <input id="confirm" name="confirm" type="checkbox" required>
+            <span>I request permanent deletion of my CaffAlert account, profile, and coffee entries.</span>
+          </label>
+
+          <button type="submit">Send deletion request</button>
+        </form>
+
+        <p class="small">This form is only for deletion requests. See the <a href="/privacy">privacy policy</a> for data-processing details. For another question, email <a href="mailto:bujnovskyf@gmail.com">bujnovskyf@gmail.com</a>.</p>
+      </main>
+      <footer>© 2026 František Bujnovský · CaffAlert</footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+:root { color-scheme: light; --espresso:#2c1710; --roast:#684333; --caramel:#bb7650; --foam:#fff8ef; --paper:#fffdf9; --line:#ead9ca; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--foam); color:var(--espresso); font-family:Raleway,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; line-height:1.6; }
+a { color:#8d472d; text-underline-offset:.18em; } a:hover { color:var(--espresso); }
+.page { width:min(100% - 32px,780px); margin:0 auto; padding:28px 0 56px; }
+.topbar { display:flex; justify-content:space-between; gap:16px; align-items:center; margin-bottom:36px; font-weight:700; }
+.brand { color:var(--espresso); text-decoration:none; }.topbar nav { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:14px; font-size:.9rem; }
+main { background:var(--paper); border:1px solid var(--line); border-radius:24px; padding:clamp(24px,5vw,52px); box-shadow:0 16px 42px rgba(63,31,17,.08); }
+.eyebrow { color:var(--caramel); font-size:.75rem; font-weight:800; letter-spacing:.12em; margin:0 0 10px; }
+h1,h2 { color:var(--espresso); line-height:1.15; } h1 { font-size:clamp(2rem,8vw,3rem); margin:0 0 14px; } h2 { font-size:1.25rem; margin:36px 0 10px; }
+p,li { color:var(--roast); } ul { padding-left:1.3em; }.lead { font-size:1.12rem; margin-top:0; }
+.notice { margin:28px 0; padding:18px 20px; background:#f7e8dc; border-left:4px solid var(--caramel); border-radius:12px; }.notice strong { color:var(--espresso); }
+.details { margin:20px 0; padding:20px; border:1px solid var(--line); border-radius:14px; background:#fffaf4; }
+label { display:block; color:var(--espresso); font-weight:700; margin:20px 0 7px; }
+input,textarea { display:block; width:100%; border:1px solid #c9ab98; border-radius:10px; background:white; color:var(--espresso); font:inherit; padding:12px 14px; } textarea { min-height:120px; resize:vertical; }
+.checkbox { display:flex; gap:10px; align-items:flex-start; color:var(--roast); font-weight:400; }.checkbox input { width:auto; margin-top:6px; }
+button { margin-top:24px; border:0; border-radius:12px; background:var(--espresso); color:white; cursor:pointer; font:inherit; font-weight:800; padding:14px 20px; } button:hover { background:#4a271b; }
+.small { font-size:.88rem; } footer { color:var(--roast); font-size:.85rem; margin-top:24px; text-align:center; }
+@media (max-width:420px) { .page { width:min(100% - 24px,780px); padding-top:18px; }.topbar { align-items:flex-start; flex-direction:column; margin-bottom:24px; }.topbar nav { justify-content:flex-start; } main { border-radius:18px; padding:24px 20px; } }

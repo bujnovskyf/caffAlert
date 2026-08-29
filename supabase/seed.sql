@@ -1,0 +1,3 @@
+-- Production data is intentionally not seeded.
+-- Create development users through local Studio or the Auth API so they have
+-- valid credentials, then add coffee logs through the application.

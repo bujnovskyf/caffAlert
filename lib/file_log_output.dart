@@ -34,11 +34,3 @@ class FileLogOutput extends LogOutput {
     await logFile.writeAsString(logLine, mode: FileMode.append, flush: true);
   }
 }
-
-/// LogOutput pro web, která neukládá nic lokálně.
-class _NoOpLogOutput extends LogOutput {
-  @override
-  void output(OutputEvent event) {
-    // Nic nedělá – nezapisuje do souboru, ani nevolá print().
-  }
-}

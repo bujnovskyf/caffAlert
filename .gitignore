@@ -43,3 +43,11 @@ app.*.map.json
 /android/app/release
 
 .env
+sentry.properties
+node_modules/
+.netlify/
+supabase/.temp/
+supabase/.branches/
+android/key.properties
+*.jks
+*.keystore

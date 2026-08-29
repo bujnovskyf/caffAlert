@@ -1,256 +1,474 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:provider/provider.dart';
+
+import 'app_theme.dart';
+import 'coffee_metrics.dart';
 import 'coffee_stats_provider.dart';
+import 'l10n/app_localizations.dart';
+import 'models/coffee_log.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
-  /// Načte jméno uživatele z databáze Supabase.
-  Future<String?> _fetchUserName() async {
-    final user = Supabase.instance.client.auth.currentUser;
-    if (user == null) return null;
-
-    try {
-      final response = await Supabase.instance.client
-          .from('profiles')
-          .select('name')
-          .eq('id', user.id)
-          .maybeSingle();
-
-      if (response == null || response['name'] == null) return null;
-      return response['name'] as String?;
-    } catch (e) {
-      return null; // Vrátí null v případě chyby
-    }
+  String _formatTime(CoffeeLog? log, String locale, String fallback) {
+    if (log == null) return fallback;
+    return DateFormat.Hm(locale).format(log.createdAt.toLocal());
   }
 
-  /// Formátuje [DateTime] do "HH:mm:ss".
-  String _formatTime(DateTime dt) {
-    return DateFormat('HH:mm:ss').format(dt.toLocal());
-  }
-
-  /// Vrátí první kávu dneška (nejstarší log pro daný den) nebo null.
-  DateTime? _firstCoffee(List<DateTime> logs) {
-    final now = DateTime.now();
-    final todays = logs.where((dt) =>
-        dt.year == now.year && dt.month == now.month && dt.day == now.day);
-    if (todays.isEmpty) return null;
-    return todays.reduce((a, b) => a.isBefore(b) ? a : b);
-  }
-
-  /// Vrátí poslední kávu dneška (nejnovější log) nebo null.
-  DateTime? _lastCoffee(List<DateTime> logs) {
-    final now = DateTime.now();
-    final todays = logs.where((dt) =>
-        dt.year == now.year && dt.month == now.month && dt.day == now.day);
-    if (todays.isEmpty) return null;
-    return todays.reduce((a, b) => a.isAfter(b) ? a : b);
-  }
-
-  /// Vypočítá průměrný interval mezi kávami dneška (v minutách).
-  String _avgInterval(List<DateTime> logs) {
-    final now = DateTime.now();
-    final todays = logs.where((dt) =>
-        dt.year == now.year && dt.month == now.month && dt.day == now.day).toList();
-    if (todays.length < 2) return 'N/A';
-    todays.sort((a, b) => a.compareTo(b));
-    int totalDiff = 0;
-    for (int i = 1; i < todays.length; i++) {
-      totalDiff += todays[i].difference(todays[i - 1]).inSeconds.abs();
-    }
-    final avgSeconds = totalDiff / (todays.length - 1);
-    return '${(avgSeconds / 60).toStringAsFixed(1)} min';
-  }
-
-  /// Vypočítá průměrný čas první kávy ze všech dní (ve formátu HH:mm).
-  String _avgFirstCoffeeTime(List<DateTime> logs) {
-    // Rozdělíme logy do skupin podle dne.
-    Map<String, DateTime> firstLogs = {};
-    for (var dt in logs) {
-      final dayKey = DateFormat('yyyy-MM-dd').format(dt.toLocal());
-      if (!firstLogs.containsKey(dayKey) || dt.isBefore(firstLogs[dayKey]!)) {
-        firstLogs[dayKey] = dt;
-      }
-    }
-    if (firstLogs.isEmpty) return 'N/A';
-    // Převod každého času na minuty od půlnoci.
-    List<int> minutesList = [];
-    for (var dt in firstLogs.values) {
-      minutesList.add(dt.toLocal().hour * 60 + dt.toLocal().minute);
-    }
-    final totalMinutes = minutesList.reduce((a, b) => a + b);
-    final avgMinutes = totalMinutes / minutesList.length;
-    final avgHour = avgMinutes ~/ 60;
-    final avgMin = (avgMinutes % 60).round();
-    return '${avgHour.toString().padLeft(2, '0')}:${avgMin.toString().padLeft(2, '0')}';
-  }
-
-  /// Zobrazí dialog pro potvrzení odstranění poslední coffee log.
-  void _showRemoveLastDialog(BuildContext context, CoffeeStatsProvider statsProvider) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text("Remove Last Coffee"),
-          content: const Text(
-              "Are you sure you want to remove the last coffee log? This will update all statistics and the timer on all devices."),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text("Cancel"),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await statsProvider.removeLastCoffee();
-                if (context.mounted) {
-                  Navigator.of(context).pop();
-                }
-              },
-              child: const Text("Remove"),
-            ),
-          ],
-        );
-      },
-    );
+  String _coffeeStatus(AppLocalizations localizations, CoffeeStatus status) {
+    return switch (status) {
+      CoffeeStatus.noCoffeeToday => localizations.coffeeStatusNoCoffeeToday,
+      CoffeeStatus.calm => localizations.coffeeStatusCalm,
+      CoffeeStatus.coffeeShift => localizations.coffeeStatusCoffeeShift,
+      CoffeeStatus.espressoDrive => localizations.coffeeStatusEspressoDrive,
+      CoffeeStatus.legend => localizations.coffeeStatusLegend,
+    };
   }
 
   @override
   Widget build(BuildContext context) {
-    final coffeeStats = Provider.of<CoffeeStatsProvider>(context);
-    final lastCoffee = _lastCoffee(coffeeStats.coffeeLog);
-    final firstCoffee = _firstCoffee(coffeeStats.coffeeLog);
-    final avgFirstCoffeeTime = _avgFirstCoffeeTime(coffeeStats.coffeeLog);
+    final localizations = AppLocalizations.of(context);
+    final state = context.watch<CoffeeStatsProvider>();
+    final locale = Localizations.localeOf(context).toLanguageTag();
+    final displayName = state.profile?.displayName?.trim();
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Dashboard'),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+      body: SafeArea(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final horizontalPadding = constraints.maxWidth < 600 ? 16.0 : 32.0;
+            final contentWidth = (constraints.maxWidth - horizontalPadding * 2)
+                .clamp(0.0, 1040.0)
+                .toDouble();
+            return SingleChildScrollView(
+              padding: EdgeInsets.fromLTRB(
+                horizontalPadding,
+                24,
+                horizontalPadding,
+                40,
+              ),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 1040),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (displayName != null && displayName.isNotEmpty) ...[
+                        Text(
+                          localizations.welcomeName(displayName),
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    color: AppColors.roast,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                        ),
+                        const SizedBox(height: 8),
+                      ],
+                      Text(
+                        localizations.statsTitle,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium
+                            ?.copyWith(
+                              color: AppColors.espresso,
+                              fontWeight: FontWeight.w700,
+                            ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        localizations.statsSubtitle,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              color: AppColors.roast,
+                            ),
+                      ),
+                      const SizedBox(height: 28),
+                      if (state.logs.isEmpty && !state.isLoading)
+                        _EmptyStats(
+                          title: localizations.emptyStatsTitle,
+                          body: localizations.emptyStatsBody,
+                        )
+                      else
+                        _StatsGrid(
+                          width: contentWidth,
+                          cards: [
+                            _StatData(
+                              icon: Icons.today_rounded,
+                              label: localizations.coffeesToday,
+                              value: '${state.dailyCoffees}',
+                              prominent: true,
+                            ),
+                            _StatData(
+                              icon: Icons.auto_awesome_rounded,
+                              label: localizations.coffeeStatus,
+                              value: _coffeeStatus(
+                                localizations,
+                                state.coffeeStatus,
+                              ),
+                            ),
+                            _StatData(
+                              icon: Icons.wb_sunny_outlined,
+                              label: localizations.firstCoffeeToday,
+                              value: _formatTime(
+                                state.firstCoffeeToday,
+                                locale,
+                                localizations.notAvailable,
+                              ),
+                            ),
+                            _StatData(
+                              icon: Icons.nights_stay_outlined,
+                              label: localizations.lastCoffeeToday,
+                              value: _formatTime(
+                                state.lastCoffeeToday,
+                                locale,
+                                localizations.notAvailable,
+                              ),
+                            ),
+                            _StatData(
+                              icon: Icons.timelapse_rounded,
+                              label: localizations.averageIntervalToday,
+                              value: state.averageIntervalToday == null
+                                  ? localizations.notAvailable
+                                  : localizations.minutesValue(
+                                      (state.averageIntervalToday!.inMinutes)
+                                          .toString(),
+                                    ),
+                            ),
+                            _StatData(
+                              icon: Icons.calendar_month_outlined,
+                              label: localizations.coffeesThisMonth,
+                              value: '${state.monthlyCoffees}',
+                            ),
+                            _StatData(
+                              icon: Icons.all_inclusive_rounded,
+                              label: localizations.totalCoffees,
+                              value: '${state.totalCoffees}',
+                            ),
+                          ],
+                        ),
+                      if (state.editableCoffees.isNotEmpty) ...[
+                        const SizedBox(height: 32),
+                        _RecentCoffeeSection(
+                          coffees: state.editableCoffees,
+                          locale: locale,
+                          title: localizations.editRecentCoffeesTitle,
+                          editTooltip: localizations.editCoffeeTimeAction,
+                          removeTooltip: localizations.remove,
+                          isLoading: state.isMutating,
+                          onEdit: (coffee) => _editCoffeeTime(
+                            context,
+                            state,
+                            coffee,
+                          ),
+                          onRemove: (coffee) => _confirmRemoveCoffee(
+                            context,
+                            state,
+                            coffee,
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+    );
+  }
+
+  Future<void> _editCoffeeTime(
+    BuildContext context,
+    CoffeeStatsProvider state,
+    CoffeeLog coffee,
+  ) async {
+    if (!state.canEditCoffee(coffee)) return;
+
+    final localizations = AppLocalizations.of(context);
+    final now = state.now.toLocal();
+    final earliestAllowed = now.subtract(CoffeeStatsProvider.coffeeEditWindow);
+    final currentTime = coffee.createdAt.toLocal();
+    final selectedDate = await showDatePicker(
+      context: context,
+      firstDate: DateUtils.dateOnly(earliestAllowed),
+      lastDate: DateUtils.dateOnly(now),
+      initialDate: DateUtils.dateOnly(currentTime),
+      helpText: localizations.editCoffeeTimeTitle,
+    );
+    if (selectedDate == null || !context.mounted) return;
+
+    final selectedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(currentTime),
+      helpText: localizations.editCoffeeTimeTitle,
+    );
+    if (selectedTime == null || !context.mounted) return;
+
+    final correctedTime = DateTime(
+      selectedDate.year,
+      selectedDate.month,
+      selectedDate.day,
+      selectedTime.hour,
+      selectedTime.minute,
+    );
+    if (correctedTime.isBefore(earliestAllowed) || correctedTime.isAfter(now)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(localizations.editCoffeeTimeOutOfRange)),
+      );
+      return;
+    }
+
+    final success = await state.updateCoffeeTime(coffee, correctedTime);
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          success
+              ? localizations.coffeeTimeUpdated
+              : localizations.actionFailed,
+        ),
+      ),
+    );
+  }
+
+  Future<void> _confirmRemoveCoffee(
+    BuildContext context,
+    CoffeeStatsProvider state,
+    CoffeeLog coffee,
+  ) async {
+    final localizations = AppLocalizations.of(context);
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        icon: const Icon(Icons.delete_outline_rounded),
+        title: Text(localizations.removeCoffeeEntryTitle),
+        content: Text(localizations.removeCoffeeEntryBody),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: Text(localizations.cancel),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.pop(dialogContext, true),
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
+            child: Text(localizations.remove),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+    final success = await state.removeCoffee(coffee);
+    if (!context.mounted || success) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(localizations.actionFailed)),
+    );
+  }
+}
+
+class _StatData {
+  const _StatData({
+    required this.icon,
+    required this.label,
+    required this.value,
+    this.prominent = false,
+  });
+
+  final IconData icon;
+  final String label;
+  final String value;
+  final bool prominent;
+}
+
+class _RecentCoffeeSection extends StatelessWidget {
+  const _RecentCoffeeSection({
+    required this.coffees,
+    required this.locale,
+    required this.title,
+    required this.editTooltip,
+    required this.removeTooltip,
+    required this.isLoading,
+    required this.onEdit,
+    required this.onRemove,
+  });
+
+  final List<CoffeeLog> coffees;
+  final String locale;
+  final String title;
+  final String editTooltip;
+  final String removeTooltip;
+  final bool isLoading;
+  final ValueChanged<CoffeeLog> onEdit;
+  final ValueChanged<CoffeeLog> onRemove;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 18, 12, 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Welcome message with user's name
-            FutureBuilder<String?>(
-              future: _fetchUserName(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Text(
-                    "Loading...",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  );
-                }
-                final userName = snapshot.data;
-                return Text(
-                  userName != null && userName.isNotEmpty
-                      ? "Welcome back, $userName! ☕"
-                      : "Welcome to CaffAlert! ☕",
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                );
-              },
+            Text(
+              title,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: AppColors.espresso,
+                    fontWeight: FontWeight.w700,
+                  ),
             ),
-            const SizedBox(height: 20),
-            // Karta s informací o poslední kávě
-            Card(
-              elevation: 4,
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: ListTile(
-                leading: const Icon(Icons.local_cafe),
-                title: const Text('Last Coffee Today'),
-                subtitle: Text(lastCoffee != null
-                    ? _formatTime(lastCoffee)
-                    : "No coffee logged"),
-              ),
-            ),
-            // Karta s informací o první kávě dneška
-            Card(
-              elevation: 4,
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: ListTile(
-                leading: const Icon(Icons.free_breakfast),
-                title: const Text('First Coffee Today'),
-                subtitle: Text(firstCoffee != null
-                    ? _formatTime(firstCoffee)
-                    : "No coffee logged"),
-              ),
-            ),
-            // Karta s průměrným časem první kávy napříč dny
-            Card(
-              elevation: 4,
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: ListTile(
-                leading: const Icon(Icons.av_timer),
-                title: const Text('Avg First Coffee Time'),
-                subtitle: Text(avgFirstCoffeeTime),
-              ),
-            ),
-            const SizedBox(height: 16),
-            // Základní statistiky
-            Card(
-              elevation: 4,
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: ListTile(
-                leading: const Icon(Icons.today),
-                title: const Text('Coffees Today'),
-                trailing: Text(
-                  "${coffeeStats.dailyCoffees}",
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+            const SizedBox(height: 6),
+            ...coffees.map(
+              (coffee) => ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.coffee_outlined),
+                title: Text(
+                  DateFormat.yMMMd(locale)
+                      .add_Hm()
+                      .format(coffee.createdAt.toLocal()),
                 ),
-              ),
-            ),
-            Card(
-              elevation: 4,
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: ListTile(
-                leading: const Icon(Icons.calendar_today),
-                title: const Text('Coffees This Month'),
-                trailing: Text(
-                  "${coffeeStats.monthlyCoffees}",
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      onPressed: isLoading ? null : () => onEdit(coffee),
+                      icon: const Icon(Icons.edit_outlined),
+                      tooltip: editTooltip,
+                    ),
+                    IconButton(
+                      onPressed: isLoading ? null : () => onRemove(coffee),
+                      icon: const Icon(Icons.delete_outline_rounded),
+                      tooltip: removeTooltip,
+                      color: AppColors.error,
+                    ),
+                  ],
                 ),
+                onTap: isLoading ? null : () => onEdit(coffee),
               ),
             ),
-            Card(
-              elevation: 4,
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: ListTile(
-                leading: const Icon(Icons.all_inbox),
-                title: const Text('Total Coffees'),
-                trailing: Text(
-                  "${coffeeStats.totalCoffees}",
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _StatsGrid extends StatelessWidget {
+  const _StatsGrid({required this.width, required this.cards});
+
+  final double width;
+  final List<_StatData> cards;
+
+  @override
+  Widget build(BuildContext context) {
+    // Stats are deliberately compact: even the narrowest phone can show two
+    // small, glanceable values next to each other.
+    final columns = width >= 960 ? 3 : 2;
+    const gap = 14.0;
+    final availableWidth = width > 1040 ? 1040.0 : width;
+    final cardWidth = (availableWidth - gap * (columns - 1)) / columns;
+    final cardHeight = width < 360 ? 172.0 : 150.0;
+
+    return Wrap(
+      spacing: gap,
+      runSpacing: gap,
+      children: cards
+          .map(
+            (data) => SizedBox(
+              width: cardWidth,
+              height: cardHeight,
+              child: _StatCard(data: data),
             ),
-            Card(
-              elevation: 4,
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: ListTile(
-                leading: const Icon(Icons.av_timer),
-                title: const Text('Avg Interval Today'),
-                subtitle: Text(_avgInterval(coffeeStats.coffeeLog)),
-              ),
+          )
+          .toList(growable: false),
+    );
+  }
+}
+
+class _StatCard extends StatelessWidget {
+  const _StatCard({required this.data});
+
+  final _StatData data;
+
+  @override
+  Widget build(BuildContext context) {
+    final isNarrow = MediaQuery.sizeOf(context).width < 360;
+    return Card(
+      color: data.prominent ? AppColors.espresso : null,
+      child: Padding(
+        padding: EdgeInsets.all(isNarrow ? 14 : 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Icon(
+              data.icon,
+              color: data.prominent ? AppColors.crema : AppColors.roast,
             ),
-            const SizedBox(height: 16),
-            // Tlačítko pro odstranění poslední kávy
-            Center(
-              child: ElevatedButton.icon(
-                icon: const Icon(Icons.remove_circle_outline),
-                label: const Text("Remove Last Coffee"),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  foregroundColor: Colors.white,
-                  minimumSize: const Size(300, 50),
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    data.value,
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          color: data.prominent
+                              ? Colors.white
+                              : AppColors.espresso,
+                          fontFamily: 'IBMPlexMono',
+                          fontWeight: FontWeight.w700,
+                        ),
                   ),
                 ),
-                onPressed: () => _showRemoveLastDialog(context, coffeeStats),
+                const SizedBox(height: 3),
+                Text(
+                  data.label,
+                  style: TextStyle(
+                    color: data.prominent ? AppColors.crema : AppColors.roast,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _EmptyStats extends StatelessWidget {
+  const _EmptyStats({required this.title, required this.body});
+
+  final String title;
+  final String body;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Row(
+          children: [
+            Container(
+              width: 58,
+              height: 58,
+              decoration: BoxDecoration(
+                color: AppColors.caramel.withValues(alpha: 0.18),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Icon(Icons.coffee_outlined, color: AppColors.roast),
+            ),
+            const SizedBox(width: 20),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title,
+                      style: const TextStyle(fontWeight: FontWeight.w700)),
+                  const SizedBox(height: 6),
+                  Text(body),
+                ],
               ),
             ),
           ],

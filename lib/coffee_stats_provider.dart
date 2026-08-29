@@ -1,193 +1,240 @@
-import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
 import 'app_logger.dart';
+import 'coffee_metrics.dart';
+import 'coffee_repository.dart';
+import 'models/coffee_log.dart';
+import 'models/profile.dart';
+
+enum CoffeeStateError { load, add, update, delete, profile }
 
 class CoffeeStatsProvider extends ChangeNotifier {
-  List<DateTime> coffeeLog = [];
-  RealtimeChannel? _channel;
+  static const coffeeEditWindow = Duration(hours: 24);
 
-  CoffeeStatsProvider() {
-    _loadStatsFromSupabase();
-    _subscribeToCoffeeLogs();
+  CoffeeStatsProvider({
+    required this.userId,
+    required CoffeeDataSource repository,
+    DateTime Function()? now,
+  })  : _repository = repository,
+        _now = now ?? DateTime.now {
+    _repository.subscribeToLogs(userId, _handleRemoteChange);
+    _ticker = Timer.periodic(const Duration(seconds: 1), (_) => _safeNotify());
+    unawaited(refresh());
   }
 
-  Future<void> _loadStatsFromSupabase() async {
-    final user = Supabase.instance.client.auth.currentUser;
-    if (user == null) {
-      coffeeLog = [];
-      notifyListeners();
-      AppLogger.logger.w("No authenticated user found. Not loading coffee logs.");
-      return;
+  final String userId;
+  final CoffeeDataSource _repository;
+  final DateTime Function() _now;
+
+  List<CoffeeLog> _logs = const [];
+  Profile? _profile;
+  bool _isLoading = true;
+  bool _isMutating = false;
+  CoffeeStateError? _error;
+  Timer? _ticker;
+  bool _isDisposed = false;
+
+  List<CoffeeLog> get logs => List.unmodifiable(_logs);
+  Profile? get profile => _profile;
+  bool get isLoading => _isLoading;
+  bool get isMutating => _isMutating;
+  CoffeeStateError? get error => _error;
+  DateTime get now => _now();
+  Duration get remaining => CoffeeMetrics.remaining(_logs, now);
+  bool get isReady => remaining == Duration.zero;
+  double get timerProgress =>
+      remaining.inMilliseconds / CoffeeMetrics.duration.inMilliseconds;
+  int get caffLevelPercent => CoffeeMetrics.caffLevelPercent(_logs, now);
+  Duration get caffLevelDuration => CoffeeMetrics.duration;
+  CoffeeStatus get coffeeStatus =>
+      CoffeeMetrics.statusForDailyCoffees(dailyCoffees);
+  CoffeeLog? get latestCoffee => CoffeeMetrics.latest(_logs);
+  List<CoffeeLog> get editableCoffees => _logs.where(canEditCoffee).toList()
+    ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+
+  bool canEditCoffee(CoffeeLog coffee) =>
+      !coffee.createdAt.isBefore(now.toUtc().subtract(coffeeEditWindow));
+
+  CoffeeLog? get firstCoffeeToday => CoffeeMetrics.firstToday(_logs, now);
+  CoffeeLog? get lastCoffeeToday => CoffeeMetrics.lastToday(_logs, now);
+  Duration? get averageIntervalToday =>
+      CoffeeMetrics.averageIntervalToday(_logs, now);
+  int get dailyCoffees => CoffeeMetrics.today(_logs, now).length;
+  int get monthlyCoffees => CoffeeMetrics.monthlyCount(_logs, now);
+  int get totalCoffees => _logs.length;
+
+  Future<void> refresh({bool silent = false}) async {
+    if (!silent) {
+      _isLoading = true;
+      _safeNotify();
     }
-
     try {
-      final response = await Supabase.instance.client
-          .from('coffee_logs')
-          .select('created_at')
-          .eq('user_id', user.id)
-          .order('created_at', ascending: false);
-
-      final data = response as List<dynamic>;
-      coffeeLog = data.map((row) {
-        return DateTime.parse(row['created_at'] as String);
-      }).toList();
-      AppLogger.logger.i("Loaded ${coffeeLog.length} coffee log(s) from Supabase.");
-      notifyListeners();
-    } catch (e, stackTrace) {
+      final results = await Future.wait<dynamic>([
+        _repository.fetchLogs(userId),
+        _repository.fetchProfile(userId),
+      ]);
+      if (_isDisposed) return;
+      _logs = results[0] as List<CoffeeLog>;
+      _profile = results[1] as Profile?;
+      _error = null;
+    } catch (error, stackTrace) {
       AppLogger.logger.e(
-        "Error loading coffee_logs",
-        error: e,
+        'Failed to load coffee data',
+        error: error,
         stackTrace: stackTrace,
       );
+      _error = CoffeeStateError.load;
+    } finally {
+      _isLoading = false;
+      _safeNotify();
     }
   }
 
-  void _subscribeToCoffeeLogs() {
-    final user = Supabase.instance.client.auth.currentUser;
-    if (user == null) {
-      AppLogger.logger.w("Cannot subscribe to realtime coffee_logs: no authenticated user.");
-      return;
-    }
-
+  Future<bool> addCoffee() async {
+    if (_isMutating) return false;
+    _isMutating = true;
+    _error = null;
+    _safeNotify();
     try {
-      _channel = Supabase.instance.client
-          .channel('public:coffee_logs_${user.id}')
-          .onPostgresChanges(
-            event: PostgresChangeEvent.insert,
-            schema: 'public',
-            table: 'coffee_logs',
-            filter: PostgresChangeFilter(
-              type: PostgresChangeFilterType.eq,
-              column: 'user_id',
-              value: user.id,
-            ),
-            callback: (payload, [ref]) async {
-              AppLogger.logger.i("Realtime INSERT event: $payload");
-              await _loadStatsFromSupabase();
-            },
-          )
-          .onPostgresChanges(
-            event: PostgresChangeEvent.delete,
-            schema: 'public',
-            table: 'coffee_logs',
-            filter: PostgresChangeFilter(
-              type: PostgresChangeFilterType.eq,
-              column: 'user_id',
-              value: user.id,
-            ),
-            callback: (payload, [ref]) async {
-              AppLogger.logger.i("Realtime DELETE event: $payload");
-              await _loadStatsFromSupabase();
-            },
-          )
-          .subscribe((status, [extra]) {
-            AppLogger.logger.i("Realtime subscription status: $status, extra: $extra");
-          });
-    } catch (e, stackTrace) {
+      await _repository.addCoffee(userId, now.toUtc());
+      await refresh(silent: true);
+      return true;
+    } catch (error, stackTrace) {
       AppLogger.logger.e(
-        "Error subscribing to realtime coffee_logs",
-        error: e,
+        'Failed to add coffee',
+        error: error,
         stackTrace: stackTrace,
       );
+      _error = CoffeeStateError.add;
+      return false;
+    } finally {
+      _isMutating = false;
+      _safeNotify();
     }
   }
 
-  /// Přidá nový coffee log do Supabase a aktualizuje lokální seznam.
-  Future<void> addCoffee() async {
-    final user = Supabase.instance.client.auth.currentUser;
-    if (user == null) {
-      AppLogger.logger.w("Cannot add coffee log: no authenticated user.");
-      return;
+  Future<bool> updateCoffeeTime(CoffeeLog coffee, DateTime createdAt) async {
+    final nowUtc = now.toUtc();
+    final earliestAllowed = nowUtc.subtract(coffeeEditWindow);
+    final correctedTime = createdAt.toUtc();
+    if (_isMutating ||
+        !canEditCoffee(coffee) ||
+        correctedTime.isBefore(earliestAllowed) ||
+        correctedTime.isAfter(nowUtc)) {
+      return false;
     }
 
-    final now = DateTime.now();
+    _isMutating = true;
+    _error = null;
+    _safeNotify();
     try {
-      await Supabase.instance.client
-          .from('coffee_logs')
-          .insert({
-            'user_id': user.id,
-            'created_at': now.toIso8601String(),
-          })
-          .select();
-      AppLogger.logger.i("New coffee log added at $now for user ${user.id}");
-      coffeeLog.insert(0, now);
-      notifyListeners();
-    } catch (e, stackTrace) {
+      await _repository.updateCoffeeTime(coffee.id, correctedTime);
+      await refresh(silent: true);
+      return true;
+    } catch (error, stackTrace) {
       AppLogger.logger.e(
-        "Error inserting coffee_logs",
-        error: e,
+        'Failed to update coffee time',
+        error: error,
         stackTrace: stackTrace,
       );
+      _error = CoffeeStateError.update;
+      return false;
+    } finally {
+      _isMutating = false;
+      _safeNotify();
     }
   }
 
-  /// Odstraní poslední vložený coffee log z databáze a aktualizuje lokální seznam.
-  Future<void> removeLastCoffee() async {
-    final user = Supabase.instance.client.auth.currentUser;
-    if (user == null) {
-      AppLogger.logger.w("Cannot remove coffee log: no authenticated user.");
-      return;
-    }
-
+  Future<bool> removeLatestCoffee() async {
+    if (_isMutating || _logs.isEmpty) return false;
+    _isMutating = true;
+    _error = null;
+    _safeNotify();
     try {
-      // Načteme poslední log (nejnovější) pomocí řazení a limitu 1.
-      final response = await Supabase.instance.client
-          .from('coffee_logs')
-          .select('id')
-          .eq('user_id', user.id)
-          .order('created_at', ascending: false)
-          .limit(1)
-          .maybeSingle();
-
-      if (response == null) {
-        AppLogger.logger.w("No coffee log found to remove.");
-        return;
-      }
-
-      final logId = response['id'];
-      await Supabase.instance.client
-          .from('coffee_logs')
-          .delete()
-          .eq('id', logId)
-          .select();
-      AppLogger.logger.i("Removed coffee log with id: $logId");
-
-      if (coffeeLog.isNotEmpty) {
-        coffeeLog.removeAt(0);
-      }
-      notifyListeners();
-    } catch (e, stackTrace) {
+      final deleted = await _repository.deleteLatestCoffee();
+      await refresh(silent: true);
+      return deleted != null;
+    } catch (error, stackTrace) {
       AppLogger.logger.e(
-        "Error removing last coffee log",
-        error: e,
+        'Failed to remove latest coffee',
+        error: error,
         stackTrace: stackTrace,
       );
+      _error = CoffeeStateError.delete;
+      return false;
+    } finally {
+      _isMutating = false;
+      _safeNotify();
     }
   }
 
-  /// Vrací počet káv za dnešní den.
-  int get dailyCoffees {
-    final now = DateTime.now();
-    return coffeeLog.where((date) =>
-        date.year == now.year &&
-        date.month == now.month &&
-        date.day == now.day).length;
+  Future<bool> removeCoffee(CoffeeLog coffee) async {
+    if (_isMutating || !canEditCoffee(coffee)) return false;
+    _isMutating = true;
+    _error = null;
+    _safeNotify();
+    try {
+      final deleted = await _repository.deleteCoffee(coffee.id);
+      await refresh(silent: true);
+      return deleted != null;
+    } catch (error, stackTrace) {
+      AppLogger.logger.e(
+        'Failed to remove coffee',
+        error: error,
+        stackTrace: stackTrace,
+      );
+      _error = CoffeeStateError.delete;
+      return false;
+    } finally {
+      _isMutating = false;
+      _safeNotify();
+    }
   }
 
-  /// Vrací počet káv za aktuální měsíc.
-  int get monthlyCoffees {
-    final now = DateTime.now();
-    return coffeeLog.where((date) =>
-        date.year == now.year &&
-        date.month == now.month).length;
+  Future<bool> saveDisplayName(String value) async {
+    if (_isMutating) return false;
+    final normalized = value.trim();
+    _isMutating = true;
+    _error = null;
+    _safeNotify();
+    try {
+      await _repository.saveDisplayName(
+        userId,
+        normalized.isEmpty ? null : normalized,
+      );
+      await refresh(silent: true);
+      return true;
+    } catch (error, stackTrace) {
+      AppLogger.logger.e(
+        'Failed to save profile',
+        error: error,
+        stackTrace: stackTrace,
+      );
+      _error = CoffeeStateError.profile;
+      return false;
+    } finally {
+      _isMutating = false;
+      _safeNotify();
+    }
   }
 
-  /// Vrací celkový počet káv.
-  int get totalCoffees => coffeeLog.length;
+  void clearError() {
+    _error = null;
+    _safeNotify();
+  }
+
+  Future<void> _handleRemoteChange() => refresh(silent: true);
+
+  void _safeNotify() {
+    if (!_isDisposed) notifyListeners();
+  }
 
   @override
   void dispose() {
-    _channel?.unsubscribe();
+    _isDisposed = true;
+    _ticker?.cancel();
+    unawaited(_repository.dispose());
     super.dispose();
   }
 }
