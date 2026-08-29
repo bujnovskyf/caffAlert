@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Žádost o smazání účtu a souvisejících dat CaffAlert.">
+    <title>Smazání účtu | CaffAlert</title>
+    <link rel="stylesheet" href="/legal/legal.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <a class="brand" href="/">CaffAlert</a>
+        <nav aria-label="Právní dokumenty">
+          <a href="/cs/privacy">Soukromí</a>
+          <a href="/cs/terms">Podmínky</a>
+          <a href="/delete-account">English</a>
+        </nav>
+      </header>
+      <main>
+        <p class="eyebrow">CAFFALERT · SMAZÁNÍ ÚČTU A DAT</p>
+        <h1>Smazání účtu</h1>
+        <p class="lead">Na této stránce můžeš požádat o trvalé smazání účtu CaffAlert a přidružených osobních údajů, i když už nemáš přístup do aplikace.</p>
+
+        <section class="details">
+          <strong>Správce osobních údajů</strong><br>
+          František Bujnovský, fyzická osoba podnikající, IČO: 17800218<br>
+          Zámecká 305, 747 41 Hradec nad Moravicí, Česká republika<br>
+          <a href="mailto:bujnovskyf@gmail.com">bujnovskyf@gmail.com</a>
+        </section>
+
+        <h2>Smazání přímo v aplikaci</h2>
+        <p>Pokud se můžeš přihlásit, použij <strong>Nastavení → Smazat účet</strong>. Je to nejrychlejší způsob: okamžitě zahájí trvalé smazání přihlašovacího účtu, profilu a všech záznamů kávy.</p>
+
+        <h2>Co výmaz zahrnuje</h2>
+        <div class="notice"><strong>Výmaz odstraní:</strong> přihlašovací účet CaffAlert, volitelné jméno profilu a všechny uložené záznamy kávy. Akci nelze vzít zpět.</div>
+        <p>Můžeme uchovat pouze údaje nezbytné pro splnění právní povinnosti, vyřešení bezpečnostního incidentu nebo určení, výkon či obhajobu právních nároků. Samotnou žádost o výmaz a související komunikaci můžeme pro tento omezený účel uchovat. Údaje účtu neprodáváme.</p>
+
+        <h2>Žádost bez přístupu do aplikace</h2>
+        <p>Vyplň formulář níže a zadej e-mail spojený s účtem. Můžeme vyžádat omezené doplňující údaje k ověření, že účet skutečně ovládáš. Na žádost odpovíme do jednoho měsíce, nebo tě informujeme o zákonně přípustném prodloužení či důvodu, proč jí nelze vyhovět.</p>
+
+        <form name="caffalert-account-deletion" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/cs/delete-account/sent/">
+          <input type="hidden" name="form-name" value="caffalert-account-deletion">
+          <p hidden><label>Nechej toto pole prázdné <input name="bot-field"></label></p>
+          <label for="email">E-mail účtu CaffAlert</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+          <label for="message">Doplňující informace <span class="small">(volitelné)</span></label>
+          <textarea id="message" name="message" placeholder="Například: Už nemám přístup ke svému účtu."></textarea>
+          <label class="checkbox" for="confirm"><input id="confirm" name="confirm" type="checkbox" required><span>Žádám o trvalé smazání svého účtu CaffAlert, profilu a záznamů kávy a beru na vědomí, že výmaz nelze vzít zpět.</span></label>
+          <button type="submit">Odeslat žádost o smazání</button>
+        </form>
+
+        <h2>Soukromí této žádosti</h2>
+        <p>Formulář hostuje Netlify a slouží pouze pro přijetí a vyřízení žádostí o výmaz. Podrobnosti o správci, příjemcích, právních základech, uchování a právech jsou v <a href="/cs/privacy">Zásadách ochrany soukromí</a>. S jiným požadavkem na ochranu soukromí napiš na <a href="mailto:bujnovskyf@gmail.com">bujnovskyf@gmail.com</a>.</p>
+      </main>
+      <footer>© 2026 František Bujnovský · CaffAlert</footer>
+    </div>
+  </body>
+</html>

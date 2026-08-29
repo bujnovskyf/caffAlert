@@ -27,6 +27,30 @@ status = 200
 force = true
 
 [[redirects]]
+from = "/cs/privacy"
+to = "/cs/privacy/index.html"
+status = 200
+force = true
+
+[[redirects]]
+from = "/cs/terms"
+to = "/cs/terms/index.html"
+status = 200
+force = true
+
+[[redirects]]
+from = "/cs/delete-account"
+to = "/cs/delete-account/index.html"
+status = 200
+force = true
+
+[[redirects]]
+from = "/cs/delete-account/sent"
+to = "/cs/delete-account/sent/index.html"
+status = 200
+force = true
+
+[[redirects]]
 from = "/*"
 to = "/index.html"
 status = 200

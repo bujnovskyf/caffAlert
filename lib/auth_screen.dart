@@ -271,6 +271,8 @@ class _AuthCard extends StatelessWidget {
     final isSignUp = mode == _AuthMode.signUp;
     final isForgotPassword = mode == _AuthMode.forgotPassword;
     final isNarrow = MediaQuery.sizeOf(context).width < 360;
+    final legalPrefix =
+        Localizations.localeOf(context).languageCode == 'cs' ? '/cs' : '';
     final title = switch (mode) {
       _AuthMode.signIn => localizations.signIn,
       _AuthMode.signUp => localizations.signUp,
@@ -463,15 +465,15 @@ class _AuthCard extends StatelessWidget {
                       children: [
                         _LegalLink(
                           label: localizations.privacyPolicy,
-                          path: '/privacy',
+                          path: '$legalPrefix/privacy',
                         ),
                         _LegalLink(
                           label: localizations.termsOfUse,
-                          path: '/terms',
+                          path: '$legalPrefix/terms',
                         ),
                         _LegalLink(
                           label: localizations.deleteAccountWeb,
-                          path: '/delete-account',
+                          path: '$legalPrefix/delete-account',
                         ),
                       ],
                     ),

@@ -28,7 +28,7 @@ flutter build web \
 # are copied explicitly so legal URLs remain available outside the SPA router.
 mkdir -p build/web/legal
 cp -R web/legal/. build/web/legal/
-for static_directory in privacy terms delete-account; do
+for static_directory in privacy terms delete-account cs; do
   mkdir -p "build/web/${static_directory}"
   cp -R "web/${static_directory}/." "build/web/${static_directory}/"
 done
