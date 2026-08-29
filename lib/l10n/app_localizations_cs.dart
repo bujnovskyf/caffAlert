@@ -322,7 +322,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get couldNotOpenStore => 'Nepodařilo se otevřít Google Play.';
 
   @override
-  String get feedbackSection => 'Kontakt a nápady';
+  String get feedbackSection => 'Podpora CaffAlertu';
 
   @override
   String get feedbackHint =>

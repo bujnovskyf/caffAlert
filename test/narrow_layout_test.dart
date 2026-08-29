@@ -123,7 +123,7 @@ void main() {
     await tester.tap(find.byIcon(Icons.tune_rounded));
     await tester.pump();
     expect(find.text('Ohodnotit CaffAlert'), findsOneWidget);
-    expect(find.text('Kontakt a nápady'), findsOneWidget);
+    expect(find.text('Podpora CaffAlertu'), findsOneWidget);
     expect(find.text('Napsat vývojáři'), findsOneWidget);
     expect(find.text('Jak funguje CaffAlert'), findsOneWidget);
     expect(find.text('Přečíst si o CaffAlertu'), findsOneWidget);

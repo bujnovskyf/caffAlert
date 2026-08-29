@@ -695,7 +695,7 @@ abstract class AppLocalizations {
   /// No description provided for @feedbackSection.
   ///
   /// In en, this message translates to:
-  /// **'Contact & ideas'**
+  /// **'Support CaffAlert'**
   String get feedbackSection;
 
   /// No description provided for @feedbackHint.

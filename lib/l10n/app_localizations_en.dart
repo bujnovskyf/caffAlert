@@ -322,7 +322,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get couldNotOpenStore => 'We could not open Google Play.';
 
   @override
-  String get feedbackSection => 'Contact & ideas';
+  String get feedbackSection => 'Support CaffAlert';
 
   @override
   String get feedbackHint =>

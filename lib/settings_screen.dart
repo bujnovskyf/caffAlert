@@ -140,52 +140,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   const SizedBox(height: 16),
                   _SectionCard(
-                    icon: Icons.favorite_outline_rounded,
-                    title: localizations.appTitle,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Text(
-                          localizations.rateAppHint,
-                          style:
-                              Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    color: AppColors.roast,
-                                  ),
-                        ),
-                        const SizedBox(height: 16),
-                        OutlinedButton.icon(
-                          onPressed: _rateApp,
-                          icon: const Icon(Icons.star_outline_rounded),
-                          label: Text(localizations.rateApp),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  _SectionCard(
-                    icon: Icons.mark_email_read_outlined,
-                    title: localizations.feedbackSection,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Text(
-                          localizations.feedbackHint,
-                          style:
-                              Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    color: AppColors.roast,
-                                  ),
-                        ),
-                        const SizedBox(height: 16),
-                        OutlinedButton.icon(
-                          onPressed: _sendFeedback,
-                          icon: const Icon(Icons.send_outlined),
-                          label: Text(localizations.contactDeveloper),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  _SectionCard(
                     icon: Icons.warning_amber_rounded,
                     title: localizations.aboutCaffAlertSection,
                     child: Column(
@@ -203,6 +157,46 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           onPressed: _showCaffEmergencyBrief,
                           icon: const Icon(Icons.info_outline_rounded),
                           label: Text(localizations.caffEmergencyBrief),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  _SectionCard(
+                    icon: Icons.support_agent_rounded,
+                    title: localizations.feedbackSection,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          localizations.feedbackHint,
+                          style:
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    color: AppColors.roast,
+                                  ),
+                        ),
+                        const SizedBox(height: 16),
+                        OutlinedButton.icon(
+                          onPressed: _sendFeedback,
+                          icon: const Icon(Icons.send_outlined),
+                          label: Text(localizations.contactDeveloper),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 20),
+                          child: Divider(height: 1),
+                        ),
+                        Text(
+                          localizations.rateAppHint,
+                          style:
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    color: AppColors.roast,
+                                  ),
+                        ),
+                        const SizedBox(height: 16),
+                        OutlinedButton.icon(
+                          onPressed: _rateApp,
+                          icon: const Icon(Icons.star_outline_rounded),
+                          label: Text(localizations.rateApp),
                         ),
                       ],
                     ),
