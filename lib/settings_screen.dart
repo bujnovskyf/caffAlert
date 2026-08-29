@@ -285,6 +285,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ],
                     ),
                   ),
+                  const SizedBox(height: 16),
+                  _SectionCard(
+                    icon: Icons.health_and_safety_outlined,
+                    title: localizations.appDisclaimerTitle,
+                    child: Text(
+                      localizations.appDisclaimerBody,
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodySmall?.copyWith(color: AppColors.roast),
+                    ),
+                  ),
                 ],
               ),
             ),

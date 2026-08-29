@@ -335,21 +335,28 @@ class AppLocalizationsCs extends AppLocalizations {
   String get couldNotOpenEmail => 'Nepodařilo se otevřít e-mailovou aplikaci.';
 
   @override
-  String get aboutCaffAlertSection => 'O CaffAlertu';
+  String get aboutCaffAlertSection => 'Jak funguje CaffAlert';
 
   @override
   String get aboutCaffAlertHint =>
-      'Kávový deníček pro okamžiky, kdy pracovní den začíná podezřele připomínat šlofíka.';
+      'Měj svůj kofeinový rytmus i CAF level během dne na očích.';
 
   @override
-  String get caffEmergencyBrief => 'Otevřít CAF emergency brief';
+  String get caffEmergencyBrief => 'Přečíst si o CaffAlertu';
 
   @override
-  String get caffEmergencyTitle => 'CAF emergency briefing';
+  String get caffEmergencyTitle => 'O CaffAlertu';
 
   @override
   String get caffEmergencyBody =>
-      'Záznamem kávy doplníš CAF úroveň na 100 %. Pak se během čtyř hodin postupně snižuje. Je to jednoduchý herní časovač nad tvými záznamy — ne laboratorní měření kofeinu v krvi.\n\nCaffAlert je tu pro dny, kdy chceš mít přehled o své kávové stopě a symbolicky nenechat CAF úroveň spadnout na nulu dřív, než skončí práce. Alarm je součást nálady aplikace, ne příkaz k další kávě.\n\nDůležité: aplikace neposkytuje zdravotní doporučení, neurčuje bezpečnou dávku ani neříká, kolik kofeinu máš pít. Reálné zdraví má vždy přednost před fiktivním ukazatelem.';
+      'CaffAlert je nástroj pro přehled o tvém kofeinovém rytmu během dne. Zaznamenej kávu, energy drink nebo jiný nápoj s kofeinem — každý záznam doplní CAF úroveň a uloží se do tvé historie.\n\nCAF úroveň pak během čtyř hodin postupně klesá. Díky tomu na první pohled vidíš, kdy sis naposledy něco zaznamenal/a, jak často se ke kofeinu vracíš a kdy se systém začíná dramaticky hlásit o pozornost.\n\nCaffAlert není dieta ani omezovač. Je to jednoduchý přehled, který drží tvůj kofeinový rytmus na očích. Stay caffeinated.';
+
+  @override
+  String get appDisclaimerTitle => 'Disclaimer';
+
+  @override
+  String get appDisclaimerBody =>
+      'CAF úroveň je fiktivní herní ukazatel založený na čase od záznamu. Neměří kofein v těle a nepředstavuje zdravotní doporučení ani návod, kolik kofeinu pít.';
 
   @override
   String get deleteAccount => 'Smazat účet';
@@ -389,4 +396,37 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get emptyStatsBody =>
       'Zaznamenej dávku na obrazovce časovače a začne se tvořit přehled.';
+
+  @override
+  String get onboardingEyebrow => 'CAF SYSTEM // START';
+
+  @override
+  String get onboardingWelcomeTitle => 'Vítej v CaffAlertu';
+
+  @override
+  String get onboardingWelcomeBody =>
+      'Tvůj den jede naplno. CaffAlert ti pomůže udržet přehled o tvém kofeinovém rytmu.';
+
+  @override
+  String get onboardingLogTitle => 'Každý záznam se počítá';
+
+  @override
+  String get onboardingLogBody =>
+      'Zaznamenej kávu, energy drink nebo jiný kofeinový nápoj. Každý záznam doplní tvůj CAF level.';
+
+  @override
+  String get onboardingTrackTitle => 'Měj CAF level na očích';
+
+  @override
+  String get onboardingTrackBody =>
+      'CAF level postupně klesá. Když bude nízko, CaffAlert ti dramaticky připomene, že systém ztrácí tempo.';
+
+  @override
+  String get onboardingNext => 'Pokračovat';
+
+  @override
+  String get onboardingSkip => 'Přeskočit';
+
+  @override
+  String get onboardingStart => 'Zaznamenat první kávu';
 }

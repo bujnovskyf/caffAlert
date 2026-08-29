@@ -76,7 +76,9 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
 
     final now = DateTime.utc(2026, 8, 28, 12);
-    SharedPreferences.setMockInitialValues({});
+    SharedPreferences.setMockInitialValues({
+      'onboarding_completed_user-1': true,
+    });
     final localeController = await LocaleController.create();
     final provider = CoffeeStatsProvider(
       userId: 'user-1',
@@ -98,7 +100,10 @@ void main() {
           locale: const Locale('cs'),
           supportedLocales: AppLocalizations.supportedLocales,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
-          home: const MainShell(userEmail: 'test@example.com'),
+          home: const MainShell(
+            userEmail: 'test@example.com',
+            userId: 'user-1',
+          ),
         ),
       ),
     );
@@ -120,9 +125,66 @@ void main() {
     expect(find.text('Ohodnotit CaffAlert'), findsOneWidget);
     expect(find.text('Kontakt a nápady'), findsOneWidget);
     expect(find.text('Napsat vývojáři'), findsOneWidget);
-    expect(find.text('O CaffAlertu'), findsOneWidget);
-    expect(find.text('Otevřít CAF emergency brief'), findsOneWidget);
+    expect(find.text('Jak funguje CaffAlert'), findsOneWidget);
+    expect(find.text('Přečíst si o CaffAlertu'), findsOneWidget);
+    expect(find.text('Disclaimer'), findsOneWidget);
     expect(find.text('Smazat účet'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+
+    await tester.pumpWidget(const SizedBox.shrink());
+    provider.dispose();
+  });
+
+  testWidgets('first sign-in gets a compact onboarding and can log coffee', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(325, 700);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    SharedPreferences.setMockInitialValues({});
+    final localeController = await LocaleController.create();
+    final provider = CoffeeStatsProvider(
+      userId: 'new-user',
+      repository: _NarrowLayoutSource([]),
+      now: () => DateTime.utc(2026, 8, 28, 12),
+    );
+    await provider.refresh();
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider.value(value: provider),
+          ChangeNotifierProvider.value(value: localeController),
+        ],
+        child: MaterialApp(
+          theme: AppTheme.light,
+          locale: const Locale('cs'),
+          supportedLocales: AppLocalizations.supportedLocales,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          home: const MainShell(
+            userEmail: 'new@example.com',
+            userId: 'new-user',
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Vítej v CaffAlertu'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+
+    await tester.tap(find.text('Pokračovat'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Pokračovat'));
+    await tester.pumpAndSettle();
+    expect(find.text('Měj CAF level na očích'), findsOneWidget);
+
+    await tester.tap(find.text('Zaznamenat první kávu'));
+    await tester.pumpAndSettle();
+    expect(provider.logs, hasLength(1));
+    expect(find.text('Vítej v CaffAlertu'), findsNothing);
     expect(tester.takeException(), isNull);
 
     await tester.pumpWidget(const SizedBox.shrink());

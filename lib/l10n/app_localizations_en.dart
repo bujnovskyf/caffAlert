@@ -335,21 +335,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get couldNotOpenEmail => 'We could not open your email app.';
 
   @override
-  String get aboutCaffAlertSection => 'About CaffAlert';
+  String get aboutCaffAlertSection => 'How CaffAlert works';
 
   @override
   String get aboutCaffAlertHint =>
-      'A coffee log for the moments when the workday starts looking suspiciously like a nap.';
+      'Keep your caffeine rhythm and CAF level in view throughout the day.';
 
   @override
-  String get caffEmergencyBrief => 'Open the CAF emergency brief';
+  String get caffEmergencyBrief => 'Read about CaffAlert';
 
   @override
-  String get caffEmergencyTitle => 'CAF emergency briefing';
+  String get caffEmergencyTitle => 'About CaffAlert';
 
   @override
   String get caffEmergencyBody =>
-      'Logging a coffee restores your CAF level to 100%. It then gradually drops over four hours. This is a simple game timer built from your logs — not a laboratory measurement of caffeine in your blood.\n\nCaffAlert is for days when you want to keep track of your coffee trail and symbolically avoid letting your CAF level hit zero before work is over. The alert is part of the app’s mood, not an instruction to get another coffee.\n\nImportant: the app does not provide health advice, determine a safe dose, or tell you how much caffeine to drink. Real health always comes before a fictional indicator.';
+      'CaffAlert is a tool for keeping your caffeine rhythm in view throughout the day. Log a coffee, an energy drink, or another caffeinated drink — every log replenishes your CAF level and joins your history.\n\nCAF level then gradually drops over four hours. At a glance, you can see when you last logged something, how often you return to caffeine, and when the system starts dramatically asking for attention.\n\nCaffAlert is neither a diet nor a limiter. It is a simple overview that keeps your caffeine rhythm visible. Stay caffeinated.';
+
+  @override
+  String get appDisclaimerTitle => 'Disclaimer';
+
+  @override
+  String get appDisclaimerBody =>
+      'CAF level is a fictional game indicator based on the time since a log. It does not measure caffeine in your body and is not health advice or a guide to how much caffeine to drink.';
 
   @override
   String get deleteAccount => 'Delete account';
@@ -389,4 +396,37 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get emptyStatsBody =>
       'Log a dose on the timer screen to start building your overview.';
+
+  @override
+  String get onboardingEyebrow => 'CAF SYSTEM // START';
+
+  @override
+  String get onboardingWelcomeTitle => 'Welcome to CaffAlert';
+
+  @override
+  String get onboardingWelcomeBody =>
+      'Your day moves fast. CaffAlert helps you keep your caffeine rhythm in view.';
+
+  @override
+  String get onboardingLogTitle => 'Every log counts';
+
+  @override
+  String get onboardingLogBody =>
+      'Log a coffee, an energy drink, or another caffeinated drink. Each log replenishes your CAF level.';
+
+  @override
+  String get onboardingTrackTitle => 'Keep CAF level in sight';
+
+  @override
+  String get onboardingTrackBody =>
+      'CAF level gradually drops. When it gets low, CaffAlert will dramatically remind you that the system is losing momentum.';
+
+  @override
+  String get onboardingNext => 'Continue';
+
+  @override
+  String get onboardingSkip => 'Skip';
+
+  @override
+  String get onboardingStart => 'Log your first coffee';
 }

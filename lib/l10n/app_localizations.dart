@@ -719,32 +719,44 @@ abstract class AppLocalizations {
   /// No description provided for @aboutCaffAlertSection.
   ///
   /// In en, this message translates to:
-  /// **'About CaffAlert'**
+  /// **'How CaffAlert works'**
   String get aboutCaffAlertSection;
 
   /// No description provided for @aboutCaffAlertHint.
   ///
   /// In en, this message translates to:
-  /// **'A coffee log for the moments when the workday starts looking suspiciously like a nap.'**
+  /// **'Keep your caffeine rhythm and CAF level in view throughout the day.'**
   String get aboutCaffAlertHint;
 
   /// No description provided for @caffEmergencyBrief.
   ///
   /// In en, this message translates to:
-  /// **'Open the CAF emergency brief'**
+  /// **'Read about CaffAlert'**
   String get caffEmergencyBrief;
 
   /// No description provided for @caffEmergencyTitle.
   ///
   /// In en, this message translates to:
-  /// **'CAF emergency briefing'**
+  /// **'About CaffAlert'**
   String get caffEmergencyTitle;
 
   /// No description provided for @caffEmergencyBody.
   ///
   /// In en, this message translates to:
-  /// **'Logging a coffee restores your CAF level to 100%. It then gradually drops over four hours. This is a simple game timer built from your logs — not a laboratory measurement of caffeine in your blood.\n\nCaffAlert is for days when you want to keep track of your coffee trail and symbolically avoid letting your CAF level hit zero before work is over. The alert is part of the app’s mood, not an instruction to get another coffee.\n\nImportant: the app does not provide health advice, determine a safe dose, or tell you how much caffeine to drink. Real health always comes before a fictional indicator.'**
+  /// **'CaffAlert is a tool for keeping your caffeine rhythm in view throughout the day. Log a coffee, an energy drink, or another caffeinated drink — every log replenishes your CAF level and joins your history.\n\nCAF level then gradually drops over four hours. At a glance, you can see when you last logged something, how often you return to caffeine, and when the system starts dramatically asking for attention.\n\nCaffAlert is neither a diet nor a limiter. It is a simple overview that keeps your caffeine rhythm visible. Stay caffeinated.'**
   String get caffEmergencyBody;
+
+  /// No description provided for @appDisclaimerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Disclaimer'**
+  String get appDisclaimerTitle;
+
+  /// No description provided for @appDisclaimerBody.
+  ///
+  /// In en, this message translates to:
+  /// **'CAF level is a fictional game indicator based on the time since a log. It does not measure caffeine in your body and is not health advice or a guide to how much caffeine to drink.'**
+  String get appDisclaimerBody;
 
   /// No description provided for @deleteAccount.
   ///
@@ -817,6 +829,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Log a dose on the timer screen to start building your overview.'**
   String get emptyStatsBody;
+
+  /// No description provided for @onboardingEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'CAF SYSTEM // START'**
+  String get onboardingEyebrow;
+
+  /// No description provided for @onboardingWelcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to CaffAlert'**
+  String get onboardingWelcomeTitle;
+
+  /// No description provided for @onboardingWelcomeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your day moves fast. CaffAlert helps you keep your caffeine rhythm in view.'**
+  String get onboardingWelcomeBody;
+
+  /// No description provided for @onboardingLogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Every log counts'**
+  String get onboardingLogTitle;
+
+  /// No description provided for @onboardingLogBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Log a coffee, an energy drink, or another caffeinated drink. Each log replenishes your CAF level.'**
+  String get onboardingLogBody;
+
+  /// No description provided for @onboardingTrackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep CAF level in sight'**
+  String get onboardingTrackTitle;
+
+  /// No description provided for @onboardingTrackBody.
+  ///
+  /// In en, this message translates to:
+  /// **'CAF level gradually drops. When it gets low, CaffAlert will dramatically remind you that the system is losing momentum.'**
+  String get onboardingTrackBody;
+
+  /// No description provided for @onboardingNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get onboardingNext;
+
+  /// No description provided for @onboardingSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get onboardingSkip;
+
+  /// No description provided for @onboardingStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Log your first coffee'**
+  String get onboardingStart;
 }
 
 class _AppLocalizationsDelegate

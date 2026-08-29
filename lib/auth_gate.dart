@@ -63,7 +63,7 @@ class _AuthGateState extends State<AuthGate> {
         userId: user.id,
         repository: CoffeeRepository(Supabase.instance.client),
       ),
-      child: MainShell(userEmail: user.email ?? ''),
+      child: MainShell(userEmail: user.email ?? '', userId: user.id),
     );
   }
 }
