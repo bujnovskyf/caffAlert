@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,6 +35,8 @@ class _MainShellState extends State<MainShell> {
   bool _isStartingOnboarding = false;
 
   String get _onboardingKey => '$_onboardingKeyPrefix${widget.userId}';
+  bool get _isLocalWebPreview =>
+      kIsWeb && (Uri.base.host == 'localhost' || Uri.base.host == '127.0.0.1');
 
   @override
   void initState() {
@@ -47,7 +50,7 @@ class _MainShellState extends State<MainShell> {
     if (!mounted) return;
     setState(() {
       _isCheckingOnboarding = false;
-      _showOnboarding = !completed;
+      _showOnboarding = _isLocalWebPreview || !completed;
     });
   }
 
