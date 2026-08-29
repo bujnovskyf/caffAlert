@@ -349,14 +349,14 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get caffEmergencyBody =>
-      'CaffAlert je nástroj pro přehled o tvém kofeinovém rytmu během dne. Zaznamenej kávu, energy drink nebo jiný nápoj s kofeinem — každý záznam doplní CAF úroveň a uloží se do tvé historie.\n\nCAF úroveň pak během čtyř hodin postupně klesá. Díky tomu na první pohled vidíš, kdy sis naposledy něco zaznamenal/a, jak často se ke kofeinu vracíš a kdy se systém začíná dramaticky hlásit o pozornost.\n\nProč zrovna čtyři hodiny? Současná literatura uvádí průměrný plazmatický poločas kofeinu u zdravých dospělých zhruba kolem pěti hodin, i když se mezi lidmi výrazně liší. CaffAlert z toho vzal praktické čtyři hodiny a vyhlásil vlastní standardní CAF protokol. Jakmile fiktivní CAF úroveň dorazí do kritické zóny, systém dramaticky doporučí zvážit doplnění. Zní to vědecky; pořád je to herní ukazatel, ne měření tvého těla.\n\nCaffAlert není dieta ani omezovač. Je to jednoduchý přehled, který drží tvůj kofeinový rytmus na očích. Stay caffeinated.';
+      'CaffAlert je nástroj pro přehled o tvém kofeinovém rytmu během dne. Zaznamenej kávu, energy drink nebo jiný nápoj s kofeinem — každý záznam doplní CAF úroveň a uloží se do tvé historie.\n\nCAF úroveň pak během čtyř hodin postupně klesá. Díky tomu na první pohled vidíš, kdy sis naposledy něco zaznamenal/a, jak často se ke kofeinu vracíš a kdy se systém začíná dramaticky hlásit o pozornost.\n\nČtyři hodiny jsou pevné pravidlo CaffAlertu. Jakmile CAF úroveň dorazí do kritické zóny, systém dramaticky navrhne další krok.\n\nCaffAlert není dieta ani omezovač. Je to jednoduchý přehled, který drží tvůj kofeinový rytmus na očích. Stay caffeinated.';
 
   @override
   String get appDisclaimerTitle => 'Disclaimer';
 
   @override
   String get appDisclaimerBody =>
-      'CAF úroveň je fiktivní herní ukazatel založený na čase od záznamu. Neměří kofein v těle a nepředstavuje zdravotní doporučení ani návod, kolik kofeinu pít.';
+      'CaffAlert je vtipná aplikace a CAF úroveň je fiktivní herní ukazatel založený na čase od záznamu. Neměří kofein v těle a nepředstavuje zdravotní doporučení ani návod, kolik kofeinu pít.';
 
   @override
   String get deleteAccount => 'Smazat účet';
@@ -419,7 +419,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get onboardingTrackBody =>
-      'Současná literatura uvádí poločas kofeinu u zdravých dospělých zhruba kolem pěti hodin. CaffAlert pro svůj standardní CAF protokol používá praktické čtyři hodiny; pak fiktivní CAF úroveň vstoupí do kritické zóny a systém navrhne zvážit doplnění.';
+      'CAF level klesá přesně čtyři hodiny. Pak vstoupí do kritické zóny a systém dramaticky navrhne další krok.';
 
   @override
   String get onboardingSource => 'Zdroj CaffAlert Protocolu';
