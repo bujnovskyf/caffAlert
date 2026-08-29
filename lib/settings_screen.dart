@@ -19,7 +19,7 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   static final _playStoreUri = Uri.parse(
-    'https://play.google.com/store/apps/details?id=com.zachrana.app',
+    'https://play.google.com/store/apps/details?id=com.frantisekbujnovsky.caffalert',
   );
   static final _feedbackUri = Uri(
     scheme: 'mailto',

@@ -1,4 +1,4 @@
-package com.zachrana.app
+package com.frantisekbujnovsky.caffalert
 
 import io.flutter.embedding.android.FlutterActivity
 

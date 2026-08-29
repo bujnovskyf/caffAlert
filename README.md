@@ -122,7 +122,7 @@ Flutter testy pokrývají časovač, denní a měsíční statistiky, návrat k 
 
 ## Android
 
-Android používá application ID `com.zachrana.app`. Debug APK sestavíš stejnými `dart-define` hodnotami:
+Android používá application ID `com.frantisekbujnovsky.caffalert`. Debug APK sestavíš stejnými `dart-define` hodnotami:
 
 ```sh
 flutter build apk --debug --dart-define-from-file=.env
