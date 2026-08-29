@@ -872,24 +872,6 @@ abstract class AppLocalizations {
   /// **'According to the CAF model, four hours are the ideal interval after which CAF level enters its critical zone. The system then recommends a next step.'**
   String get onboardingTrackBody;
 
-  /// No description provided for @onboardingSource.
-  ///
-  /// In en, this message translates to:
-  /// **'Source'**
-  String get onboardingSource;
-
-  /// No description provided for @onboardingSourceTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Source'**
-  String get onboardingSourceTitle;
-
-  /// No description provided for @onboardingSourceMeme.
-  ///
-  /// In en, this message translates to:
-  /// **'I made it up.'**
-  String get onboardingSourceMeme;
-
   /// No description provided for @onboardingNext.
   ///
   /// In en, this message translates to:

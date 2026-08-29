@@ -422,15 +422,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'According to the CAF model, four hours are the ideal interval after which CAF level enters its critical zone. The system then recommends a next step.';
 
   @override
-  String get onboardingSource => 'Source';
-
-  @override
-  String get onboardingSourceTitle => 'Source';
-
-  @override
-  String get onboardingSourceMeme => 'I made it up.';
-
-  @override
   String get onboardingNext => 'Continue';
 
   @override

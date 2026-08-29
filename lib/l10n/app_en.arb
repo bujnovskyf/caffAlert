@@ -132,9 +132,6 @@
   "onboardingLogBody": "Log a coffee, an energy drink, or another caffeinated drink. Each log replenishes your CAF level.",
   "onboardingTrackTitle": "The four-hour protocol",
   "onboardingTrackBody": "According to the CAF model, four hours are the ideal interval after which CAF level enters its critical zone. The system then recommends a next step.",
-  "onboardingSource": "Source",
-  "onboardingSourceTitle": "Source",
-  "onboardingSourceMeme": "I made it up.",
   "onboardingNext": "Continue",
   "onboardingSkip": "Skip",
   "onboardingStart": "Log your first coffee"

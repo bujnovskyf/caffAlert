@@ -132,9 +132,6 @@
   "onboardingLogBody": "Zaznamenej kávu, energy drink nebo jiný kofeinový nápoj. Každý záznam doplní tvůj CAF level.",
   "onboardingTrackTitle": "Čtyřhodinový protokol",
   "onboardingTrackBody": "Čtyři hodiny jsou podle CAF modelu ideální interval, po kterém se CAF úroveň dostává do kritické zóny. Tehdy systém doporučí další krok.",
-  "onboardingSource": "Zdroj",
-  "onboardingSourceTitle": "Zdroj",
-  "onboardingSourceMeme": "I made it up.",
   "onboardingNext": "Pokračovat",
   "onboardingSkip": "Přeskočit",
   "onboardingStart": "Zaznamenat první kávu"

@@ -422,15 +422,6 @@ class AppLocalizationsCs extends AppLocalizations {
       'Čtyři hodiny jsou podle CAF modelu ideální interval, po kterém se CAF úroveň dostává do kritické zóny. Tehdy systém doporučí další krok.';
 
   @override
-  String get onboardingSource => 'Zdroj';
-
-  @override
-  String get onboardingSourceTitle => 'Zdroj';
-
-  @override
-  String get onboardingSourceMeme => 'I made it up.';
-
-  @override
   String get onboardingNext => 'Pokračovat';
 
   @override
