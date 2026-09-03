@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="caff_widget_title">CaffAlert</string>
+    <string name="caff_widget_description">Your CaffAlert CAF level</string>
+    <string name="caff_widget_default_description">CaffAlert CAF level</string>
+    <string name="caff_widget_default_level">CAF level 0%</string>
+    <string name="caff_widget_level">CAF level %1$d%%</string>
+    <string name="caff_widget_empty">Log your first coffee</string>
+    <string name="caff_widget_zero">CAF level is at zero</string>
+    <string name="caff_widget_low">CAF level is low</string>
+    <string name="caff_widget_remaining">Hits zero in %1$s</string>
+    <string name="caff_widget_content_description">CaffAlert CAF level: %1$d percent</string>
+</resources>

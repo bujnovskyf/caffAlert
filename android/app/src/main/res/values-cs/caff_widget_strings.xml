@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="caff_widget_description">Tvoje CAF úroveň v CaffAlertu</string>
+    <string name="caff_widget_default_description">CAF úroveň v CaffAlertu</string>
+    <string name="caff_widget_default_level">CAF úroveň 0 %</string>
+    <string name="caff_widget_level">CAF úroveň %1$d %%</string>
+    <string name="caff_widget_empty">Zaznamenej první kávu</string>
+    <string name="caff_widget_zero">CAF úroveň je na nule</string>
+    <string name="caff_widget_low">CAF úroveň je nízká</string>
+    <string name="caff_widget_remaining">Na nule za %1$s</string>
+    <string name="caff_widget_content_description">CAF úroveň v CaffAlertu: %1$d procent</string>
+</resources>

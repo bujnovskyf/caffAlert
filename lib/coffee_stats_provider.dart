@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+
 import 'app_logger.dart';
+import 'caff_alert_home_widget.dart';
 import 'coffee_metrics.dart';
 import 'coffee_repository.dart';
 import 'models/coffee_log.dart';
@@ -78,6 +80,12 @@ class CoffeeStatsProvider extends ChangeNotifier {
       _logs = results[0] as List<CoffeeLog>;
       _profile = results[1] as Profile?;
       _error = null;
+      unawaited(
+        CaffAlertHomeWidget.sync(
+          latestCoffee: latestCoffee,
+          duration: caffLevelDuration,
+        ),
+      );
     } catch (error, stackTrace) {
       AppLogger.logger.e(
         'Failed to load coffee data',
@@ -234,6 +242,7 @@ class CoffeeStatsProvider extends ChangeNotifier {
   void dispose() {
     _isDisposed = true;
     _ticker?.cancel();
+    unawaited(CaffAlertHomeWidget.clear());
     unawaited(_repository.dispose());
     super.dispose();
   }
