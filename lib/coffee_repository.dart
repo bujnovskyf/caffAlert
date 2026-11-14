@@ -2,6 +2,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'models/coffee_log.dart';
 import 'models/profile.dart';
+import 'paginated_fetch.dart';
 
 abstract interface class CoffeeDataSource {
   Future<List<CoffeeLog>> fetchLogs(String userId);
@@ -23,20 +24,26 @@ class CoffeeRepository implements CoffeeDataSource {
 
   @override
   Future<List<CoffeeLog>> fetchLogs(String userId) async {
-    final response = await _client
-        .from('coffee_logs')
-        .select('id, user_id, created_at')
-        .eq('user_id', userId)
-        .order('created_at', ascending: false)
-        .order('id', ascending: false);
+    // The REST API caps every response at max_rows, so the full history
+    // (and the all-time stats built from it) has to be read page by page.
+    final logs = await fetchAllPages<CoffeeLog>((from, to) async {
+      final response = await _client
+          .from('coffee_logs')
+          .select('id, user_id, created_at')
+          .eq('user_id', userId)
+          .order('created_at', ascending: false)
+          .order('id', ascending: false)
+          .range(from, to);
 
-    return (response as List<dynamic>)
-        .map(
-          (row) => CoffeeLog.fromJson(
-            Map<String, dynamic>.from(row as Map<dynamic, dynamic>),
-          ),
-        )
-        .toList(growable: false);
+      return (response as List<dynamic>)
+          .map(
+            (row) => CoffeeLog.fromJson(
+              Map<String, dynamic>.from(row as Map<dynamic, dynamic>),
+            ),
+          )
+          .toList(growable: false);
+    });
+    return List.of(logs, growable: false);
   }
 
   @override
