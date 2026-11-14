@@ -48,7 +48,7 @@ Let `L` be the fetched list of records for the current user, sorted newest first
 | First coffee today | Minimum timestamp in `T`; unavailable if empty; rendered as local hours/minutes |
 | Last coffee today | Maximum timestamp in `T`; unavailable if empty; rendered as local hours/minutes |
 | Average interval today | Sort `T` ascending; sum each adjacent UTC timestamp difference truncated to whole seconds, then integer-divide by `length(T) − 1`. Unavailable for fewer than two records. The card further truncates to whole minutes. |
-| Coffee status | Daily count 0: `noCoffeeToday`; 1–3: `calm`; 4–5: `coffeeShift`; 6–9: `espressoDrive`; 10+: `legend`, rendered with localized labels |
+| Coffee status | Daily count 0: `noCoffeeToday`; 1–3: `calm`; 4–5: `coffeeShift`; 6–9: `espressoDrive`; 10+: `coffeeAfterCoffee` (neutral, not a reward), rendered with localized labels |
 | CAF countdown | If `L` is empty: zero; otherwise `max(0, D − (now UTC − L.first.createdAt))` |
 | CAF level | Round `100 × remaining.inMilliseconds / D.inMilliseconds`, then clamp to 0–100 |
 

@@ -7,13 +7,22 @@ import 'coffee_metrics.dart';
 import 'coffee_stats_provider.dart';
 import 'l10n/app_localizations.dart';
 import 'models/coffee_log.dart';
+import 'time_format.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
-  String _formatTime(CoffeeLog? log, String locale, String fallback) {
+  String _formatTime(
+    BuildContext context,
+    CoffeeLog? log,
+    String locale,
+    String fallback,
+  ) {
     if (log == null) return fallback;
-    return DateFormat.Hm(locale).format(log.createdAt.toLocal());
+    return AppTimeFormat.time(
+      locale,
+      alwaysUse24HourFormat: AppTimeFormat.alwaysUse24HourFormatOf(context),
+    ).format(log.createdAt.toLocal());
   }
 
   String _coffeeStatus(AppLocalizations localizations, CoffeeStatus status) {
@@ -22,7 +31,8 @@ class DashboardScreen extends StatelessWidget {
       CoffeeStatus.calm => localizations.coffeeStatusCalm,
       CoffeeStatus.coffeeShift => localizations.coffeeStatusCoffeeShift,
       CoffeeStatus.espressoDrive => localizations.coffeeStatusEspressoDrive,
-      CoffeeStatus.legend => localizations.coffeeStatusLegend,
+      CoffeeStatus.coffeeAfterCoffee =>
+        localizations.coffeeStatusCoffeeAfterCoffee,
     };
   }
 
@@ -110,6 +120,7 @@ class DashboardScreen extends StatelessWidget {
                               icon: Icons.wb_sunny_outlined,
                               label: localizations.firstCoffeeToday,
                               value: _formatTime(
+                                context,
                                 state.firstCoffeeToday,
                                 locale,
                                 localizations.notAvailable,
@@ -119,6 +130,7 @@ class DashboardScreen extends StatelessWidget {
                               icon: Icons.nights_stay_outlined,
                               label: localizations.lastCoffeeToday,
                               value: _formatTime(
+                                context,
                                 state.lastCoffeeToday,
                                 locale,
                                 localizations.notAvailable,
@@ -322,9 +334,12 @@ class _RecentCoffeeSection extends StatelessWidget {
                 contentPadding: EdgeInsets.zero,
                 leading: const Icon(Icons.coffee_outlined),
                 title: Text(
-                  DateFormat.yMMMd(locale)
-                      .add_Hm()
-                      .format(coffee.createdAt.toLocal()),
+                  AppTimeFormat.withTime(
+                    DateFormat.yMMMd(locale),
+                    locale,
+                    alwaysUse24HourFormat:
+                        AppTimeFormat.alwaysUse24HourFormatOf(context),
+                  ).format(coffee.createdAt.toLocal()),
                 ),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -455,7 +470,7 @@ class _EmptyStats extends StatelessWidget {
               height: 58,
               decoration: BoxDecoration(
                 color: AppColors.caramel.withValues(alpha: 0.18),
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(AppRadii.control),
               ),
               child: const Icon(Icons.coffee_outlined, color: AppColors.roast),
             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -40,15 +41,25 @@ Future<void> main() async {
     return;
   }
 
+  // Matches sentry_dart_plugin's default release name (pubspec
+  // `name@version+build`), so uploaded symbols/source maps line up.
+  String? release;
+  try {
+    final packageInfo = await PackageInfo.fromPlatform();
+    release = 'caff_alert@${packageInfo.version}+${packageInfo.buildNumber}';
+  } catch (_) {
+    // Without version info Sentry falls back to its own default release.
+  }
+
   await SentryFlutter.init(
     (options) {
       options
         ..dsn = config.sentryDsn
         ..environment = kReleaseMode ? 'production' : 'development'
-        ..release = 'caffalert@1.0.0+1'
         ..debug = false
         ..sendDefaultPii = false
         ..tracesSampleRate = kReleaseMode ? 0.1 : 0.0;
+      if (release != null) options.release = release;
     },
     appRunner: startApp,
   );

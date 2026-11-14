@@ -1,6 +1,14 @@
 import 'models/coffee_log.dart';
 
-enum CoffeeStatus { noCoffeeToday, calm, coffeeShift, espressoDrive, legend }
+enum CoffeeStatus {
+  noCoffeeToday,
+  calm,
+  coffeeShift,
+  espressoDrive,
+
+  /// 10+ coffees a day: described neutrally, never rewarded.
+  coffeeAfterCoffee,
+}
 
 abstract final class CoffeeMetrics {
   static const _defaultDurationSeconds = 4 * 60 * 60;
@@ -25,6 +33,13 @@ abstract final class CoffeeMetrics {
     return remaining.isNegative ? Duration.zero : remaining;
   }
 
+  /// The instant the CAF countdown of the latest coffee reaches zero.
+  static DateTime? zeroAt(List<CoffeeLog> logs) {
+    final latestLog = latest(logs);
+    if (latestLog == null) return null;
+    return latestLog.createdAt.toUtc().add(duration);
+  }
+
   static int caffLevelPercent(List<CoffeeLog> logs, DateTime now) {
     final remainingDuration = remaining(logs, now);
     return (remainingDuration.inMilliseconds / duration.inMilliseconds * 100)
@@ -38,7 +53,7 @@ abstract final class CoffeeMetrics {
     if (count <= 3) return CoffeeStatus.calm;
     if (count <= 5) return CoffeeStatus.coffeeShift;
     if (count <= 9) return CoffeeStatus.espressoDrive;
-    return CoffeeStatus.legend;
+    return CoffeeStatus.coffeeAfterCoffee;
   }
 
   static List<CoffeeLog> today(List<CoffeeLog> logs, DateTime now) {

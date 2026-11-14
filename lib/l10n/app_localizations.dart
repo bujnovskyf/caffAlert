@@ -119,13 +119,13 @@ abstract class AppLocalizations {
   /// No description provided for @authWelcomeTitle.
   ///
   /// In en, this message translates to:
-  /// **'Don\'t let your caffeine level hit zero.'**
+  /// **'Your coffee day, playful and clear.'**
   String get authWelcomeTitle;
 
   /// No description provided for @authWelcomeSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Follow your caffeine rhythm. When your CAF level drops, it is time to top it up.'**
+  /// **'Log a coffee and watch a playful CAF countdown. It is a game indicator, not a caffeine measurement.'**
   String get authWelcomeSubtitle;
 
   /// No description provided for @emailLabel.
@@ -332,12 +332,6 @@ abstract class AppLocalizations {
   /// **'YOUR COFFEE RHYTHM'**
   String get timerEyebrow;
 
-  /// No description provided for @nextCoffeeIn.
-  ///
-  /// In en, this message translates to:
-  /// **'CAF level reaches zero in'**
-  String get nextCoffeeIn;
-
   /// No description provided for @coffeeReady.
   ///
   /// In en, this message translates to:
@@ -347,14 +341,8 @@ abstract class AppLocalizations {
   /// No description provided for @coffeeReadySubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Time to brew a coffee.'**
+  /// **'Coffee, water, or a break? Your call.'**
   String get coffeeReadySubtitle;
-
-  /// No description provided for @coffeeLowLevelWarning.
-  ///
-  /// In en, this message translates to:
-  /// **'Heads up, your CAF level is nearing zero.'**
-  String get coffeeLowLevelWarning;
 
   /// No description provided for @caffLevel.
   ///
@@ -371,13 +359,13 @@ abstract class AppLocalizations {
   /// No description provided for @logCoffee.
   ///
   /// In en, this message translates to:
-  /// **'I had a coffee'**
+  /// **'Log a coffee'**
   String get logCoffee;
 
   /// No description provided for @coffeeLogged.
   ///
   /// In en, this message translates to:
-  /// **'CAF level replenished.'**
+  /// **'Coffee logged. CAF is back at 100%.'**
   String get coffeeLogged;
 
   /// No description provided for @lastCoffee.
@@ -449,13 +437,13 @@ abstract class AppLocalizations {
   /// No description provided for @statsTitle.
   ///
   /// In en, this message translates to:
-  /// **'Your caffeine at a glance'**
+  /// **'Your coffee at a glance'**
   String get statsTitle;
 
   /// No description provided for @statsSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'A simple view of your caffeine rhythm.'**
+  /// **'A simple view of your coffee day.'**
   String get statsSubtitle;
 
   /// No description provided for @welcomeName.
@@ -500,11 +488,11 @@ abstract class AppLocalizations {
   /// **'Espresso drive'**
   String get coffeeStatusEspressoDrive;
 
-  /// No description provided for @coffeeStatusLegend.
+  /// No description provided for @coffeeStatusCoffeeAfterCoffee.
   ///
   /// In en, this message translates to:
-  /// **'Coffee legend'**
-  String get coffeeStatusLegend;
+  /// **'Coffee after coffee'**
+  String get coffeeStatusCoffeeAfterCoffee;
 
   /// No description provided for @firstCoffeeToday.
   ///
@@ -743,7 +731,7 @@ abstract class AppLocalizations {
   /// No description provided for @caffEmergencyBody.
   ///
   /// In en, this message translates to:
-  /// **'CaffAlert is a tool for keeping your caffeine rhythm in view throughout the day. Log a coffee, an energy drink, or another caffeinated drink — every log replenishes your CAF level and joins your history.\n\nCAF level then gradually drops over four hours. At a glance, you can see when you last logged something, how often you return to caffeine, and when the system starts dramatically asking for attention.\n\nAccording to the CAF model, four hours are the ideal interval after which CAF level enters its critical zone. The system then recommends a next step.\n\nCaffAlert is neither a diet nor a limiter. It is a simple overview that keeps your caffeine rhythm visible. Stay caffeinated.'**
+  /// **'CaffAlert is a playful coffee diary. Log a coffee, an energy drink, or another caffeinated drink — each log sets your CAF level to 100% and joins your history.\n\nCAF level then drops evenly to zero over four hours. At a glance, you can see when you last logged something and what your coffee day looks like.\n\nFour hours is a game rule, not a recommendation. CAF level only counts the time since your latest log: it does not measure caffeine in your body and does not tell you how much to drink.\n\nCaffAlert is neither a diet nor a limiter. It is a simple overview and — if you switch it on — a single reminder when the countdown ends.'**
   String get caffEmergencyBody;
 
   /// No description provided for @appDisclaimerTitle.
@@ -821,13 +809,13 @@ abstract class AppLocalizations {
   /// No description provided for @emptyStatsTitle.
   ///
   /// In en, this message translates to:
-  /// **'Your first caffeine dose will appear here'**
+  /// **'Your first coffee will appear here'**
   String get emptyStatsTitle;
 
   /// No description provided for @emptyStatsBody.
   ///
   /// In en, this message translates to:
-  /// **'Log a dose on the timer screen to start building your overview.'**
+  /// **'Log a coffee on the main screen to start building your overview.'**
   String get emptyStatsBody;
 
   /// No description provided for @onboardingEyebrow.
@@ -857,7 +845,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingLogBody.
   ///
   /// In en, this message translates to:
-  /// **'Log a coffee, an energy drink, or another caffeinated drink. Each log replenishes your CAF level.'**
+  /// **'Log a coffee, an energy drink, or another caffeinated drink. Each log sets your CAF level to 100%.'**
   String get onboardingLogBody;
 
   /// No description provided for @onboardingTrackTitle.
@@ -869,7 +857,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingTrackBody.
   ///
   /// In en, this message translates to:
-  /// **'According to the CAF model, four hours are the ideal interval after which CAF level enters its critical zone. The system then recommends a next step.'**
+  /// **'After every log, a four-hour CAF countdown runs from 100% to zero. It is a game rule, not health advice.'**
   String get onboardingTrackBody;
 
   /// No description provided for @onboardingNext.
@@ -889,6 +877,186 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Log your first coffee'**
   String get onboardingStart;
+
+  /// No description provided for @undo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get undo;
+
+  /// No description provided for @widgetUndo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get widgetUndo;
+
+  /// No description provided for @coffeeUndone.
+  ///
+  /// In en, this message translates to:
+  /// **'Coffee removed.'**
+  String get coffeeUndone;
+
+  /// No description provided for @cafZeroAt.
+  ///
+  /// In en, this message translates to:
+  /// **'CAF hits zero at {time}'**
+  String cafZeroAt(String time);
+
+  /// No description provided for @cafZeroTomorrowAt.
+  ///
+  /// In en, this message translates to:
+  /// **'CAF hits zero tomorrow at {time}'**
+  String cafZeroTomorrowAt(String time);
+
+  /// No description provided for @lastCoffeeAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Last coffee at {time}'**
+  String lastCoffeeAt(String time);
+
+  /// No description provided for @lastCoffeeOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Last coffee {date}'**
+  String lastCoffeeOn(String date);
+
+  /// No description provided for @caffCountdownLength.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} countdown'**
+  String caffCountdownLength(String value);
+
+  /// No description provided for @caffToZero.
+  ///
+  /// In en, this message translates to:
+  /// **'to zero'**
+  String get caffToZero;
+
+  /// No description provided for @caffZeroTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'CAF at zero'**
+  String get caffZeroTitle;
+
+  /// No description provided for @caffZeroHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Coffee, water, or a break?'**
+  String get caffZeroHint;
+
+  /// No description provided for @caffLowHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Almost at zero'**
+  String get caffLowHint;
+
+  /// No description provided for @caffEmptyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Log a coffee to start the four-hour CAF countdown.'**
+  String get caffEmptyHint;
+
+  /// No description provided for @coffeesTodayCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No coffee yet today} one{{count} coffee today} other{{count} coffees today}}'**
+  String coffeesTodayCount(int count);
+
+  /// No description provided for @todayTimelineEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s first coffee will show up here on the timeline.'**
+  String get todayTimelineEmpty;
+
+  /// No description provided for @todayTimelineSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s coffees: {times}'**
+  String todayTimelineSemantics(String times);
+
+  /// No description provided for @notificationsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notificationsSection;
+
+  /// No description provided for @cafAlertToggle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notify me when CAF hits zero'**
+  String get cafAlertToggle;
+
+  /// No description provided for @cafAlertToggleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'A single notification when the four-hour countdown ends. It is scheduled on this phone only; nothing is sent anywhere.'**
+  String get cafAlertToggleHint;
+
+  /// No description provided for @cafAlertEnabledMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Done. We\'ll ping you when CAF hits zero.'**
+  String get cafAlertEnabledMessage;
+
+  /// No description provided for @cafAlertPermissionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'This needs notification permission. Allow it in Android settings and try again.'**
+  String get cafAlertPermissionDenied;
+
+  /// No description provided for @openSystemSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get openSystemSettings;
+
+  /// No description provided for @cafAlertChannelName.
+  ///
+  /// In en, this message translates to:
+  /// **'CAF at zero'**
+  String get cafAlertChannelName;
+
+  /// No description provided for @cafAlertChannelDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'A single reminder when the four-hour CAF countdown ends.'**
+  String get cafAlertChannelDescription;
+
+  /// No description provided for @cafAlertNotificationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'CAF at zero ☕'**
+  String get cafAlertNotificationTitle;
+
+  /// No description provided for @cafAlertNotificationBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Countdown\'s done. Coffee, a glass of water, or five minutes of fresh air? Your call.'**
+  String get cafAlertNotificationBody;
+
+  /// No description provided for @legalSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Legal'**
+  String get legalSection;
+
+  /// No description provided for @privacyPolicyLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyPolicyLink;
+
+  /// No description provided for @termsOfUseLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Use'**
+  String get termsOfUseLink;
+
+  /// No description provided for @couldNotOpenLink.
+  ///
+  /// In en, this message translates to:
+  /// **'We could not open the link.'**
+  String get couldNotOpenLink;
 }
 
 class _AppLocalizationsDelegate

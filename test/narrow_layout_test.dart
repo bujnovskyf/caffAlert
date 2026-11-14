@@ -108,8 +108,9 @@ void main() {
       ),
     );
     await tester.pump();
-    expect(find.text('CAF úroveň na nule za'), findsOneWidget);
-    expect(find.text('Měl/a jsem kávu'), findsOneWidget);
+    expect(find.textContaining('CAF na nule v'), findsOneWidget);
+    expect(find.text('Zapsat kávu'), findsOneWidget);
+    expect(find.text('Dnes 1 káva'), findsOneWidget);
     expect(tester.takeException(), isNull);
 
     await tester.tap(find.text('Statistiky'));

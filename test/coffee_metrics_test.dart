@@ -83,7 +83,8 @@ void main() {
         CoffeeMetrics.statusForDailyCoffees(6),
         CoffeeStatus.espressoDrive,
       );
-      expect(CoffeeMetrics.statusForDailyCoffees(10), CoffeeStatus.legend);
+      expect(CoffeeMetrics.statusForDailyCoffees(10),
+          CoffeeStatus.coffeeAfterCoffee);
     });
   });
 }

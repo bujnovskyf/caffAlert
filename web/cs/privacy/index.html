@@ -18,7 +18,7 @@
         </nav>
       </header>
       <main>
-        <p class="eyebrow">PLATNÉ OD 29. 8. 2026</p>
+        <p class="eyebrow">PLATNÉ OD 14. 11. 2026</p>
         <h1>Zásady ochrany soukromí</h1>
         <p class="lead">Tyto zásady popisují, jak CaffAlert zpracovává osobní údaje podle použitelných předpisů, včetně GDPR, pokud se použije.</p>
 
@@ -39,6 +39,8 @@
           <li><strong>Údaje žádosti o výmaz:</strong> e-mail a případná zpráva odeslaná přes veřejný formulář pro smazání účtu.</li>
         </ul>
         <p>Tyto údaje získáváme přímo od tebe, z používání aplikace a od poskytovatelů nutných k přihlášení a hostování služby. Nevyžadujeme zdravotní údaje ani nepoužíváme CAF level jako zdravotní měření.</p>
+        <p><strong>Volitelné upozornění na Androidu:</strong> pokud v Nastavení zapneš „Upozornit, až CAF klesne na nulu“, aplikace požádá Android o oprávnění zobrazovat notifikace (<code>POST_NOTIFICATIONS</code>, Android 13 a novější) a naplánuje v tvém zařízení jednu lokální notifikaci na okamžik, kdy doběhne CAF odpočet posledního záznamu. Upozornění vytváří a uchovává jen Android v tomto zařízení; nám ani žádnému poskytovateli se neodesílají žádné údaje o notifikacích, push tokeny ani informace o doručení a nepoužíváme žádnou push službu. Volba zapnuto/vypnuto zůstává jen v zařízení. Kdykoli ji vypneš v aplikaci nebo oprávnění k notifikacím odvoláš v nastavení Androidu; odhlášení naplánované upozornění zruší.</p>
+        <p><strong>Údaje uložené jen v zařízení:</strong> aby aplikace fungovala i na ploše a bez čekání na síť, ukládá několik hodnot jen v telefonu nebo v prohlížeči a nad rámec záznamů kávy výše nám je neposílá: čas poslední kávy a délku CAF odpočtu pro widget na ploše Androidu, krátkodobé značky nedávných klepnutí na widget (aby jedno klepnutí nezapsalo dvě kávy), zda je upozornění zapnuté, zvolený jazyk, zda jsi dokončil/a úvodní průvodce a v Android aplikaci lokální chybový log (soubor <code>app_logs.txt</code> v soukromém úložišti aplikace) s časem, zprávou a technickými podrobnostmi varování a chyb, který slouží jen k dohledání problémů; aplikace tento soubor nikam neodesílá (chybová hlášení do Sentry, je-li zapnuté, popisuje bod 3). Chybový log se automaticky nepromazává. Všechny tyto hodnoty se smažou odinstalováním aplikace nebo vymazáním jejích dat (na webu vymazáním dat webu).</p>
 
         <h2>2. Účely a právní základy</h2>
         <ul>
@@ -49,14 +51,14 @@
         </ul>
 
         <h2>3. Příjemci a poskytovatelé</h2>
-        <p>V nezbytném rozsahu využíváme poskytovatele jednající podle našich pokynů: <strong>Supabase</strong> pro databázi, přihlášení a synchronizaci; <strong>Netlify</strong> pro hostování webu a formuláře výmazu; a <strong>Sentry</strong>, jen je-li pro dané nasazení zapnuté, pro technické chybové reporty. Aplikace je nastavená tak, aby do Sentry neposílala výchozí osobní identifikační údaje.</p>
+        <p>V nezbytném rozsahu využíváme poskytovatele jednající podle našich pokynů: <strong>Supabase</strong> pro databázi, přihlášení a synchronizaci; <strong>Netlify</strong> pro hostování webu a formuláře výmazu; a <strong>Sentry</strong>, jen je-li pro dané nasazení zapnuté, pro technické chybové reporty a malý vzorek výkonnostních dat (např. jak dlouho trvá načtení obrazovky nebo požadavku). Sentry SDK pak vytváří i náhodný identifikátor instalace, aby šlo opakované chyby z jedné instalace seskupit; není propojený s tvým e-mailem. Aplikace je nastavená tak, aby do Sentry neposílala výchozí osobní identifikační údaje.</p>
         <p>Pokud nastavíme samostatného poskytovatele transakčních e-mailů, bude zpracovávat e-mail a doručovací údaje nutné pro potvrzení účtu a reset hesla; tento dokument při podstatné změně aktualizujeme.</p>
 
         <h2>4. Předání mimo EHP</h2>
         <p>Někteří poskytovatelé mohou údaje zpracovávat nebo předávat mimo Evropský hospodářský prostor. Vyžaduje-li předání záruku, spoléháme na rozhodnutí o odpovídající ochraně, standardní smluvní doložky nebo jiný zákonný mechanismus poskytovatele. Další informace si můžeš vyžádat na uvedeném kontaktu.</p>
 
         <h2>5. Doba uchování</h2>
-        <p>Účet, profil a záznamy kávy uchováváme po dobu existence účtu. Při smazání účtu v aplikaci se tyto údaje odstraní v rámci operace výmazu. Žádost přes veřejný formulář a související komunikaci uchováváme jen po dobu nutnou k ověření, vyřízení a doložení žádosti, pokud delší dobu nevyžaduje zákon nebo ochrana právních nároků.</p>
+        <p>Účet, profil a záznamy kávy uchováváme po dobu existence účtu. Při smazání účtu v aplikaci se tyto údaje odstraní v rámci operace výmazu. Kopie mohou krátce zůstat v automatických zálohách a provozních logech Supabase, dokud se v rámci běžného cyklu poskytovatele nepřepíšou; mezitím je k ničemu jinému nepoužíváme. Žádost přes veřejný formulář a související komunikaci uchováváme jen po dobu nutnou k ověření, vyřízení a doložení žádosti, pokud delší dobu nevyžaduje zákon nebo ochrana právních nároků.</p>
 
         <h2>6. Jsou údaje povinné?</h2>
         <p>E-mail a přihlašovací údaje jsou nezbytné pro vytvoření a používání účtu. Bez nich nemůžeme poskytnout synchronizaci založenou na účtu. Zobrazované jméno a záznamy kávy jsou volitelné; bez záznamů aplikace nemá co zobrazit v časovači a statistikách.</p>
@@ -65,10 +67,13 @@
         <p>V rozsahu stanoveném právem můžeš žádat přístup, opravu, výmaz, omezení zpracování, přenositelnost nebo vznést námitku proti zpracování založenému na oprávněném zájmu. Souhlas, je-li právním základem, můžeš kdykoli odvolat bez vlivu na předchozí zpracování. Napiš na <a href="mailto:bujnovskyf@gmail.com">bujnovskyf@gmail.com</a>.</p>
         <p>Máš právo podat stížnost u <a href="https://uoou.gov.cz/" rel="noopener noreferrer" target="_blank">Úřadu pro ochranu osobních údajů</a> nebo dozorového úřadu v místě obvyklého bydliště, práce či údajného porušení.</p>
 
-        <h2>8. Automatizované rozhodování a zabezpečení</h2>
+        <h2>8. Minimální věk</h2>
+        <p>CaffAlert je určený jen dospělým od 18 let. Údaje mladších osob vědomě nezpracováváme. Pokud máš za to, že účet založil nezletilý, napiš nám a účet smažeme.</p>
+
+        <h2>9. Automatizované rozhodování a zabezpečení</h2>
         <p>Osobní údaje nepoužíváme pro automatizované rozhodování včetně profilování s právními nebo obdobně významnými účinky. Používáme přiměřená technická a organizační opatření včetně ověřeného přístupu a šifrovaného přenosu. Žádná online služba však nemůže zaručit absolutní bezpečnost; chraň své přihlašovací údaje a používej jedinečné heslo.</p>
 
-        <h2>9. Změny zásad</h2>
+        <h2>10. Změny zásad</h2>
         <p>Zásady můžeme aktualizovat při změně aplikace, zpracování nebo práva. Nové znění a datum účinnosti zveřejníme zde; pokud to bude potřeba, dáme další oznámení nebo vyžádáme souhlas.</p>
       </main>
       <footer>© 2026 František Bujnovský · CaffAlert</footer>

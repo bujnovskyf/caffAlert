@@ -19,11 +19,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Add SUPABASE_URL and SUPABASE_PUBLISHABLE_KEY, then rebuild the app.';
 
   @override
-  String get authWelcomeTitle => 'Don\'t let your caffeine level hit zero.';
+  String get authWelcomeTitle => 'Your coffee day, playful and clear.';
 
   @override
   String get authWelcomeSubtitle =>
-      'Follow your caffeine rhythm. When your CAF level drops, it is time to top it up.';
+      'Log a coffee and watch a playful CAF countdown. It is a game indicator, not a caffeine measurement.';
 
   @override
   String get emailLabel => 'Email';
@@ -131,17 +131,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get timerEyebrow => 'YOUR COFFEE RHYTHM';
 
   @override
-  String get nextCoffeeIn => 'CAF level reaches zero in';
-
-  @override
   String get coffeeReady => 'CAF level is at zero';
 
   @override
-  String get coffeeReadySubtitle => 'Time to brew a coffee.';
-
-  @override
-  String get coffeeLowLevelWarning =>
-      'Heads up, your CAF level is nearing zero.';
+  String get coffeeReadySubtitle => 'Coffee, water, or a break? Your call.';
 
   @override
   String get caffLevel => 'CAF level';
@@ -152,10 +145,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get logCoffee => 'I had a coffee';
+  String get logCoffee => 'Log a coffee';
 
   @override
-  String get coffeeLogged => 'CAF level replenished.';
+  String get coffeeLogged => 'Coffee logged. CAF is back at 100%.';
 
   @override
   String get lastCoffee => 'Last coffee';
@@ -192,10 +185,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get retry => 'Try again';
 
   @override
-  String get statsTitle => 'Your caffeine at a glance';
+  String get statsTitle => 'Your coffee at a glance';
 
   @override
-  String get statsSubtitle => 'A simple view of your caffeine rhythm.';
+  String get statsSubtitle => 'A simple view of your coffee day.';
 
   @override
   String welcomeName(String name) {
@@ -221,7 +214,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get coffeeStatusEspressoDrive => 'Espresso drive';
 
   @override
-  String get coffeeStatusLegend => 'Coffee legend';
+  String get coffeeStatusCoffeeAfterCoffee => 'Coffee after coffee';
 
   @override
   String get firstCoffeeToday => 'First today';
@@ -349,7 +342,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get caffEmergencyBody =>
-      'CaffAlert is a tool for keeping your caffeine rhythm in view throughout the day. Log a coffee, an energy drink, or another caffeinated drink — every log replenishes your CAF level and joins your history.\n\nCAF level then gradually drops over four hours. At a glance, you can see when you last logged something, how often you return to caffeine, and when the system starts dramatically asking for attention.\n\nAccording to the CAF model, four hours are the ideal interval after which CAF level enters its critical zone. The system then recommends a next step.\n\nCaffAlert is neither a diet nor a limiter. It is a simple overview that keeps your caffeine rhythm visible. Stay caffeinated.';
+      'CaffAlert is a playful coffee diary. Log a coffee, an energy drink, or another caffeinated drink — each log sets your CAF level to 100% and joins your history.\n\nCAF level then drops evenly to zero over four hours. At a glance, you can see when you last logged something and what your coffee day looks like.\n\nFour hours is a game rule, not a recommendation. CAF level only counts the time since your latest log: it does not measure caffeine in your body and does not tell you how much to drink.\n\nCaffAlert is neither a diet nor a limiter. It is a simple overview and — if you switch it on — a single reminder when the countdown ends.';
 
   @override
   String get appDisclaimerTitle => 'Disclaimer';
@@ -391,11 +384,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorLoadingData => 'We could not load your data.';
 
   @override
-  String get emptyStatsTitle => 'Your first caffeine dose will appear here';
+  String get emptyStatsTitle => 'Your first coffee will appear here';
 
   @override
   String get emptyStatsBody =>
-      'Log a dose on the timer screen to start building your overview.';
+      'Log a coffee on the main screen to start building your overview.';
 
   @override
   String get onboardingEyebrow => 'CAF SYSTEM // START';
@@ -412,14 +405,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingLogBody =>
-      'Log a coffee, an energy drink, or another caffeinated drink. Each log replenishes your CAF level.';
+      'Log a coffee, an energy drink, or another caffeinated drink. Each log sets your CAF level to 100%.';
 
   @override
   String get onboardingTrackTitle => 'The four-hour protocol';
 
   @override
   String get onboardingTrackBody =>
-      'According to the CAF model, four hours are the ideal interval after which CAF level enters its critical zone. The system then recommends a next step.';
+      'After every log, a four-hour CAF countdown runs from 100% to zero. It is a game rule, not health advice.';
 
   @override
   String get onboardingNext => 'Continue';
@@ -429,4 +422,122 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingStart => 'Log your first coffee';
+
+  @override
+  String get undo => 'Undo';
+
+  @override
+  String get widgetUndo => 'Undo';
+
+  @override
+  String get coffeeUndone => 'Coffee removed.';
+
+  @override
+  String cafZeroAt(String time) {
+    return 'CAF hits zero at $time';
+  }
+
+  @override
+  String cafZeroTomorrowAt(String time) {
+    return 'CAF hits zero tomorrow at $time';
+  }
+
+  @override
+  String lastCoffeeAt(String time) {
+    return 'Last coffee at $time';
+  }
+
+  @override
+  String lastCoffeeOn(String date) {
+    return 'Last coffee $date';
+  }
+
+  @override
+  String caffCountdownLength(String value) {
+    return '$value countdown';
+  }
+
+  @override
+  String get caffToZero => 'to zero';
+
+  @override
+  String get caffZeroTitle => 'CAF at zero';
+
+  @override
+  String get caffZeroHint => 'Coffee, water, or a break?';
+
+  @override
+  String get caffLowHint => 'Almost at zero';
+
+  @override
+  String get caffEmptyHint =>
+      'Log a coffee to start the four-hour CAF countdown.';
+
+  @override
+  String coffeesTodayCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count coffees today',
+      one: '$count coffee today',
+      zero: 'No coffee yet today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get todayTimelineEmpty =>
+      'Today\'s first coffee will show up here on the timeline.';
+
+  @override
+  String todayTimelineSemantics(String times) {
+    return 'Today\'s coffees: $times';
+  }
+
+  @override
+  String get notificationsSection => 'Notifications';
+
+  @override
+  String get cafAlertToggle => 'Notify me when CAF hits zero';
+
+  @override
+  String get cafAlertToggleHint =>
+      'A single notification when the four-hour countdown ends. It is scheduled on this phone only; nothing is sent anywhere.';
+
+  @override
+  String get cafAlertEnabledMessage =>
+      'Done. We\'ll ping you when CAF hits zero.';
+
+  @override
+  String get cafAlertPermissionDenied =>
+      'This needs notification permission. Allow it in Android settings and try again.';
+
+  @override
+  String get openSystemSettings => 'Settings';
+
+  @override
+  String get cafAlertChannelName => 'CAF at zero';
+
+  @override
+  String get cafAlertChannelDescription =>
+      'A single reminder when the four-hour CAF countdown ends.';
+
+  @override
+  String get cafAlertNotificationTitle => 'CAF at zero ☕';
+
+  @override
+  String get cafAlertNotificationBody =>
+      'Countdown\'s done. Coffee, a glass of water, or five minutes of fresh air? Your call.';
+
+  @override
+  String get legalSection => 'Legal';
+
+  @override
+  String get privacyPolicyLink => 'Privacy Policy';
+
+  @override
+  String get termsOfUseLink => 'Terms of Use';
+
+  @override
+  String get couldNotOpenLink => 'We could not open the link.';
 }

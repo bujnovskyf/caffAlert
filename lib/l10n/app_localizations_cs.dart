@@ -19,11 +19,11 @@ class AppLocalizationsCs extends AppLocalizations {
       'Doplň SUPABASE_URL a SUPABASE_PUBLISHABLE_KEY a aplikaci znovu sestav.';
 
   @override
-  String get authWelcomeTitle => 'Nenech hladinu kofeinu spadnout na nulu.';
+  String get authWelcomeTitle => 'Tvůj kávový den, hravě a přehledně.';
 
   @override
   String get authWelcomeSubtitle =>
-      'Sleduj svůj kofeinový rytmus. Jakmile CAF level klesne, je čas ho doplnit.';
+      'Zapiš kávu a sleduj hravý CAF odpočet. Je to herní ukazatel, ne měření kofeinu.';
 
   @override
   String get emailLabel => 'E-mail';
@@ -132,16 +132,10 @@ class AppLocalizationsCs extends AppLocalizations {
   String get timerEyebrow => 'TVŮJ KÁVOVÝ RYTMUS';
 
   @override
-  String get nextCoffeeIn => 'CAF úroveň na nule za';
-
-  @override
   String get coffeeReady => 'CAF úroveň je na nule';
 
   @override
-  String get coffeeReadySubtitle => 'Jdi si dát kávu.';
-
-  @override
-  String get coffeeLowLevelWarning => 'Pozor, CAF úroveň se blíží nule.';
+  String get coffeeReadySubtitle => 'Káva, voda, nebo pauza? Je to na tobě.';
 
   @override
   String get caffLevel => 'CAF úroveň';
@@ -152,10 +146,10 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get logCoffee => 'Měl/a jsem kávu';
+  String get logCoffee => 'Zapsat kávu';
 
   @override
-  String get coffeeLogged => 'CAF level doplněn.';
+  String get coffeeLogged => 'Káva zapsána. CAF je na 100 %.';
 
   @override
   String get lastCoffee => 'Poslední káva';
@@ -192,10 +186,10 @@ class AppLocalizationsCs extends AppLocalizations {
   String get retry => 'Zkusit znovu';
 
   @override
-  String get statsTitle => 'Tvůj kofein v kostce';
+  String get statsTitle => 'Tvoje káva v kostce';
 
   @override
-  String get statsSubtitle => 'Jednoduchý přehled tvého kofeinového rytmu.';
+  String get statsSubtitle => 'Jednoduchý přehled tvého kávového dne.';
 
   @override
   String welcomeName(String name) {
@@ -221,7 +215,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get coffeeStatusEspressoDrive => 'Espresso pohon';
 
   @override
-  String get coffeeStatusLegend => 'Kávová legenda';
+  String get coffeeStatusCoffeeAfterCoffee => 'Káva za kávou';
 
   @override
   String get firstCoffeeToday => 'První dnes';
@@ -349,7 +343,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get caffEmergencyBody =>
-      'CaffAlert je nástroj pro přehled o tvém kofeinovém rytmu během dne. Zaznamenej kávu, energy drink nebo jiný nápoj s kofeinem — každý záznam doplní CAF úroveň a uloží se do tvé historie.\n\nCAF úroveň pak během čtyř hodin postupně klesá. Díky tomu na první pohled vidíš, kdy sis naposledy něco zaznamenal/a, jak často se ke kofeinu vracíš a kdy se systém začíná dramaticky hlásit o pozornost.\n\nČtyři hodiny jsou podle CAF modelu ideální interval, po kterém se CAF úroveň dostává do kritické zóny. Tehdy systém doporučí další krok.\n\nCaffAlert není dieta ani omezovač. Je to jednoduchý přehled, který drží tvůj kofeinový rytmus na očích. Stay caffeinated.';
+      'CaffAlert je hravý kávový deníček. Zapiš kávu, energy drink nebo jiný nápoj s kofeinem — záznam nastaví CAF úroveň na 100 % a uloží se do tvé historie.\n\nCAF úroveň pak za čtyři hodiny rovnoměrně klesne na nulu. Na první pohled tak vidíš, kdy sis naposledy něco zapsal/a a jak vypadá tvůj kávový den.\n\nČtyři hodiny jsou herní pravidlo, ne doporučení. CAF úroveň počítá jen čas od posledního záznamu: neměří kofein v těle a neradí, kolik pít.\n\nCaffAlert není dieta ani omezovač. Je to jednoduchý přehled a — pokud si ho zapneš — jedno upozornění, až odpočet doběhne.';
 
   @override
   String get appDisclaimerTitle => 'Disclaimer';
@@ -391,11 +385,11 @@ class AppLocalizationsCs extends AppLocalizations {
   String get errorLoadingData => 'Tvoje data se nepodařilo načíst.';
 
   @override
-  String get emptyStatsTitle => 'První dávka kofeinu se objeví tady';
+  String get emptyStatsTitle => 'Tvoje první káva se objeví tady';
 
   @override
   String get emptyStatsBody =>
-      'Zaznamenej dávku na obrazovce časovače a začne se tvořit přehled.';
+      'Zapiš kávu na hlavní obrazovce a začne se tvořit přehled.';
 
   @override
   String get onboardingEyebrow => 'CAF SYSTEM // START';
@@ -412,14 +406,14 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get onboardingLogBody =>
-      'Zaznamenej kávu, energy drink nebo jiný kofeinový nápoj. Každý záznam doplní tvůj CAF level.';
+      'Zaznamenej kávu, energy drink nebo jiný kofeinový nápoj. Každý záznam nastaví CAF level na 100 %.';
 
   @override
   String get onboardingTrackTitle => 'Čtyřhodinový protokol';
 
   @override
   String get onboardingTrackBody =>
-      'Čtyři hodiny jsou podle CAF modelu ideální interval, po kterém se CAF úroveň dostává do kritické zóny. Tehdy systém doporučí další krok.';
+      'Po každém zápisu běží čtyřhodinový CAF odpočet ze 100 % na nulu. Je to herní pravidlo, ne zdravotní rada.';
 
   @override
   String get onboardingNext => 'Pokračovat';
@@ -429,4 +423,123 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get onboardingStart => 'Zaznamenat první kávu';
+
+  @override
+  String get undo => 'Vrátit';
+
+  @override
+  String get widgetUndo => 'Vrátit';
+
+  @override
+  String get coffeeUndone => 'Káva vrácena.';
+
+  @override
+  String cafZeroAt(String time) {
+    return 'CAF na nule v $time';
+  }
+
+  @override
+  String cafZeroTomorrowAt(String time) {
+    return 'CAF na nule zítra v $time';
+  }
+
+  @override
+  String lastCoffeeAt(String time) {
+    return 'Poslední káva v $time';
+  }
+
+  @override
+  String lastCoffeeOn(String date) {
+    return 'Poslední káva $date';
+  }
+
+  @override
+  String caffCountdownLength(String value) {
+    return 'Odpočet $value';
+  }
+
+  @override
+  String get caffToZero => 'do nuly';
+
+  @override
+  String get caffZeroTitle => 'CAF na nule';
+
+  @override
+  String get caffZeroHint => 'Káva, voda, nebo pauza?';
+
+  @override
+  String get caffLowHint => 'Skoro na nule';
+
+  @override
+  String get caffEmptyHint =>
+      'Zapiš kávu a spustí se čtyřhodinový CAF odpočet.';
+
+  @override
+  String coffeesTodayCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Dnes $count káv',
+      few: 'Dnes $count kávy',
+      one: 'Dnes $count káva',
+      zero: 'Dnes zatím bez kávy',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get todayTimelineEmpty =>
+      'První dnešní káva se objeví tady na časové ose.';
+
+  @override
+  String todayTimelineSemantics(String times) {
+    return 'Dnešní kávy: $times';
+  }
+
+  @override
+  String get notificationsSection => 'Upozornění';
+
+  @override
+  String get cafAlertToggle => 'Upozornit, až CAF klesne na nulu';
+
+  @override
+  String get cafAlertToggleHint =>
+      'Jedna notifikace, když doběhne čtyřhodinový odpočet. Plánuje se jen v tomhle telefonu, nic se neodesílá.';
+
+  @override
+  String get cafAlertEnabledMessage =>
+      'Hotovo. Ozveme se, až bude CAF na nule.';
+
+  @override
+  String get cafAlertPermissionDenied =>
+      'Bez povolení notifikací to nepůjde. Povol je v nastavení Androidu a zkus to znovu.';
+
+  @override
+  String get openSystemSettings => 'Nastavení';
+
+  @override
+  String get cafAlertChannelName => 'CAF na nule';
+
+  @override
+  String get cafAlertChannelDescription =>
+      'Jedno upozornění, když doběhne čtyřhodinový CAF odpočet.';
+
+  @override
+  String get cafAlertNotificationTitle => 'CAF na nule ☕';
+
+  @override
+  String get cafAlertNotificationBody =>
+      'Odpočet doběhl. Káva, sklenice vody, nebo pět minut na vzduchu? Vyber si.';
+
+  @override
+  String get legalSection => 'Právní informace';
+
+  @override
+  String get privacyPolicyLink => 'Zásady ochrany soukromí';
+
+  @override
+  String get termsOfUseLink => 'Podmínky použití';
+
+  @override
+  String get couldNotOpenLink => 'Nepodařilo se otevřít odkaz.';
 }

@@ -2,25 +2,34 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:home_widget/home_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_theme.dart';
 import 'coffee_stats_provider.dart';
+import 'caff_alert_home_widget.dart';
 import 'dashboard_screen.dart';
 import 'l10n/app_localizations.dart';
 import 'settings_screen.dart';
 import 'timer_screen.dart';
+import 'widget_launch_handler.dart';
 
 class MainShell extends StatefulWidget {
   const MainShell({
     required this.userEmail,
     required this.userId,
+    this.signedInAt,
     super.key,
   });
 
   final String userEmail;
   final String userId;
+
+  /// When the user signed in during this app run, or null when the session
+  /// was already there at start. Widget taps from before this moment were
+  /// made while signed out and are dropped, never logged later.
+  final DateTime? signedInAt;
 
   @override
   State<MainShell> createState() => _MainShellState();
@@ -29,10 +38,15 @@ class MainShell extends StatefulWidget {
 class _MainShellState extends State<MainShell> {
   static const _onboardingKeyPrefix = 'onboarding_completed_';
 
+  StreamSubscription<Uri?>? _widgetClicks;
+
   int _selectedIndex = 0;
   bool _isCheckingOnboarding = true;
   bool _showOnboarding = false;
   bool _isStartingOnboarding = false;
+  // A coffee logged from the widget counts as the first coffee of the
+  // onboarding, even before the onboarding flag has been read.
+  bool _loggedFromWidget = false;
 
   String get _onboardingKey => '$_onboardingKeyPrefix${widget.userId}';
   bool get _isLocalWebPreview =>
@@ -42,6 +56,99 @@ class _MainShellState extends State<MainShell> {
   void initState() {
     super.initState();
     unawaited(_loadOnboarding());
+    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) unawaited(_listenForWidget());
+      });
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    unawaited(CaffAlertHomeWidget.syncLanguage(
+      Localizations.localeOf(context).languageCode,
+    ));
+  }
+
+  Future<void> _listenForWidget() async {
+    _widgetClicks = HomeWidget.widgetClicked.listen(
+      (uri) => unawaited(_logFromWidget(uri)),
+      onError: (Object _) {},
+    );
+    try {
+      final uri = await HomeWidget.initiallyLaunchedFromHomeWidget();
+      if (mounted) await _logFromWidget(uri);
+    } catch (_) {
+      // Unsupported platform channel must not affect normal app launches.
+    }
+  }
+
+  Future<void> _logFromWidget(Uri? uri) async {
+    if (!mounted) return;
+    final state = context.read<CoffeeStatsProvider>();
+    if (state.userId != widget.userId) return;
+    try {
+      if (!await WidgetLaunchHandler.claim(
+        uri,
+        userId: widget.userId,
+        notBefore: widget.signedInAt,
+      )) {
+        return;
+      }
+      if (!mounted) return;
+      final success = await state.addCoffee();
+      if (!mounted) return;
+      if (success) {
+        _loggedFromWidget = true;
+        // The widget already logged the first coffee: finish the onboarding
+        // so it cannot log a second "first" one or hide the snackbar.
+        if (_showOnboarding || _isCheckingOnboarding) {
+          await _finishOnboarding();
+          if (!mounted) return;
+        }
+      }
+      final l10n = AppLocalizations.of(context);
+      final messenger = ScaffoldMessenger.of(context);
+      messenger
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          SnackBar(
+            content: Text(success ? l10n.coffeeLogged : l10n.actionFailed),
+            duration: const Duration(seconds: 6),
+            action: success
+                ? SnackBarAction(
+                    label: l10n.widgetUndo,
+                    onPressed: () async {
+                      // Exactly the coffee the widget added, even if another
+                      // device logged one in between (as in TimerScreen).
+                      final undone = await state.undoLastAddedCoffee();
+                      messenger
+                        ..hideCurrentSnackBar()
+                        ..showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              undone ? l10n.coffeeUndone : l10n.actionFailed,
+                            ),
+                          ),
+                        );
+                    },
+                  )
+                : null,
+          ),
+        );
+    } catch (_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(AppLocalizations.of(context).actionFailed)),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    unawaited(_widgetClicks?.cancel());
+    super.dispose();
   }
 
   Future<void> _loadOnboarding() async {
@@ -50,7 +157,8 @@ class _MainShellState extends State<MainShell> {
     if (!mounted) return;
     setState(() {
       _isCheckingOnboarding = false;
-      _showOnboarding = _isLocalWebPreview || !completed;
+      _showOnboarding =
+          !_loggedFromWidget && (_isLocalWebPreview || !completed);
     });
   }
 

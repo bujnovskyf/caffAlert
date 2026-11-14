@@ -5,8 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'auth_screen.dart';
+import 'caf_alert_notifications.dart';
 import 'coffee_repository.dart';
 import 'coffee_stats_provider.dart';
+import 'locale_controller.dart';
 import 'main_shell.dart';
 import 'password_update_screen.dart';
 
@@ -21,6 +23,9 @@ class _AuthGateState extends State<AuthGate> {
   late Session? _session;
   late final StreamSubscription<AuthState> _authSubscription;
   bool _isPasswordRecovery = false;
+  // Set when a session appears during this app run (sign-in, recovery link).
+  // Widget taps from before that moment were made while signed out.
+  DateTime? _signedInAt;
 
   @override
   void initState() {
@@ -30,6 +35,9 @@ class _AuthGateState extends State<AuthGate> {
     _authSubscription = auth.onAuthStateChange.listen((state) {
       if (!mounted) return;
       setState(() {
+        if (_session == null && state.session != null) {
+          _signedInAt = DateTime.now();
+        }
         _session = state.session;
         if (state.event == AuthChangeEvent.passwordRecovery) {
           _isPasswordRecovery = true;
@@ -59,11 +67,19 @@ class _AuthGateState extends State<AuthGate> {
     final user = session.user;
     return ChangeNotifierProvider(
       key: ValueKey(user.id),
-      create: (_) => CoffeeStatsProvider(
+      create: (providerContext) => CoffeeStatsProvider(
         userId: user.id,
         repository: CoffeeRepository(Supabase.instance.client),
+        cafAlert: LocalCafAlertNotifications(
+          preferredLocale: () =>
+              providerContext.read<LocaleController>().locale,
+        ),
       ),
-      child: MainShell(userEmail: user.email ?? '', userId: user.id),
+      child: MainShell(
+        userEmail: user.email ?? '',
+        userId: user.id,
+        signedInAt: _signedInAt,
+      ),
     );
   }
 }

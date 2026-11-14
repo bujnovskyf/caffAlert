@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'app_theme.dart';
+import 'caf_alert_notifications.dart';
 import 'coffee_stats_provider.dart';
 import 'l10n/app_localizations.dart';
 import 'locale_controller.dart';
@@ -28,6 +29,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
       'subject': 'CaffAlert — feedback',
     },
   );
+
+  static const _legalBaseUrl = 'https://caff-alert.netlify.app';
 
   final _nameController = TextEditingController();
   bool _profileInitialized = false;
@@ -130,14 +133,45 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           child: Text(localizations.english),
                         ),
                       ],
-                      onChanged: (value) {
+                      onChanged: (value) async {
                         if (value == null) return;
-                        context.read<LocaleController>().setLocale(
+                        final stats = context.read<CoffeeStatsProvider>();
+                        await context.read<LocaleController>().setLocale(
                               value == 'system' ? null : Locale(value),
                             );
+                        // A pending reminder should speak the new language.
+                        await stats.resyncCafAlert();
                       },
                     ),
                   ),
+                  if (coffeeState.cafAlertSupported) ...[
+                    const SizedBox(height: 16),
+                    _SectionCard(
+                      icon: Icons.notifications_none_rounded,
+                      title: localizations.notificationsSection,
+                      child: SwitchListTile.adaptive(
+                        contentPadding: EdgeInsets.zero,
+                        value: coffeeState.cafAlertEnabled,
+                        onChanged: coffeeState.isChangingCafAlert
+                            ? null
+                            : (value) => _toggleCafAlert(coffeeState, value),
+                        title: Text(
+                          localizations.cafAlertToggle,
+                          style: const TextStyle(
+                            color: AppColors.espresso,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        subtitle: Padding(
+                          padding: const EdgeInsets.only(top: 4),
+                          child: Text(
+                            localizations.cafAlertToggleHint,
+                            style: const TextStyle(color: AppColors.roast),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                   const SizedBox(height: 16),
                   _SectionCard(
                     icon: Icons.warning_amber_rounded,
@@ -241,7 +275,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ),
                             padding: const EdgeInsets.symmetric(vertical: 16),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
+                              borderRadius:
+                                  BorderRadius.circular(AppRadii.control),
                             ),
                           ),
                         ),
@@ -272,9 +307,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ),
                             padding: const EdgeInsets.symmetric(vertical: 16),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
+                              borderRadius:
+                                  BorderRadius.circular(AppRadii.control),
                             ),
                           ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  _SectionCard(
+                    icon: Icons.gavel_rounded,
+                    title: localizations.legalSection,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        OutlinedButton.icon(
+                          onPressed: () => _openLegal('privacy'),
+                          icon: const Icon(Icons.privacy_tip_outlined),
+                          label: Text(localizations.privacyPolicyLink),
+                        ),
+                        const SizedBox(height: 12),
+                        OutlinedButton.icon(
+                          onPressed: () => _openLegal('terms'),
+                          icon: const Icon(Icons.description_outlined),
+                          label: Text(localizations.termsOfUseLink),
                         ),
                       ],
                     ),
@@ -312,6 +369,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
+  Future<void> _toggleCafAlert(CoffeeStatsProvider state, bool value) async {
+    final localizations = AppLocalizations.of(context);
+    final result = await state.setCafAlertEnabled(value);
+    if (!mounted) return;
+    final messenger = ScaffoldMessenger.of(context)..hideCurrentSnackBar();
+    switch (result) {
+      case CafAlertToggleResult.enabled:
+        messenger.showSnackBar(
+          SnackBar(content: Text(localizations.cafAlertEnabledMessage)),
+        );
+      case CafAlertToggleResult.disabled:
+        break;
+      case CafAlertToggleResult.permissionDenied:
+        messenger.showSnackBar(
+          SnackBar(
+            content: Text(localizations.cafAlertPermissionDenied),
+            duration: const Duration(seconds: 8),
+            action: SnackBarAction(
+              label: localizations.openSystemSettings,
+              onPressed: state.openCafAlertSystemSettings,
+            ),
+          ),
+        );
+      case CafAlertToggleResult.failed:
+        messenger.showSnackBar(
+          SnackBar(content: Text(localizations.actionFailed)),
+        );
+    }
+  }
+
   Future<void> _signOut() async {
     final localizations = AppLocalizations.of(context);
     setState(() => _isSigningOut = true);
@@ -325,6 +412,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
       }
     } finally {
       if (mounted) setState(() => _isSigningOut = false);
+    }
+  }
+
+  Future<void> _openLegal(String page) async {
+    final localizations = AppLocalizations.of(context);
+    final isCzech = Localizations.localeOf(context).languageCode == 'cs';
+    final uri = Uri.parse('$_legalBaseUrl${isCzech ? '/cs' : ''}/$page');
+    final opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
+    if (!opened && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(localizations.couldNotOpenLink)),
+      );
     }
   }
 

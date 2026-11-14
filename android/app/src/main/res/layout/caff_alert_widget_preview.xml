@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Widget picker preview (API 31+): the default 4×2 layout with sample values.
+     Mirrors caff_alert_widget_wide.xml; the ring is the static 75 % drawable. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/caff_widget_background"
+    android:padding="10dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.47">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/caff_widget_preview_ring"
+            android:scaleType="fitCenter"
+            android:importantForAccessibility="no" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ibm_plex_mono_bold"
+                android:text="75%"
+                android:textColor="#FFFBF7"
+                android:textSize="24sp"
+                android:includeFontPadding="false" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ibm_plex_mono_bold"
+                android:text="CAF"
+                android:textColor="#D7BBA7"
+                android:textSize="9sp"
+                android:includeFontPadding="false" />
+        </LinearLayout>
+    </FrameLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.53"
+        android:layout_marginStart="10dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/caff_widget_state_stable"
+            android:textColor="#F4E9DE"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:ellipsize="end" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/caff_widget_zero_at_label"
+            android:textColor="#D7BBA7"
+            android:textSize="12sp"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:ellipsize="end" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/ibm_plex_mono_bold"
+            android:text="@string/caff_widget_preview_time"
+            android:textColor="#FFFBF7"
+            android:textSize="20sp"
+            android:includeFontPadding="false"
+            android:maxLines="1" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginTop="8dp"
+            android:minWidth="88dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:background="@drawable/caff_widget_button"
+            android:gravity="center"
+            android:text="@string/caff_widget_add"
+            android:textColor="#35241D"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:maxLines="1" />
+    </LinearLayout>
+</LinearLayout>

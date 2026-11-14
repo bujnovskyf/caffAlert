@@ -1,62 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 2×2: ring, then when CAF hits zero (small label + IBM Plex Mono time).
+     Before the first coffee and at zero only the status line is shown. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/caff_widget_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/caff_widget_background"
-    android:contentDescription="@string/caff_widget_default_description"
-    android:gravity="center_vertical"
-    android:orientation="vertical"
-    android:padding="16dp">
-
+    android:padding="10dp"
+    android:gravity="center"
+    android:orientation="vertical">
+    <ImageView
+        android:id="@+id/caff_widget_ring"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scaleType="fitCenter"
+        android:src="@drawable/caff_widget_preview_ring"
+        android:contentDescription="@string/caff_widget_default_description" />
     <TextView
-        android:id="@+id/caff_widget_title"
-        android:layout_width="wrap_content"
+        android:id="@+id/caff_widget_end_label"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/caff_widget_title"
-        android:textAllCaps="true"
-        android:textColor="#E6B980"
-        android:textSize="12sp"
-        android:textStyle="bold" />
-
+        android:layout_marginTop="3dp"
+        android:text="@string/caff_widget_zero_at_label"
+        android:textColor="#D7BBA7"
+        android:textSize="11sp"
+        android:includeFontPadding="false"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:visibility="gone" />
     <TextView
-        android:id="@+id/caff_widget_level"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/caff_widget_default_level"
-        android:textColor="#FFF8EE"
-        android:textSize="15sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/caff_widget_status"
+        android:id="@+id/caff_widget_end_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
-        android:text="@string/caff_widget_default_state"
-        android:textColor="#FFF8EE"
-        android:textSize="27sp"
-        android:textStyle="bold" />
-
-    <ProgressBar
-        android:id="@+id/caff_widget_progress"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="7dp"
-        android:layout_marginTop="10dp"
-        android:indeterminate="false"
-        android:max="100"
-        android:progress="0"
-        android:progressBackgroundTint="#5A392A"
-        android:progressTint="#D88A42" />
-
+        android:fontFamily="@font/ibm_plex_mono_bold"
+        android:textColor="#FFFBF7"
+        android:textSize="17sp"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:visibility="gone" />
     <TextView
-        android:id="@+id/caff_widget_detail"
-        android:layout_width="wrap_content"
+        android:id="@+id/caff_widget_status"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/caff_widget_empty"
-        android:textColor="#EADDD0"
-        android:textSize="13sp" />
+        android:layout_marginTop="3dp"
+        android:text="@string/caff_widget_state_empty"
+        android:textColor="#F4E9DE"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:includeFontPadding="false"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:gravity="center" />
 </LinearLayout>

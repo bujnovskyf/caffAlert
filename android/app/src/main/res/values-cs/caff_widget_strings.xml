@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="caff_widget_description">Tvoje CAF úroveň v CaffAlertu</string>
-    <string name="caff_widget_default_description">CAF úroveň v CaffAlertu</string>
-    <string name="caff_widget_default_level">CAF úroveň</string>
-    <string name="caff_widget_default_state">NA NULE</string>
-    <string name="caff_widget_level">CAF úroveň</string>
-    <string name="caff_widget_state_stable">STABILNÍ</string>
-    <string name="caff_widget_state_low">NÍZKÁ</string>
-    <string name="caff_widget_state_empty">NA NULE</string>
-    <string name="caff_widget_empty">Zaznamenej první kávu</string>
-    <string name="caff_widget_zero">Čas na další kávu</string>
-    <string name="caff_widget_last_coffee">Poslední káva · %1$s</string>
-    <string name="caff_widget_content_description">CAF úroveň v CaffAlertu: %1$s</string>
+    <string name="caff_widget_title">CaffAlert</string>
+    <string name="caff_widget_description">Hravý CAF level, čas, kdy bude na nule, a rychlý zápis kávy.</string>
+    <string name="caff_widget_default_description">CaffAlert, fiktivní CAF level</string>
+    <string name="caff_widget_state_stable">Stabilní</string>
+    <string name="caff_widget_state_low">CAF dochází</string>
+    <string name="caff_widget_state_empty">První káva?</string>
+    <string name="caff_widget_state_zero">CAF na nule</string>
+    <string name="caff_widget_empty">Zatím bez zapsané kávy</string>
+    <string name="caff_widget_zero">Káva, voda, nebo pauza?</string>
+    <string name="caff_widget_zero_at_label">CAF na nule v</string>
+    <string name="caff_widget_zero_tomorrow_label">CAF na nule zítra v</string>
+    <string name="caff_widget_zero_at">CAF na nule v %1$s</string>
+    <string name="caff_widget_zero_tomorrow_at">CAF na nule zítra v %1$s</string>
+    <string name="caff_widget_content_description">CAF %1$d procent. %2$s. Fiktivní herní ukazatel.</string>
+    <string name="caff_widget_add">+ Káva</string>
+    <string name="caff_widget_add_description">Zapsat kávu v CaffAlertu</string>
 </resources>

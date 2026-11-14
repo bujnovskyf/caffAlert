@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="160dp" android:height="160dp"
+    android:viewportWidth="320" android:viewportHeight="320">
+    <path
+        android:pathData="M160,16 A144,144 0,1 1,160 304 A144,144 0,1 1,160 16"
+        android:strokeWidth="24" android:strokeColor="#594035"
+        android:fillColor="@android:color/transparent" />
+    <path
+        android:pathData="M160,31 L160,36 M289,160 L284,160 M160,289 L160,284 M31,160 L36,160"
+        android:strokeWidth="2" android:strokeColor="#6EC2865D"
+        android:strokeLineCap="round" android:fillColor="@android:color/transparent" />
+    <!-- 75% clockwise from noon, matching the live bitmap and CafGaugePainter. -->
+    <group android:rotation="-90" android:pivotX="160" android:pivotY="160">
+        <path
+            android:pathData="M304,160 A144,144 0,1 1,160 16"
+            android:strokeWidth="24" android:strokeLineCap="round"
+            android:fillColor="@android:color/transparent">
+            <aapt:attr name="android:strokeColor">
+                <gradient android:type="sweep" android:centerX="160" android:centerY="160">
+                    <item android:offset="0" android:color="#C2865D" />
+                    <item android:offset="0.55" android:color="#6D4938" />
+                    <item android:offset="1" android:color="#35241D" />
+                </gradient>
+            </aapt:attr>
+        </path>
+    </group>
+    <path
+        android:pathData="M10.24,160 A5.76,5.76 0,1 0,21.76 160 A5.76,5.76 0,1 0,10.24 160"
+        android:fillColor="#F2FFFBF7" />
+</vector>

@@ -1,8 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:description="@string/caff_widget_description"
-    android:minWidth="180dp"
-    android:minHeight="110dp"
-    android:resizeMode="horizontal|vertical"
-    android:updatePeriodMillis="1800000"
-    android:widgetCategory="home_screen" />
+<?xml version="1.0" ?>
+<!-- Default 4×2 (wide layout with "+ Coffee"): 250dp = 4 cells by the 70n − 30
+     rule, matching WIDE_MIN_WIDTH_DP in CaffAlertWidgetProvider. Still
+     resizable down to 2×2 (130dp). -->
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android" android:description="@string/caff_widget_description" android:initialLayout="@layout/caff_alert_widget_wide" android:minWidth="250dp" android:minHeight="130dp" android:minResizeWidth="130dp" android:minResizeHeight="130dp" android:resizeMode="horizontal|vertical" android:updatePeriodMillis="1800000" android:widgetCategory="home_screen"/>

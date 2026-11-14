@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="caff_widget_title">CaffAlert</string>
-    <string name="caff_widget_description">Your CaffAlert CAF level</string>
-    <string name="caff_widget_default_description">CaffAlert CAF level</string>
-    <string name="caff_widget_default_level">CAF level</string>
-    <string name="caff_widget_default_state">EMPTY</string>
-    <string name="caff_widget_level">CAF level</string>
-    <string name="caff_widget_state_stable">STABLE</string>
-    <string name="caff_widget_state_low">LOW</string>
-    <string name="caff_widget_state_empty">EMPTY</string>
-    <string name="caff_widget_empty">Log your first coffee</string>
-    <string name="caff_widget_zero">Time for another coffee</string>
-    <string name="caff_widget_last_coffee">Last coffee · %1$s</string>
-    <string name="caff_widget_content_description">CaffAlert CAF level: %1$s</string>
+    <string name="caff_widget_description">A playful CAF level, the time it hits zero and quick coffee logging.</string>
+    <string name="caff_widget_default_description">CaffAlert fictional CAF level</string>
+    <string name="caff_widget_state_stable">Steady</string>
+    <string name="caff_widget_state_low">CAF running low</string>
+    <string name="caff_widget_state_empty">Your first coffee?</string>
+    <string name="caff_widget_state_zero">CAF at zero</string>
+    <string name="caff_widget_empty">No coffee logged yet</string>
+    <string name="caff_widget_zero">Coffee, water, or a break?</string>
+    <!-- Shown in a smaller font in front of the end time (IBM Plex Mono). -->
+    <string name="caff_widget_zero_at_label">CAF hits zero at</string>
+    <string name="caff_widget_zero_tomorrow_label">CAF hits zero tomorrow at</string>
+    <string name="caff_widget_zero_at">CAF hits zero at %1$s</string>
+    <string name="caff_widget_zero_tomorrow_at">CAF hits zero tomorrow at %1$s</string>
+    <string name="caff_widget_content_description">CAF %1$d percent. %2$s. Fictional game metric.</string>
+    <string name="caff_widget_add">+ Coffee</string>
+    <string name="caff_widget_add_description">Log a coffee in CaffAlert</string>
+    <!-- Sample values for the widget picker preview only. -->
+    <string name="caff_widget_preview_time" translatable="false">14:30</string>
 </resources>
