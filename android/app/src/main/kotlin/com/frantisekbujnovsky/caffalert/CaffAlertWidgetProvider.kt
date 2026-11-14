@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.widget.RemoteViews
+import java.text.SimpleDateFormat
+import java.util.Date
 import es.antonborri.home_widget.HomeWidgetProvider
 import java.util.Locale
 import kotlin.math.roundToInt
@@ -52,36 +54,49 @@ class CaffAlertWidgetProvider : HomeWidgetProvider() {
         return RemoteViews(context.packageName, R.layout.caff_alert_widget).apply {
             setTextViewText(
                 R.id.caff_widget_level,
-                context.getString(R.string.caff_widget_level, level),
+                context.getString(R.string.caff_widget_level),
+            )
+            setTextViewText(
+                R.id.caff_widget_status,
+                stateText(context, latestCoffeeMillis, level),
             )
             setProgressBar(R.id.caff_widget_progress, 100, level, false)
             setTextViewText(
-                R.id.caff_widget_status,
-                statusText(context, latestCoffeeMillis, remainingMillis, level),
+                R.id.caff_widget_detail,
+                detailText(context, latestCoffeeMillis, level),
             )
             setContentDescription(
                 R.id.caff_widget_root,
                 context.getString(
                     R.string.caff_widget_content_description,
-                    level,
+                    stateText(context, latestCoffeeMillis, level),
                 ),
             )
             setOnClickPendingIntent(R.id.caff_widget_root, launchIntent(context))
         }
     }
 
-    private fun statusText(
+    private fun stateText(
         context: Context,
         latestCoffeeMillis: Long?,
-        remainingMillis: Long,
+        level: Int,
+    ): String = when {
+        latestCoffeeMillis == null || level == 0 ->
+            context.getString(R.string.caff_widget_state_empty)
+        level <= LOW_LEVEL_THRESHOLD -> context.getString(R.string.caff_widget_state_low)
+        else -> context.getString(R.string.caff_widget_state_stable)
+    }
+
+    private fun detailText(
+        context: Context,
+        latestCoffeeMillis: Long?,
         level: Int,
     ): String = when {
         latestCoffeeMillis == null -> context.getString(R.string.caff_widget_empty)
         level == 0 -> context.getString(R.string.caff_widget_zero)
-        level <= LOW_LEVEL_THRESHOLD -> context.getString(R.string.caff_widget_low)
         else -> context.getString(
-            R.string.caff_widget_remaining,
-            formatRemaining(remainingMillis),
+            R.string.caff_widget_last_coffee,
+            formatTime(latestCoffeeMillis),
         )
     }
 
@@ -98,12 +113,8 @@ class CaffAlertWidgetProvider : HomeWidgetProvider() {
         )
     }
 
-    private fun formatRemaining(remainingMillis: Long): String {
-        val totalMinutes = remainingMillis / 60_000L
-        val hours = totalMinutes / 60L
-        val minutes = totalMinutes % 60L
-        return String.format(Locale.getDefault(), "%d:%02d", hours, minutes)
-    }
+    private fun formatTime(timestamp: Long): String =
+        SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date(timestamp))
 
     private companion object {
         const val LATEST_COFFEE_KEY = "caff_alert_latest_coffee_millis"

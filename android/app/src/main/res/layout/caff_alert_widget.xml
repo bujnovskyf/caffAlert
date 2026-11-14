@@ -26,7 +26,17 @@
         android:layout_marginTop="5dp"
         android:text="@string/caff_widget_default_level"
         android:textColor="#FFF8EE"
-        android:textSize="25sp"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/caff_widget_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:text="@string/caff_widget_default_state"
+        android:textColor="#FFF8EE"
+        android:textSize="27sp"
         android:textStyle="bold" />
 
     <ProgressBar
@@ -42,7 +52,7 @@
         android:progressTint="#D88A42" />
 
     <TextView
-        android:id="@+id/caff_widget_status"
+        android:id="@+id/caff_widget_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
