@@ -1,153 +1,160 @@
 # CaffAlert
 
-CaffAlert je responzivní Flutter deníček kofeinového rytmu s CAF levelem a statistikami. Web je primární platforma, data a přihlášení zajišťuje Supabase. Rozhraní podporuje češtinu i angličtinu.
+A web-first coffee diary that turns your daily coffee rhythm into a playful CAF countdown and clear personal statistics.
 
-## Co potřebuješ
+Built by **František Bujnovský**, web analyst working with GA4, GTM, SQL and data quality. The [analytics case study](docs/case-study.md) explains the event model, metric definitions, security boundaries and example SQL analyses.
 
-- Flutter `3.47.9` (stejná verze je připnutá pro Netlify)
-- Node.js 20+
-- Docker Desktop, OrbStack nebo jiný Docker-kompatibilní runtime pro lokální Supabase
+**Live demo:** [caff-alert.netlify.app](https://caff-alert.netlify.app)
 
-## Lokální spuštění
+[Česká dokumentace a provozní poznámky](docs/README.cs.md)
 
-1. Nainstaluj projektově připnutý Supabase CLI:
+## What it does
 
-   ```sh
-   npm ci
-   ```
+Log a coffee, watch a four-hour countdown, and review your daily rhythm across devices with a Supabase account. Web is the primary platform; Android adds a home-screen widget.
 
-2. Spusť lokální Supabase a obnov databázi z migrací:
+- Email sign-up, sign-in, password recovery and account deletion.
+- One-tap coffee logging, undo of the latest entry, and correction/removal of recent entries in the UI.
+- Today, month and total counts; first/last coffee today and average interval.
+- Realtime refresh of coffee records across signed-in clients.
+- Responsive layouts, Czech/English interface and editable display name.
+- Android widget showing the latest coffee countdown.
 
-   ```sh
-   npm run db:start
-   npm run db:reset
-   npm run db:test
-   ```
+<!-- screenshot: web-dashboard -->
+Web dashboard — TODO: `docs/screenshots/web-dashboard.png`.
 
-3. Připrav lokální konfiguraci:
+<!-- screenshot: android -->
+Android app — TODO: `docs/screenshots/android.png`.
 
-   ```sh
-   cp .env.example .env
-   npx supabase status
-   ```
+<!-- screenshot: widget -->
+Home-screen widget — TODO: `docs/screenshots/widget.png`.
 
-   Do `.env` zkopíruj lokální API URL a klientský `anon` klíč. Hodnotu lokálního anon klíče vlož pod název `SUPABASE_PUBLISHABLE_KEY`; parametr SDK podporuje jak nový publishable klíč, tak lokální legacy anon klíč.
+## Stack and architecture
 
-4. Spusť aplikaci:
+Flutter **3.47.9** / Dart, Provider, Supabase Auth + PostgreSQL + Realtime, `home_widget` for Android, and optional Sentry error reporting. Netlify builds and serves the web application and static privacy/account-deletion pages.
 
-   ```sh
-   flutter run -d chrome --web-port 8765 --dart-define-from-file=.env
-   ```
-
-Lokální potvrzovací e-maily a obnovu hesla najdeš v Mailpit na `http://localhost:54324`.
-
-## Obnovení nové vzdálené databáze
-
-Původní Supabase endpoint projektu už neexistuje a repozitář neobsahoval migrace ani zálohu. Tento projekt proto obnovuje čistou databázi z verzovaných SQL migrací; původní účty a data se nepřenášejí.
-
-1. V Supabase Dashboardu založ nový projekt a bezpečně si ulož databázové heslo.
-2. Z kořene repozitáře spusť:
-
-   ```sh
-   npx supabase login
-   npx supabase link --project-ref <novy-project-ref>
-   npx supabase db push --dry-run
-   npx supabase db push
-   ```
-
-3. V panelu **Connect** zkopíruj Project URL a publishable klíč `sb_publishable_…` do `.env`:
-
-   ```dotenv
-   SUPABASE_URL=https://<novy-project-ref>.supabase.co
-   SUPABASE_PUBLISHABLE_KEY=sb_publishable_...
-   SENTRY_DSN=
-   ```
-
-4. V **Authentication → URL Configuration** nastav:
-
-   - Site URL na produkční Netlify adresu;
-   - Redirect URLs alespoň na produkční adresu a `http://localhost:8765/**`;
-   - povolenou registraci e-mailem a potvrzení e-mailu.
-
-5. Před veřejným spuštěním nastav vlastní SMTP. Výchozí Supabase mailer je určený jen pro vývoj a má nízké limity.
-
-Schéma vytváří `profiles`, `coffee_logs`, automatický profil nového uživatele, RLS pravidla, Realtime publikaci a funkci pro bezpečné smazání poslední kávy. Produkční databázi neplň přes `--include-seed`; `seed.sql` je záměrně bez uživatelských dat.
-
-> `npx supabase db reset --linked` maže vzdálenou databázi. V tomto projektu ho nepoužívej na produkčním prostředí.
-
-## Před vydáním: účet a dokumenty
-
-- V Nastavení lze účet smazat. Po nasazení poslední migrace funkce odstraní přihlašovací účet, profil i všechny záznamy kávy.
-- Pro Google Play je vedle akce v aplikaci potřeba veřejná webová stránka pro žádost o smazání účtu. Tento repozitář ji nasazuje na `/delete-account`; její finální HTTPS URL vlož do Play Console.
-- Veřejné podmínky a zásady ochrany soukromí jsou přímo v Netlify deployi na `/terms` a `/privacy`. Zdroje jsou v `web/`; při přidání analytiky, reklam, plateb nebo dalšího SDK text aktualizuj.
-- CAF level je v aplikaci výslovně označený jako fiktivní herní ukazatel založený jen na čase od posledního záznamu. Není zdravotním měřením ani doporučením.
-
-## Netlify
-
-V nastavení webu přidej:
-
-- `SUPABASE_URL`
-- `SUPABASE_PUBLISHABLE_KEY`
-- volitelně `SENTRY_DSN`
-- volitelně `SENTRY_AUTH_TOKEN`, pokud se mají uploadovat source mapy
-
-Netlify používá `netlify_build.sh`, který stáhne přesně Flutter `3.47.9`, spustí `flutter pub get` a vytvoří release web build. SPA redirect je definovaný v `netlify.toml`.
-
-### Vlastní subdoména a veřejné dokumenty
-
-Před nasazením přidej v Netlify zamýšlenou subdoménu (např. `caffalert.example.cz`) jako Production domain a v DNS jejího parent doménového jména nastav CNAME podle hodnoty, kterou Netlify ukáže. Potom:
-
-1. Doplň tuto HTTPS adresu jako Supabase **Site URL** a do **Redirect URLs** přidej `https://<tvoje-subdomena>/**`.
-2. V Netlify zapni notifikaci pro formulář `caffalert-account-deletion` na `bujnovskyf@gmail.com`. Formulář je na `/delete-account` a slouží lidem, kteří už nemají přístup do aplikace.
-3. Po prvním deployi otevři a ověř všechny veřejné cesty: `/privacy`, `/terms`, `/delete-account` a `/delete-account/sent/`.
-
-Právní stránky jsou přímo součástí deploye a obsahují údaje provozovatele František Bujnovský, IČO 17800218. Před vydáním je vhodné nechat jejich konečné znění posoudit právníkem, zejména pokud později přidáš analytiku, reklamu, platby nebo jiné SDK.
-
-Lokální release build:
-
-```sh
-flutter build web --release --dart-define-from-file=.env
+```mermaid
+flowchart TD
+  UI[Flutter web / Android screens] --> State[CoffeeStatsProvider]
+  State --> Metrics[CoffeeMetrics: pure Dart calculations]
+  State --> Repo[CoffeeRepository]
+  UI --> Auth[Supabase Auth]
+  Repo --> DB[(PostgreSQL: profiles + coffee_logs / RLS)]
+  DB --> RT[Supabase Realtime]
+  RT --> State
+  State --> Bridge[home_widget bridge]
+  Bridge --> Widget[Android home-screen widget]
 ```
 
-## Testy a kontroly
+## How CAF level works
 
-```sh
-flutter analyze
-flutter test
-npm run db:test       # vyžaduje spuštěný lokální Supabase
-npm run db:lint       # vyžaduje spuštěný lokální Supabase
+CAF level is a fictional game metric, **not medical advice or a measurement of caffeine in the body**. It only uses time since the latest recorded coffee; drinks do not stack and no caffeine dose is stored.
+
+With `D = 4 hours`, `elapsed = now UTC − latest coffee UTC`:
+
+```text
+remaining = max(0, D − elapsed)
+CAF % = clamp(round(100 × remaining milliseconds / D milliseconds), 0, 100)
 ```
 
-Flutter testy pokrývají časovač, denní a měsíční statistiky, návrat k předchozí kávě, provider a český/anglický onboarding. SQL test ověřuje schéma a oddělení dat dvou uživatelů pomocí RLS.
+No records means zero. A coffee recorded one hour ago gives 75%; after four hours it gives 0%. Removing the latest entry resumes the countdown from the previous entry. `CAFF_LEVEL_DURATION_SECONDS` can override the duration at build time; non-positive values fall back to four hours. See [all metric definitions and edge cases](docs/case-study.md#metric-definitions).
 
-## Android
+## Quick start
 
-Android používá application ID `com.frantisekbujnovsky.caffalert`. Debug APK sestavíš stejnými `dart-define` hodnotami:
+Prerequisites: Flutter **3.47.9** (also pinned in `netlify_build.sh` and workflows), Node.js 20+, and a running Docker-compatible runtime. Commands below use only local Supabase.
+
+```sh
+git clone https://github.com/bujnovskyf/caffAlert.git
+cd caffAlert
+npm ci
+npm run db:start
+npm run db:reset
+npm run db:test
+cp .env.example .env
+npx supabase status
+```
+
+Copy the local API URL and local `anon` key from status into `.env` as `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY`. The latter accepts the local legacy anon key as well as a publishable key. Leave `SENTRY_DSN` empty for local development.
+
+```sh
+flutter pub get
+flutter run -d chrome --web-port 8765 --dart-define-from-file=.env
+```
+
+Confirmation and recovery emails appear in local Mailpit at `http://localhost:54324`. Stop the local stack with `npx supabase stop`. Resetting the local database discards its data. See the [Czech operations guide](docs/README.cs.md) for Netlify and deployment configuration.
+
+## Android install and build
+
+Download `app-release.apk` from [GitHub Releases](https://github.com/bujnovskyf/caffAlert/releases) when a release is available. Open it on Android and allow installation from that download source if prompted. Add the CaffAlert widget through your launcher's widget picker after signing in and recording a coffee.
+
+Build a debug APK yourself with the same `.env` configuration:
 
 ```sh
 flutter build apk --debug --dart-define-from-file=.env
 ```
 
-Pro podepsaný release vytvoř mimo Git soubor `android/key.properties`:
+Output: `build/app/outputs/flutter-apk/app-debug.apk`. For a physical phone, the Supabase URL must be reachable from that phone; its `localhost` refers to the phone itself. The standard Android emulator reaches the host at `10.0.2.2`.
+
+For a signed release, create an untracked `android/key.properties`:
 
 ```properties
-storeFile=/absolutni/cesta/upload-keystore.jks
-storePassword=...
-keyAlias=upload
-keyPassword=...
+storeFile=/absolute/path/to/upload-keystore.jks
+storePassword=<keystore password>
+keyAlias=<key alias>
+keyPassword=<key password>
 ```
-
-Potom spusť:
 
 ```sh
-flutter build appbundle --release --dart-define-from-file=.env
+flutter build apk --release --dart-define-from-file=.env
 ```
 
-Bez `key.properties` se release varianta záměrně nepodepisuje debug klíčem.
+Output: `build/app/outputs/flutter-apk/app-release.apk`. `android/app/build.gradle` reads these four properties; without the file it does not fall back to debug signing.
 
-## Konfigurace a bezpečnost
+### Release automation
 
-- `.env`, `sentry.properties`, Android keystory a `key.properties` jsou ignorované Gitem.
-- Publishable klíč je určený pro klientské aplikace; ochranu dat zajišťují RLS pravidla.
-- Supabase secret/service-role klíč nikdy nevkládej do Flutter aplikace ani do Netlify web buildu.
-- Sentry je volitelné, v release nemá debug výpisy a neposílá výchozí osobní údaje.
+The [release workflow](.github/workflows/release.yml) runs on tags matching `v*`, builds with JDK 17 and Flutter 3.47.9, and attaches the signed APK to the matching GitHub Release. Configure these repository secrets before tagging:
+
+| Secret | Purpose |
+| --- | --- |
+| `ANDROID_KEYSTORE_BASE64` | Base64-encoded signing keystore |
+| `ANDROID_KEYSTORE_PASSWORD` | Keystore password |
+| `ANDROID_KEY_ALIAS` | Signing key alias |
+| `ANDROID_KEY_PASSWORD` | Signing key password |
+| `SUPABASE_URL` | Backend URL compiled into the release |
+| `SUPABASE_PUBLISHABLE_KEY` | Public client key compiled into the release |
+
+The workflow creates `.env` and `android/key.properties` only during the build and removes them and the decoded keystore afterward. Never put a service-role/secret Supabase key in a client build. Keep the signing key backed up securely for future updates. The tag does not change `pubspec.yaml`'s app version; maintain version name/code before release.
+
+## Tests and CI
+
+```sh
+dart format --output=none --set-exit-if-changed lib test
+flutter analyze
+flutter test --coverage
+npm run db:test   # local Supabase must be running
+npm run db:lint   # local Supabase must be running
+```
+
+Flutter tests cover countdown/statistics, provider behavior, authentication localization and narrow layouts. The pgTAP suite has 14 assertions covering schema, ownership isolation, recent timestamp edits and account deletion. See [coverage and gaps](docs/case-study.md#data-quality-and-security).
+
+[CI](.github/workflows/ci.yml) runs formatting, analysis and tests on pushes and pull requests, uploads coverage and a debug APK, and runs the SQL tests in a separate local Supabase job. Its debug APK uses placeholder backend configuration; build locally or use a signed release to connect to a real backend.
+
+## Project structure
+
+```text
+lib/                         UI, state, repository, metrics, localization
+android/                     Android build and native widget
+assets/                      Fonts and brand artwork
+supabase/migrations/         Versioned schema, RLS and database functions
+supabase/tests/database/     pgTAP SQL tests
+test/                        Flutter unit and widget tests
+web/                         Web shell and static public/legal pages
+docs/                        Case study and Czech operations guide
+.github/workflows/           CI and signed APK releases
+netlify_build.sh             Pinned Flutter web build
+```
+
+## License and assets
+
+Project code is available under the [MIT License](LICENSE), copyright © 2026 František Bujnovský.
+
+Bundled third-party fonts retain **SIL Open Font License 1.1**, as confirmed by their embedded license metadata: [Raleway](https://github.com/google/fonts/blob/main/ofl/raleway/OFL.txt), copyright 2010 The Raleway Project Authors, reserved name “Raleway”; and [IBM Plex Mono](https://github.com/google/fonts/blob/main/ofl/ibmplexmono/OFL.txt), copyright 2017 IBM Corp., reserved name “Plex”. These font licenses are separate from the project's MIT license. `assets/brand/caffalert-icon-master.png` has no separate license/provenance notice in the repository; its provenance should be confirmed before reuse outside this project. Package and platform assets retain their respective licenses.
