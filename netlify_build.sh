@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-FLUTTER_VERSION="${FLUTTER_VERSION:-3.38.5}"
+FLUTTER_VERSION="${FLUTTER_VERSION:-3.47.9}"
 FLUTTER_DIR="${PWD}/.netlify/flutter"
 
 if [[ ! -x "${FLUTTER_DIR}/bin/flutter" ]]; then

@@ -4,7 +4,7 @@ CaffAlert je responzivní Flutter deníček kofeinového rytmu s CAF levelem a s
 
 ## Co potřebuješ
 
-- Flutter `3.38.5` (stejná verze je připnutá pro Netlify)
+- Flutter `3.47.9` (stejná verze je připnutá pro Netlify)
 - Node.js 20+
 - Docker Desktop, OrbStack nebo jiný Docker-kompatibilní runtime pro lokální Supabase
 
@@ -91,7 +91,7 @@ V nastavení webu přidej:
 - volitelně `SENTRY_DSN`
 - volitelně `SENTRY_AUTH_TOKEN`, pokud se mají uploadovat source mapy
 
-Netlify používá `netlify_build.sh`, který stáhne přesně Flutter `3.38.5`, spustí `flutter pub get` a vytvoří release web build. SPA redirect je definovaný v `netlify.toml`.
+Netlify používá `netlify_build.sh`, který stáhne přesně Flutter `3.47.9`, spustí `flutter pub get` a vytvoří release web build. SPA redirect je definovaný v `netlify.toml`.
 
 ### Vlastní subdoména a veřejné dokumenty
 
