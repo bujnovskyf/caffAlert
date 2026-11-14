@@ -34,19 +34,13 @@ select is(
   'another user cannot read the owner coffee log'
 );
 
-select is(
-  (
-    with changed as (
-      update public.coffee_logs
-      set created_at = now()
-      where user_id = '11111111-1111-4111-8111-111111111111'
-      returning id
-    )
-    select count(*)::bigint from changed
-  ),
-  0::bigint,
-  'another user cannot update the owner coffee log'
-);
+with changed as (
+  update public.coffee_logs
+  set created_at = now()
+  where user_id = '11111111-1111-4111-8111-111111111111'
+  returning id
+)
+select is(count(*)::bigint, 0::bigint, 'another user cannot update the owner coffee log') from changed;
 
 delete from public.coffee_logs
 where user_id = '11111111-1111-4111-8111-111111111111';
@@ -86,19 +80,13 @@ select is(
 set local role authenticated;
 set local request.jwt.claim.sub = '11111111-1111-4111-8111-111111111111';
 
-select is(
-  (
-    with changed as (
-      update public.coffee_logs
-      set created_at = now() - interval '1 hour'
-      where user_id = '11111111-1111-4111-8111-111111111111'
-      returning id
-    )
-    select count(*)::bigint from changed
-  ),
-  1::bigint,
-  'owner can correct a coffee from the last 24 hours'
-);
+with changed as (
+  update public.coffee_logs
+  set created_at = now() - interval '1 hour'
+  where user_id = '11111111-1111-4111-8111-111111111111'
+  returning id
+)
+select is(count(*)::bigint, 1::bigint, 'owner can correct a coffee from the last 24 hours') from changed;
 
 insert into public.coffee_logs (user_id, created_at)
 values (
@@ -106,20 +94,14 @@ values (
   now() - interval '25 hours'
 );
 
-select is(
-  (
-    with changed as (
-      update public.coffee_logs
-      set created_at = now()
-      where user_id = '11111111-1111-4111-8111-111111111111'
-        and created_at < now() - interval '24 hours'
-      returning id
-    )
-    select count(*)::bigint from changed
-  ),
-  0::bigint,
-  'owner cannot correct a coffee older than 24 hours'
-);
+with changed as (
+  update public.coffee_logs
+  set created_at = now()
+  where user_id = '11111111-1111-4111-8111-111111111111'
+    and created_at < now() - interval '24 hours'
+  returning id
+)
+select is(count(*)::bigint, 0::bigint, 'owner cannot correct a coffee older than 24 hours') from changed;
 
 select lives_ok(
   $$select public.delete_own_account()$$,
