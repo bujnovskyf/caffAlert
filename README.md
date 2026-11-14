@@ -107,7 +107,7 @@ keyPassword=<key password>
 flutter build apk --release --dart-define-from-file=.env
 ```
 
-Output: `build/app/outputs/flutter-apk/app-release.apk`. `android/app/build.gradle` reads these four properties; without the file it does not fall back to debug signing.
+Output: `build/app/outputs/flutter-apk/app-release.apk`. `android/app/build.gradle.kts` reads these four properties; without the file it does not fall back to debug signing.
 
 ### Release automation
 
