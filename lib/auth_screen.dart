@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'app_theme.dart';
+import 'auth_redirect.dart';
 import 'l10n/app_localizations.dart';
 import 'locale_controller.dart';
 
@@ -38,7 +39,7 @@ class _AuthScreenState extends State<AuthScreen> {
     super.dispose();
   }
 
-  String? get _redirectUrl => kIsWeb ? Uri.base.origin : null;
+  String? get _redirectUrl => authRedirectUrl();
 
   void _setMode(_AuthMode mode) {
     setState(() {

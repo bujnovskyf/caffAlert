@@ -27,6 +27,16 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <!-- Email confirmation and password reset links return here.
+                 Keep in sync with nativeAuthRedirectUrl in lib/auth_redirect.dart. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data
+                    android:scheme="com.frantisekbujnovsky.caffalert"
+                    android:host="login-callback"/>
+            </intent-filter>
         </activity>
         <receiver
             android:name=".CaffAlertWidgetProvider"
