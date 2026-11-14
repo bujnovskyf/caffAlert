@@ -101,6 +101,8 @@ class _MainShellState extends State<MainShell> {
       if (!mounted) return;
       if (success) {
         _loggedFromWidget = true;
+        // Show the timer so the fresh 100 % is visible right away.
+        setState(() => _selectedIndex = 0);
         // The widget already logged the first coffee: finish the onboarding
         // so it cannot log a second "first" one or hide the snackbar.
         if (_showOnboarding || _isCheckingOnboarding) {
