@@ -152,5 +152,5 @@ Stav k 14. 11. 2026, ověřeno v `lib/settings_screen.dart`, `lib/main.dart`, `l
 
 **Otevřené:**
 
-1. **E-mailová služba.** README žádá před spuštěním vlastní SMTP. Až bude nastavené, zásady (bod 3) musí uvést konkrétního poskytovatele. Teď formulace „If we configure…“ platí, jen pokud SMTP opravdu není.
+1. ~~E-mailová služba~~: od 15. 11. 2026 posílá Supabase e-maily přes vlastní SMTP Hostinger (`noreply@frantisekbujnovsky.com`, DKIM/SPF/DMARC v pořádku); zásady (bod 3, EN i CS) Hostinger uvádějí, platné od 15. 11. 2026.
 2. **Distribuce přes Google Play.** Volitelné: zmínit, že při stažení z Google Play zpracovává údaje o instalaci Google jako samostatný správce (na Google zásady odkázat).
