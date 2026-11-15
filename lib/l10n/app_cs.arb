@@ -61,7 +61,7 @@
   "statsSubtitle": "Jednoduchý přehled tvého kávového dne.",
   "welcomeName": "Ahoj, {name}",
   "@welcomeName": {"placeholders": {"name": {"type": "String"}}},
-  "coffeesToday": "Káv dnes",
+  "coffeesToday": "Kávy dnes",
   "coffeeStatus": "Kávový status",
   "coffeeStatusNoCoffeeToday": "Dnešek bez kávy",
   "coffeeStatusCalm": "V pohodě",

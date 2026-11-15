@@ -197,7 +197,7 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get coffeesToday => 'Káv dnes';
+  String get coffeesToday => 'Kávy dnes';
 
   @override
   String get coffeeStatus => 'Kávový status';

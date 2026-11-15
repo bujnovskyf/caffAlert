@@ -115,7 +115,7 @@ void main() {
 
     await tester.tap(find.text('Statistiky'));
     await tester.pump();
-    expect(find.text('Káv dnes'), findsOneWidget);
+    expect(find.text('Kávy dnes'), findsOneWidget);
     expect(find.text('Kávy z posledních 24 hodin'), findsOneWidget);
     expect(find.byIcon(Icons.edit_outlined), findsOneWidget);
     expect(find.byIcon(Icons.delete_outline_rounded), findsOneWidget);
