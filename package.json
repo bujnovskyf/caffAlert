@@ -8,6 +8,6 @@
     "db:lint": "supabase db lint --local"
   },
   "devDependencies": {
-    "supabase": "2.116.0"
+    "supabase": "3.1.0"
   }
 }
