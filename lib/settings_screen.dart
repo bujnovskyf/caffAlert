@@ -1,8 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'app_config.dart';
 import 'app_theme.dart';
 import 'caf_alert_notifications.dart';
 import 'coffee_stats_provider.dart';
@@ -19,9 +21,6 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  static final _playStoreUri = Uri.parse(
-    'https://play.google.com/store/apps/details?id=com.frantisekbujnovsky.caffalert',
-  );
   static final _feedbackUri = Uri(
     scheme: 'mailto',
     path: 'bujnovskyf@gmail.com',
@@ -220,7 +219,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           child: Divider(height: 1),
                         ),
                         Text(
-                          localizations.rateAppHint,
+                          kIsWeb
+                              ? localizations.androidAppHint
+                              : localizations.rateAppHint,
                           style:
                               Theme.of(context).textTheme.bodyMedium?.copyWith(
                                     color: AppColors.roast,
@@ -228,9 +229,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         const SizedBox(height: 16),
                         OutlinedButton.icon(
-                          onPressed: _rateApp,
-                          icon: const Icon(Icons.star_outline_rounded),
-                          label: Text(localizations.rateApp),
+                          onPressed: _openGooglePlay,
+                          icon: Icon(
+                            kIsWeb
+                                ? Icons.android_rounded
+                                : Icons.star_outline_rounded,
+                          ),
+                          label: Text(
+                            kIsWeb
+                                ? localizations.getOnGooglePlay
+                                : localizations.rateApp,
+                          ),
                         ),
                       ],
                     ),
@@ -427,9 +436,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
-  Future<void> _rateApp() async {
+  Future<void> _openGooglePlay() async {
     final opened = await launchUrl(
-      _playStoreUri,
+      googlePlayUri,
       mode: LaunchMode.externalApplication,
     );
     if (!opened && mounted) {

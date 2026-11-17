@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'app_config.dart';
 import 'app_theme.dart';
 import 'auth_redirect.dart';
 import 'l10n/app_localizations.dart';
@@ -466,6 +467,17 @@ class _AuthCard extends StatelessWidget {
                       ),
                     ),
                   if (kIsWeb) ...[
+                    const SizedBox(height: 12),
+                    Center(
+                      child: OutlinedButton.icon(
+                        onPressed: () => launchUrl(
+                          googlePlayUri,
+                          mode: LaunchMode.externalApplication,
+                        ),
+                        icon: const Icon(Icons.android_rounded),
+                        label: Text(localizations.getOnGooglePlay),
+                      ),
+                    ),
                     const SizedBox(height: 16),
                     const Divider(),
                     const SizedBox(height: 6),

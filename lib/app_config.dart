@@ -1,3 +1,8 @@
+/// The CaffAlert listing on Google Play.
+final Uri googlePlayUri = Uri.parse(
+  'https://play.google.com/store/apps/details?id=com.frantisekbujnovsky.caffalert',
+);
+
 class AppConfig {
   const AppConfig({
     required this.supabaseUrl,

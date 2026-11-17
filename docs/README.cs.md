@@ -1,6 +1,6 @@
 # CaffAlert
 
-[English showcase](../README.md) · [Analytická případová studie (EN)](case-study.md)
+[English showcase](../README.md) · [Analytická případová studie (EN)](case-study.md) · [Google Play](https://play.google.com/store/apps/details?id=com.frantisekbujnovsky.caffalert)
 
 CaffAlert je responzivní Flutter deníček kofeinového rytmu s CAF levelem a statistikami. Web je primární platforma, data a přihlášení zajišťuje Supabase. Rozhraní podporuje češtinu i angličtinu.
 
@@ -124,7 +124,7 @@ Flutter testy pokrývají časovač, denní a měsíční statistiky, návrat k 
 
 ## Android
 
-Android používá application ID `com.frantisekbujnovsky.caffalert`. Debug APK sestavíš stejnými `dart-define` hodnotami:
+Aplikace je na [Google Play](https://play.google.com/store/apps/details?id=com.frantisekbujnovsky.caffalert). Android používá application ID `com.frantisekbujnovsky.caffalert`. Debug APK sestavíš stejnými `dart-define` hodnotami:
 
 ```sh
 flutter build apk --debug --dart-define-from-file=.env
@@ -156,4 +156,4 @@ Bez `key.properties` se release varianta záměrně nepodepisuje debug klíčem.
 
 ## Licence a veřejná vydání
 
-Zdrojový kód má [licenci MIT](../LICENSE). Fonty Raleway a IBM Plex Mono mají samostatnou licenci SIL OFL 1.1; odkazy jsou v [anglickém README](../README.md#license-and-assets). Hotové podepsané APK bude po vydání dostupné v [GitHub Releases](https://github.com/bujnovskyf/caffAlert/releases).
+Zdrojový kód má [licenci MIT](../LICENSE). Fonty Raleway a IBM Plex Mono mají samostatnou licenci SIL OFL 1.1; odkazy jsou v [anglickém README](../README.md#license-and-assets). Aplikace pro Android je na [Google Play](https://play.google.com/store/apps/details?id=com.frantisekbujnovsky.caffalert), podepsané APK také v [GitHub Releases](https://github.com/bujnovskyf/caffAlert/releases).

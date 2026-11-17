@@ -4,7 +4,7 @@ A web-first coffee diary that turns your daily coffee rhythm into a playful CAF 
 
 Built by **František Bujnovský**, web analyst working with GA4, GTM, SQL and data quality. The [analytics case study](docs/case-study.md) explains the event model, metric definitions, security boundaries and example SQL analyses.
 
-**Live demo:** [caff-alert.netlify.app](https://caff-alert.netlify.app)
+**Live demo:** [caff-alert.netlify.app](https://caff-alert.netlify.app) · **Android:** [Google Play](https://play.google.com/store/apps/details?id=com.frantisekbujnovsky.caffalert)
 
 [Česká dokumentace a provozní poznámky](docs/README.cs.md)
 
@@ -84,7 +84,7 @@ Confirmation and recovery emails appear in local Mailpit at `http://localhost:54
 
 ## Android install and build
 
-Download `app-release.apk` from [GitHub Releases](https://github.com/bujnovskyf/caffAlert/releases) when a release is available. Open it on Android and allow installation from that download source if prompted. Add the CaffAlert widget through your launcher's widget picker after signing in and recording a coffee.
+Install CaffAlert from [Google Play](https://play.google.com/store/apps/details?id=com.frantisekbujnovsky.caffalert). A signed `app-release.apk` is also available in [GitHub Releases](https://github.com/bujnovskyf/caffAlert/releases); open it on Android and allow installation from that download source if prompted. Add the CaffAlert widget through your launcher's widget picker after signing in and recording a coffee.
 
 Build a debug APK yourself with the same `.env` configuration:
 
