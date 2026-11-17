@@ -1,6 +1,6 @@
 # CaffAlert: vydání na Google Play (checklist)
 
-Osobní vývojářský účet, balíček `com.frantisekbujnovsky.caffalert`, verze **1.1.0+2** (`pubspec.yaml` → `versionName 1.1.0`, `versionCode 2`). Podklady: [`listing.md`](listing.md) (texty), [`data-safety.md`](data-safety.md) (formuláře a soulad se zásadami), [`graphics/`](graphics/) (ikona, grafika funkce).
+Osobní vývojářský účet, balíček `com.frantisekbujnovsky.caffalert`, verze **1.2.0+3** (`pubspec.yaml` → `versionName 1.2.0`, `versionCode 3`; na Google Play od 17. 11. 2026, první vydání 1.1.0+2). Podklady: [`listing.md`](listing.md) (texty), [`data-safety.md`](data-safety.md) (formuláře a soulad se zásadami), [`graphics/`](graphics/) (ikona, grafika funkce).
 
 Pravidla repa platí i tady: nic do Play Console, na Netlify ani na GitHub bez Františkova „pushni“. Tajemství (`.env`, `android/key.properties`, keystore) nikdy do gitu.
 
@@ -70,6 +70,17 @@ Po nahrání si z Console poznamenej SHA-256 otisky obou klíčů (Supabase je n
 6. Během 14 dní sbírat zpětnou vazbu, opravit chyby, případně nahrát nový build (versionCode +1) do stejné uzavřené stopy. Testery v ní nech, aby jejich přihlášení běželo dál.
 7. **Dashboard → Požádat o přístup do produkce:** dotazník o průběhu testu (jak jsi testery získal, jakou zpětnou vazbu dali, co se změnilo, proč je aplikace připravená). Odpovídej konkrétně. Posouzení žádosti může trvat několik dní.
 8. **Produkce:** vytvořit vydání z ověřeného AAB, země, **postupné zavádění** (např. 20 % → 100 %), odeslat ke kontrole. Recenze nové aplikace může trvat i několik dní.
+
+Poznámky k verzi 1.2.0 (cs / en):
+
+```text
+<cs-CZ>
+Čas poslední kávy upravíš jedním klepnutím přímo na hlavní obrazovce. Stačí vybrat čas, den se doplní sám (i včerejší večer).
+</cs-CZ>
+<en-US>
+Change the time of your last coffee with one tap on the main screen. Just pick the time; the day follows on its own (yesterday evening too).
+</en-US>
+```
 
 Poznámky k verzi 1.1.0 (cs / en):
 
