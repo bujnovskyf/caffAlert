@@ -321,7 +321,7 @@ void main() {
     ]);
     final provider = await pumpTimer(tester, source, now);
 
-    await tester.tap(find.text('Upravit čas poslední kávy'));
+    await tester.tap(find.text('Upravit čas'));
     await tester.pumpAndSettle();
     expect(find.text('Kdy byla káva?'), findsOneWidget);
     await tester.tap(find.byIcon(Icons.keyboard_outlined));
@@ -348,7 +348,7 @@ void main() {
     ]);
     final provider = await pumpTimer(tester, source, now);
 
-    expect(find.text('Upravit čas poslední kávy'), findsNothing);
+    expect(find.text('Upravit čas'), findsNothing);
 
     await tester.pumpWidget(const SizedBox.shrink());
     provider.dispose();

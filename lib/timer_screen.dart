@@ -379,10 +379,12 @@ class _HeroCard extends StatelessWidget {
                 if (onEditLastCoffeeTime != null) ...[
                   const SizedBox(height: 8),
                   Center(
-                    child: TextButton.icon(
+                    child: TextButton(
                       onPressed: isLoading ? null : onEditLastCoffeeTime,
-                      icon: const Icon(Icons.edit_outlined, size: 18),
-                      label: Text(localizations.editLastCoffeeTime),
+                      child: Text(
+                        localizations.editTime,
+                        semanticsLabel: localizations.editLastCoffeeTime,
+                      ),
                     ),
                   ),
                 ],

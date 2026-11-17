@@ -52,6 +52,7 @@
   "editCoffeeTimeAction": "Edit coffee time",
   "editCoffeeTimeTitle": "When did you have it?",
   "editLastCoffeeTime": "Change last coffee time",
+  "editTime": "Change time",
   "coffeeTimeUpdatedToday": "Coffee moved to {time} today.",
   "@coffeeTimeUpdatedToday": {"placeholders": {"time": {"type": "String"}}},
   "coffeeTimeUpdatedYesterday": "Coffee moved to {time} yesterday.",

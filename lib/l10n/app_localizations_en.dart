@@ -169,6 +169,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editLastCoffeeTime => 'Change last coffee time';
 
   @override
+  String get editTime => 'Change time';
+
+  @override
   String coffeeTimeUpdatedToday(String time) {
     return 'Coffee moved to $time today.';
   }

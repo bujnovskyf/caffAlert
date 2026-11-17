@@ -52,6 +52,7 @@
   "editCoffeeTimeAction": "Upravit čas kávy",
   "editCoffeeTimeTitle": "Kdy byla káva?",
   "editLastCoffeeTime": "Upravit čas poslední kávy",
+  "editTime": "Upravit čas",
   "coffeeTimeUpdatedToday": "Káva přesunutá na dnešek {time}.",
   "@coffeeTimeUpdatedToday": {"placeholders": {"time": {"type": "String"}}},
   "coffeeTimeUpdatedYesterday": "Káva přesunutá na včera {time}.",

@@ -404,6 +404,12 @@ abstract class AppLocalizations {
   /// **'Change last coffee time'**
   String get editLastCoffeeTime;
 
+  /// No description provided for @editTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Change time'**
+  String get editTime;
+
   /// No description provided for @coffeeTimeUpdatedToday.
   ///
   /// In en, this message translates to:

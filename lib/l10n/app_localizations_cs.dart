@@ -170,6 +170,9 @@ class AppLocalizationsCs extends AppLocalizations {
   String get editLastCoffeeTime => 'Upravit čas poslední kávy';
 
   @override
+  String get editTime => 'Upravit čas';
+
+  @override
   String coffeeTimeUpdatedToday(String time) {
     return 'Káva přesunutá na dnešek $time.';
   }
