@@ -167,11 +167,17 @@ class AppLocalizationsCs extends AppLocalizations {
   String get editCoffeeTimeTitle => 'Kdy byla káva?';
 
   @override
-  String get editCoffeeTimeOutOfRange =>
-      'Čas kávy musí být v posledních 24 hodinách.';
+  String get editLastCoffeeTime => 'Upravit čas poslední kávy';
 
   @override
-  String get coffeeTimeUpdated => 'Čas kávy je upravený.';
+  String coffeeTimeUpdatedToday(String time) {
+    return 'Káva přesunutá na dnešek $time.';
+  }
+
+  @override
+  String coffeeTimeUpdatedYesterday(String time) {
+    return 'Káva přesunutá na včera $time.';
+  }
 
   @override
   String get noCoffeeYet => 'Zatím žádná káva';
@@ -314,6 +320,13 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get couldNotOpenStore => 'Nepodařilo se otevřít Google Play.';
+
+  @override
+  String get androidAppHint =>
+      'CaffAlert je i na Androidu: s widgetem na plochu a upozorněním, když CAF klesne na nulu.';
+
+  @override
+  String get getOnGooglePlay => 'Stáhnout na Google Play';
 
   @override
   String get feedbackSection => 'Podpora CaffAlertu';

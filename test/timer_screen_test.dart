@@ -1,6 +1,7 @@
 import 'package:caff_alert/app_theme.dart';
 import 'package:caff_alert/coffee_repository.dart';
 import 'package:caff_alert/coffee_stats_provider.dart';
+import 'package:caff_alert/coffee_time_editor.dart';
 import 'package:caff_alert/l10n/app_localizations.dart';
 import 'package:caff_alert/models/coffee_log.dart';
 import 'package:caff_alert/models/profile.dart';
@@ -24,8 +25,14 @@ class _Source implements CoffeeDataSource {
   }
 
   @override
-  Future<CoffeeLog> updateCoffeeTime(int coffeeId, DateTime createdAt) =>
-      throw UnimplementedError();
+  Future<CoffeeLog> updateCoffeeTime(int coffeeId, DateTime createdAt) async {
+    final index = logs.indexWhere((log) => log.id == coffeeId);
+    final updated = CoffeeLog(
+        id: coffeeId, userId: logs[index].userId, createdAt: createdAt);
+    logs[index] = updated;
+    logs.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    return updated;
+  }
 
   @override
   Future<CoffeeLog?> deleteCoffee(int coffeeId) async {
@@ -250,6 +257,99 @@ void main() {
       ),
       findsOneWidget,
     );
+    await tester.pumpWidget(const SizedBox.shrink());
+    provider.dispose();
+  });
+
+  group('changing the time of a coffee', () {
+    test('a clock time not later than now is today', () {
+      final now = DateTime(2026, 11, 14, 9, 30);
+      expect(
+        CoffeeTimeEditor.resolve(const TimeOfDay(hour: 9, minute: 30), now),
+        DateTime(2026, 11, 14, 9, 30),
+      );
+      expect(
+        CoffeeTimeEditor.resolve(const TimeOfDay(hour: 0, minute: 5), now),
+        DateTime(2026, 11, 14, 0, 5),
+      );
+    });
+
+    test('a clock time later than now is yesterday, across a month', () {
+      final now = DateTime(2026, 12, 1, 9, 30);
+      expect(
+        CoffeeTimeEditor.resolve(const TimeOfDay(hour: 9, minute: 31), now),
+        DateTime(2026, 11, 30, 9, 31),
+      );
+      expect(
+        CoffeeTimeEditor.resolve(const TimeOfDay(hour: 23, minute: 40), now),
+        DateTime(2026, 11, 30, 23, 40),
+      );
+    });
+  });
+
+  Future<CoffeeStatsProvider> pumpTimer(
+    WidgetTester tester,
+    _Source source,
+    DateTime now,
+  ) async {
+    final provider = CoffeeStatsProvider(
+      userId: 'u',
+      repository: source,
+      now: () => now,
+    );
+    await provider.refresh();
+    await tester.pumpWidget(
+      ChangeNotifierProvider.value(
+        value: provider,
+        child: MaterialApp(
+          theme: AppTheme.light,
+          locale: const Locale('cs'),
+          supportedLocales: AppLocalizations.supportedLocales,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          home: const TimerScreen(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    return provider;
+  }
+
+  testWidgets('the last coffee can be moved back to yesterday', (tester) async {
+    final now = DateTime(2026, 11, 14, 9);
+    final source = _Source([
+      CoffeeLog(id: 1, userId: 'u', createdAt: DateTime(2026, 11, 14, 8)),
+    ]);
+    final provider = await pumpTimer(tester, source, now);
+
+    await tester.tap(find.text('Upravit čas poslední kávy'));
+    await tester.pumpAndSettle();
+    expect(find.text('Kdy byla káva?'), findsOneWidget);
+    await tester.tap(find.byIcon(Icons.keyboard_outlined));
+    await tester.pumpAndSettle();
+    final fields = find.byType(TextFormField);
+    await tester.enterText(fields.at(0), '10');
+    await tester.enterText(fields.at(1), '15');
+    await tester.tap(find.text('OK'));
+    await tester.pumpAndSettle();
+
+    expect(
+        source.logs.single.createdAt.toLocal(), DateTime(2026, 11, 13, 10, 15));
+    expect(find.text('Káva přesunutá na včera 10:15.'), findsOneWidget);
+
+    await tester.pumpWidget(const SizedBox.shrink());
+    provider.dispose();
+  });
+
+  testWidgets('no time change for a coffee older than 24 hours',
+      (tester) async {
+    final now = DateTime(2026, 11, 14, 9);
+    final source = _Source([
+      CoffeeLog(id: 1, userId: 'u', createdAt: DateTime(2026, 11, 13, 8)),
+    ]);
+    final provider = await pumpTimer(tester, source, now);
+
+    expect(find.text('Upravit čas poslední kávy'), findsNothing);
+
     await tester.pumpWidget(const SizedBox.shrink());
     provider.dispose();
   });

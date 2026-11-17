@@ -398,17 +398,23 @@ abstract class AppLocalizations {
   /// **'When did you have it?'**
   String get editCoffeeTimeTitle;
 
-  /// No description provided for @editCoffeeTimeOutOfRange.
+  /// No description provided for @editLastCoffeeTime.
   ///
   /// In en, this message translates to:
-  /// **'Coffee time must be within the last 24 hours.'**
-  String get editCoffeeTimeOutOfRange;
+  /// **'Change last coffee time'**
+  String get editLastCoffeeTime;
 
-  /// No description provided for @coffeeTimeUpdated.
+  /// No description provided for @coffeeTimeUpdatedToday.
   ///
   /// In en, this message translates to:
-  /// **'Coffee time updated.'**
-  String get coffeeTimeUpdated;
+  /// **'Coffee moved to {time} today.'**
+  String coffeeTimeUpdatedToday(String time);
+
+  /// No description provided for @coffeeTimeUpdatedYesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Coffee moved to {time} yesterday.'**
+  String coffeeTimeUpdatedYesterday(String time);
 
   /// No description provided for @noCoffeeYet.
   ///
@@ -679,6 +685,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'We could not open Google Play.'**
   String get couldNotOpenStore;
+
+  /// No description provided for @androidAppHint.
+  ///
+  /// In en, this message translates to:
+  /// **'CaffAlert is on Android too, with a home-screen widget and a reminder when CAF hits zero.'**
+  String get androidAppHint;
+
+  /// No description provided for @getOnGooglePlay.
+  ///
+  /// In en, this message translates to:
+  /// **'Get it on Google Play'**
+  String get getOnGooglePlay;
 
   /// No description provided for @feedbackSection.
   ///

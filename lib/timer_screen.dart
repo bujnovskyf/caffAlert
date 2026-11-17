@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'app_theme.dart';
 import 'coffee_stats_provider.dart';
+import 'coffee_time_editor.dart';
 import 'l10n/app_localizations.dart';
 import 'models/coffee_log.dart';
 import 'time_format.dart';
@@ -170,6 +171,14 @@ class TimerScreen extends StatelessWidget {
                         ),
                         isLoading: state.isMutating,
                         onLogCoffee: () => _logCoffee(context, state),
+                        onEditLastCoffeeTime: latestCoffee != null &&
+                                state.canEditCoffee(latestCoffee)
+                            ? () => CoffeeTimeEditor.edit(
+                                  context,
+                                  state,
+                                  latestCoffee,
+                                )
+                            : null,
                       ),
                       if (state.error != null &&
                           state.error != CoffeeStateError.load) ...[
@@ -254,6 +263,7 @@ class _HeroCard extends StatelessWidget {
     required this.intervalLabel,
     required this.isLoading,
     required this.onLogCoffee,
+    this.onEditLastCoffeeTime,
   });
 
   final CafGaugeMode mode;
@@ -264,6 +274,9 @@ class _HeroCard extends StatelessWidget {
   final String intervalLabel;
   final bool isLoading;
   final VoidCallback onLogCoffee;
+
+  /// Null when there is no coffee from the last 24 hours to correct.
+  final VoidCallback? onEditLastCoffeeTime;
 
   @override
   Widget build(BuildContext context) {
@@ -363,6 +376,16 @@ class _HeroCard extends StatelessWidget {
                     ),
                   ),
                 ),
+                if (onEditLastCoffeeTime != null) ...[
+                  const SizedBox(height: 8),
+                  Center(
+                    child: TextButton.icon(
+                      onPressed: isLoading ? null : onEditLastCoffeeTime,
+                      icon: const Icon(Icons.edit_outlined, size: 18),
+                      label: Text(localizations.editLastCoffeeTime),
+                    ),
+                  ),
+                ],
               ],
             ),
           );

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'app_theme.dart';
 import 'coffee_metrics.dart';
 import 'coffee_stats_provider.dart';
+import 'coffee_time_editor.dart';
 import 'l10n/app_localizations.dart';
 import 'models/coffee_log.dart';
 import 'time_format.dart';
@@ -167,7 +168,7 @@ class DashboardScreen extends StatelessWidget {
                           editTooltip: localizations.editCoffeeTimeAction,
                           removeTooltip: localizations.remove,
                           isLoading: state.isMutating,
-                          onEdit: (coffee) => _editCoffeeTime(
+                          onEdit: (coffee) => CoffeeTimeEditor.edit(
                             context,
                             state,
                             coffee,
@@ -185,60 +186,6 @@ class DashboardScreen extends StatelessWidget {
               ),
             );
           },
-        ),
-      ),
-    );
-  }
-
-  Future<void> _editCoffeeTime(
-    BuildContext context,
-    CoffeeStatsProvider state,
-    CoffeeLog coffee,
-  ) async {
-    if (!state.canEditCoffee(coffee)) return;
-
-    final localizations = AppLocalizations.of(context);
-    final now = state.now.toLocal();
-    final earliestAllowed = now.subtract(CoffeeStatsProvider.coffeeEditWindow);
-    final currentTime = coffee.createdAt.toLocal();
-    final selectedDate = await showDatePicker(
-      context: context,
-      firstDate: DateUtils.dateOnly(earliestAllowed),
-      lastDate: DateUtils.dateOnly(now),
-      initialDate: DateUtils.dateOnly(currentTime),
-      helpText: localizations.editCoffeeTimeTitle,
-    );
-    if (selectedDate == null || !context.mounted) return;
-
-    final selectedTime = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.fromDateTime(currentTime),
-      helpText: localizations.editCoffeeTimeTitle,
-    );
-    if (selectedTime == null || !context.mounted) return;
-
-    final correctedTime = DateTime(
-      selectedDate.year,
-      selectedDate.month,
-      selectedDate.day,
-      selectedTime.hour,
-      selectedTime.minute,
-    );
-    if (correctedTime.isBefore(earliestAllowed) || correctedTime.isAfter(now)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(localizations.editCoffeeTimeOutOfRange)),
-      );
-      return;
-    }
-
-    final success = await state.updateCoffeeTime(coffee, correctedTime);
-    if (!context.mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          success
-              ? localizations.coffeeTimeUpdated
-              : localizations.actionFailed,
         ),
       ),
     );

@@ -166,11 +166,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editCoffeeTimeTitle => 'When did you have it?';
 
   @override
-  String get editCoffeeTimeOutOfRange =>
-      'Coffee time must be within the last 24 hours.';
+  String get editLastCoffeeTime => 'Change last coffee time';
 
   @override
-  String get coffeeTimeUpdated => 'Coffee time updated.';
+  String coffeeTimeUpdatedToday(String time) {
+    return 'Coffee moved to $time today.';
+  }
+
+  @override
+  String coffeeTimeUpdatedYesterday(String time) {
+    return 'Coffee moved to $time yesterday.';
+  }
 
   @override
   String get noCoffeeYet => 'No coffee logged yet';
@@ -313,6 +319,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get couldNotOpenStore => 'We could not open Google Play.';
+
+  @override
+  String get androidAppHint =>
+      'CaffAlert is on Android too, with a home-screen widget and a reminder when CAF hits zero.';
+
+  @override
+  String get getOnGooglePlay => 'Get it on Google Play';
 
   @override
   String get feedbackSection => 'Support CaffAlert';
